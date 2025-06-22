@@ -152,17 +152,11 @@ Shift+Tab Shift+Tab
 # 1. Install WSL2
 wsl --install Ubuntu
 
-# 2. Configure performance (~/.wslconfig)
-[wsl2]
-memory=8GB
-processors=4
-localhostForwarding=true
-
-# 3. Access Windows projects
+# 2. Access Windows projects
 cd /mnt/c/Users/YourUsername/Projects
 cursor .  # or code .
 
-# 4. Install Claude Code in WSL
+# 3. Install Claude Code in WSL
 npm install -g @anthropic-ai/claude-code
 ```
 
