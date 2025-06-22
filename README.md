@@ -4,7 +4,7 @@
 
 [![npm](https://img.shields.io/npm/v/@anthropic-ai/claude-code)](https://www.npmjs.com/package/@anthropic-ai/claude-code) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Install
