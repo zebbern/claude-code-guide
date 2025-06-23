@@ -1,4 +1,4 @@
-## <code>The website i made under includes more comprehensive guides</code>
+## <code>The website i made under includes a more comprehensive guide</code>
 
 > Guides on how to install on Windows, Linux, MacOS ✅
 > 
