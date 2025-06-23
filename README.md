@@ -1,60 +1,55 @@
-## <code>Visit the website for more information checked under!</code>
+<div align="center">
 
-> Guides on how to install on Windows, Linux, MacOS ✅
-> 
-> Tips and Tricks ✅
-> 
-> MCP Overview with what to use ✅
-> 
-> Community Guides ✅
-> 
-> Troubleshooting ✅
-> 
-> How to use Claude code the most optimal way ✅
-
-### https://zebbern.github.io
-
-```bash
-# Install
-npm install -g @anthropic-ai/claude-code
-```
-
-# 🚀 Claude Code - Complete Command Reference
+# Claude Code - Complete Command Reference
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
-> **The most comprehensive Claude Code command reference available** 📚  
-> Discover hidden commands, advanced flags, and power-user techniques that most developers don't know about.
 
-<div align="center">
-  <img src="https://img.shields.io/badge/🧠-AI%20Assistant-purple" alt="AI Assistant">
-  <img src="https://img.shields.io/badge/⚡-Terminal%20Native-yellow" alt="Terminal Native">
-  <img src="https://img.shields.io/badge/🔧-MCP%20Integration-green" alt="MCP Integration">
-  <img src="https://img.shields.io/badge/🎯-Expert%20Level-red" alt="Expert Level">
+<kbd> The most comprehensive Claude Code command reference available 📚  </kbd>
+
+<kbd> Discover hidden commands, advanced flags, and power-user techniques that most developers don't know about.</kbd>
+
+
+
+
+<kbd>
+
+# <code>Visit: [https://zebbern.github.io/](https://zebbern.github.io/) for more detailed info!</code>
+
+| Section                                    | Status          |
+|---------------------------------------------|------------------------------|
+| Guides on how to install on Windows, Linux, MacOS | ✅ |
+| Tips and Tricks                            | ✅ |
+| MCP Overview with what to use              | ✅ |
+| Community Guides                           | ✅ |
+| Troubleshooting                            | ✅ |
+| How to use Claude code the most optimal way| ✅ |
+</kbd>
+
 </div>
 
 ---
 
 ## 📖 Table of Contents
 
-- [🎯 Quick Start](#-quick-start)
-- [💻 Core CLI Commands](#-core-cli-commands)
-- [🏗️ CLI Flags & Options](#️-cli-flags--options)
-- [⚙️ Configuration Commands](#️-configuration-commands)
-- [⚡ Slash Commands](#-slash-commands)
-- [🌍 Environment Variables](#-environment-variables)
-- [🔍 Hidden Features](#-hidden-features)
-- [🛠️ Advanced Usage](#️-advanced-usage)
-- [📄 Output Formats](#-output-formats)
-- [🔗 Integration Examples](#-integration-examples)
-- [🔧 Troubleshooting](#-troubleshooting)
-- [📁 Configuration Files](#-configuration-files)
-- [🔐 Security](#-security)
-- [🧪 Beta Features](#-beta-features)
+- [Quick Start](#-quick-start)
+- [Core CLI Commands](#-core-cli-commands)
+- [CLI Flags & Options](#️-cli-flags--options)
+- [⚙Configuration Commands](#️-configuration-commands)
+- [Slash Commands](#-slash-commands)
+- [Environment Variables](#-environment-variables)
+- [Hidden Features](#-hidden-features)
+- [🛠Advanced Usage](#️-advanced-usage)
+- [Output Formats](#-output-formats)
+- [Integration Examples](#-integration-examples)
+- [Troubleshooting](#-troubleshooting)
+- [Configuration Files](#-configuration-files)
+- [Security](#-security)
+- [Beta Features](#-beta-features)
 
-## 🎯 Quick Start
+## Quick Start
 
 <details>
 <summary><strong>🚀 Essential Commands (Click to expand)</strong></summary>
