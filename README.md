@@ -1,19 +1,5 @@
 <div align="center">
 
-# Claude Code - Complete Command Reference
-
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
-[![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
-
-
-<kbd> The most comprehensive Claude Code command reference available 📚  </kbd>
-
-<kbd> Discover hidden commands, advanced flags, and power-user techniques that most developers don't know about.</kbd>
-
-
-
-
 <kbd>
 
 # <code>Visit: [https://zebbern.github.io/](https://zebbern.github.io/) for more detailed info!</code>
@@ -27,6 +13,17 @@
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
 </kbd>
+
+# Claude Code - Complete Command Reference
+
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
+[![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
+
+
+<kbd> The most comprehensive Claude Code command reference available 📚  </kbd>
+
+<kbd> Discover hidden commands, advanced flags, and power-user techniques that most developers don't know about.</kbd>
 
 </div>
 
