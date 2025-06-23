@@ -12,6 +12,8 @@
 | Community Guides                           | ✅ |
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
+### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code>
+
 </kbd>
 
 # Claude Code - Complete Command Reference
