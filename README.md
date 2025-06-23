@@ -1,5 +1,9 @@
 # Claude Code: Complete Cheat Sheet & Power User Guide
 
+## Also made a website thats includes more comprehensive guides and better information
+
+### https://zebbern.github.io
+
 > AI coding assistant that lives in your terminal. Understands your codebase, writes code, fixes bugs, handles git workflows through natural language.
 
 [![npm](https://img.shields.io/npm/v/@anthropic-ai/claude-code)](https://www.npmjs.com/package/@anthropic-ai/claude-code) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
