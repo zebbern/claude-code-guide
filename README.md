@@ -34,7 +34,7 @@
 | Community Guides                           | ✅ |
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
-### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code>
+### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code> only use this if you know exactly what ur doing!
 
 </kbd>
 
