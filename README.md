@@ -49,7 +49,7 @@
 # Quick Installment
 # Quick Install
 
-## Method 1 – NPM (global) **⭐️ Official**
+## Method 1 – NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
 # Requires Node 18+ on macOS / Linux / WSL :contentReference[oaicite:0]{index=0}
 
@@ -67,7 +67,7 @@ docker run -it -v "$PWD":"$PWD" -w "$PWD" \
 ghcr.io/rchgrav/claudebox:latest
 # Nice when you can’t touch the host system :contentReference[oaicite:3]{index=3}
 
-## Method 5 – Windows via WSL **(Anthropic-recommended path)**
+## Method 5 – Windows via WSL (Anthropic-recommended path)
 # 1) Enable WSL 2 and install Ubuntu
 # 2) Inside Ubuntu:
 sudo apt update && sudo apt install -y nodejs npm
