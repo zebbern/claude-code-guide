@@ -16,7 +16,7 @@
 
 </kbd>
 
-# Claude Code - Complete Command Reference
+# Complete Command Reference
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
