@@ -47,14 +47,38 @@
 
 ```bash
 # Quick Installment
-## Method 1
-npm install -g @anthropic/claude-code
-## Method 2
+# Quick Install
+
+## Method 1 – NPM (global) **⭐️ Official**
+npm install -g @anthropic-ai/claude-code
+# Requires Node 18+ on macOS / Linux / WSL :contentReference[oaicite:0]{index=0}
+
+## Method 2 – Homebrew Tap (macOS & Linux) *️⃣
 brew install anthropic/tap/claude-code
-## Method 3
-curl -fsSL https://claude.ai/install.sh | sh
-## Method 4
-iwr https://claude.ai/install.ps1 | iex
+# Formula contributed by the community :contentReference[oaicite:1]{index=1}
+
+## Method 3 – Arch Linux AUR *️⃣
+yay -S claude-code        # or paru -S claude-code
+# Keeps pace with npm releases :contentReference[oaicite:2]{index=2}
+
+## Method 4 – Docker (containerised) *️⃣
+docker pull ghcr.io/rchgrav/claudebox:latest
+docker run -it -v "$PWD":"$PWD" -w "$PWD" \
+ghcr.io/rchgrav/claudebox:latest
+# Nice when you can’t touch the host system :contentReference[oaicite:3]{index=3}
+
+## Method 5 – Windows via WSL **(Anthropic-recommended path)**
+# 1) Enable WSL 2 and install Ubuntu
+# 2) Inside Ubuntu:
+sudo apt update && sudo apt install -y nodejs npm
+npm install -g @anthropic-ai/claude-code
+# Step-by-step guide :contentReference[oaicite:4]{index=4}
+
+## Method 6 – Build from source (any OS) *️⃣
+git clone https://github.com/anthropics/claude-code.git
+cd claude-code && pnpm install && pnpm build
+pnpm --filter cli run cli:install
+# Handy for cutting-edge commits or local patches :contentReference[oaicite:5]{index=5}
 
 # Interactive Mode
 claude                      # Start interactive REPL
