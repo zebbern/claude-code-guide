@@ -47,7 +47,6 @@
 
 ```bash
 # Quick Installment
-# Quick Install
 
 ## Method 1 – NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
