@@ -63,8 +63,8 @@
 
 ## Quick Start
 
-<details>
-<summary><strong>Essential Commands (Click to expand)</strong></summary>
+
+<strong>Essential Commands (Click to expand)</strong>
 
 ```bash
 # Interactive Mode
@@ -81,7 +81,7 @@ claude update              # Update to latest
 claude mcp                 # Setup MCP servers
 ```
 
-</details>
+
 
 ---
 
@@ -155,8 +155,8 @@ claude mcp                 # Setup MCP servers
 
 ### Output Format Control
 
-<details>
-<summary><strong>Format Options</strong></summary>
+
+<strong>Format Options</strong>
 
 | Flag | Options | Description |
 |------|---------|-------------|
@@ -176,14 +176,14 @@ claude -p "analyze" --output-format json
 claude -p "process" --output-format stream-json
 ```
 
-</details>
+
 
 ### Permission & Security Flags
 
 > ⚠️ **Warning**: Use security flags with extreme caution!
 
-<details>
-<summary><strong>Security Controls</strong></summary>
+
+<strong>Security Controls</strong>
 
 | Flag | Risk Level | Description |
 |------|------------|-------------|
@@ -203,12 +203,12 @@ claude --allowedTools "Edit,View"
 claude --dangerously-skip-permissions
 ```
 
-</details>
+
 
 ### Advanced/Hidden Flags
 
-<details>
-<summary><strong>Expert-Level Options</strong></summary>
+
+<strong>Expert-Level Options</strong>
 
 #### System Control
 
@@ -235,14 +235,14 @@ claude --dangerously-skip-permissions
 | `--allow-tool` | Allow specific tool | `claude --allow-tool Edit` |
 | `--disallow-tool` | Block specific tool | `claude --disallow-tool Bash` |
 
-</details>
+
 
 ### Experimental Flags
 
 > **Under Development**: These flags are proposed/experimental
 
-<details>
-<summary><strong>Future Features</strong></summary>
+
+<strong>Future Features</strong>
 
 | Flag | Status | Purpose |
 |------|--------|----------|
@@ -250,18 +250,15 @@ claude --dangerously-skip-permissions
 | `--no-tools` | **Proposed** | Exclude tool context |
 | `--no-env` | **Proposed** | Disable environment context |
 
-</details>
+
 
 ### Cloud Provider Integration
-
-<div align="center">
 
 | Provider | Flag | Service |
 |----------|------|------|
 | **Amazon Bedrock** | `--use-bedrock` | AWS |
 | **Google Vertex AI** | `--use-vertex` | GCP |
 
-</div>
 
 ```bash
 # Use AWS Bedrock
@@ -334,8 +331,8 @@ claude config set allowedTools "Edit,View,Bash(git:*)"
 
 > **MCP**: Model Context Protocol for extending Claude's capabilities
 
-<details>
-<summary><strong>MCP Server Management</strong></summary>
+
+<strong>MCP Server Management</strong>
 
 | Command | Purpose | Example |
 |---------|---------|----------|
@@ -355,7 +352,7 @@ claude mcp add browser "browser-mcp-server"
 claude mcp add fs "filesystem-mcp-server"
 ```
 
-</details>
+
 
 ## Slash Commands
 
@@ -363,10 +360,9 @@ claude mcp add fs "filesystem-mcp-server"
 
 ### Core Slash Commands
 
-<details>
-<summary><strong>Essential Commands</strong></summary>
 
-<div align="center">
+<strong>Essential Commands</strong>
+
 
 | Command | Purpose | Quick Tip |
 |---------|---------|--------|
@@ -376,12 +372,9 @@ claude mcp add fs "filesystem-mcp-server"
 | `/cost` | Token usage stats | Monitor spending |
 | `/exit` | Exit safely | Clean shutdown |
 
-</div>
 
-</details>
 
-<details>
-<summary><strong>Management Commands</strong></summary>
+<strong>Management Commands</strong>
 
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
@@ -391,10 +384,10 @@ claude mcp add fs "filesystem-mcp-server"
 | `/init` | Create CLAUDE.md | New projects |
 | `/bug` | Report issues | Found a problem? |
 
-</details>
 
-<details>
-<summary><strong>History & Session Commands</strong></summary>
+
+
+<strong>History & Session Commands</strong>
 
 | Command | Purpose | Pro Tip |
 |---------|---------|----------|
@@ -403,21 +396,21 @@ claude mcp add fs "filesystem-mcp-server"
 | `/login` | Switch accounts | Multi-account |
 | `/logout` | Sign out | Security |
 
-</details>
 
-<details>
-<summary><strong>Interface Commands</strong></summary>
+
+
+<strong>Interface Commands</strong>
 
 | Command | Purpose | For Users Who |
 |---------|---------|---------------|
 | `/vim` | Enable Vim keybindings | Love Vim |
 
-</details>
+
 
 ### Advanced Slash Commands
 
-<details>
-<summary><strong>Workspace Management</strong></summary>
+
+<strong>Workspace Management</strong>
 
 | Command | Purpose | Example |
 |---------|---------|----------|
@@ -425,10 +418,10 @@ claude mcp add fs "filesystem-mcp-server"
 | `/memory` | Edit memory files | `/memory` |
 | `/model <name>` | Change AI model | `/model claude-opus-4` |
 
-</details>
 
-<details>
-<summary><strong>Integration Commands</strong></summary>
+
+
+<strong>Integration Commands</strong>
 
 | Command | Integration | Purpose |
 |---------|-------------|----------|
@@ -438,10 +431,10 @@ claude mcp add fs "filesystem-mcp-server"
 | `/pr-comments` | GitHub | Get PR comments |
 | `/review` | GitHub | Review pull requests |
 
-</details>
 
-<details>
-<summary><strong>AI Enhancement Commands</strong></summary>
+
+
+<strong>AI Enhancement Commands</strong>
 
 | Command | Purpose | Level |
 |---------|---------|--------|
@@ -449,16 +442,16 @@ claude mcp add fs "filesystem-mcp-server"
 | `/upgrade` | Access Claude Max | **Premium** |
 | `/user` | Personal commands | **Custom** |
 
-</details>
 
-<details>
-<summary><strong>Experimental Commands</strong></summary>
+
+
+<strong>Experimental Commands</strong>
 
 | Command | Status | Purpose |
 |---------|--------|----------|
 | `/terminal-setup` | **Proposed** | Terminal optimizations |
 
-</details>
+
 
 ### Custom Slash Commands
 
@@ -500,15 +493,11 @@ claude mcp add fs "filesystem-mcp-server"
 
 ### Core Configuration Variables
 
-<div align="center">
-
 | Variable | Purpose | Example | Required |
 |----------|---------|---------|----------|
 | `ANTHROPIC_API_KEY` | API Authentication | `sk-ant-api03-xxx` | **Yes** |
 | `ANTHROPIC_MODEL` | Default model | `claude-sonnet-4` | No |
 | `ANTHROPIC_SMALL_FAST_MODEL` | Quick operations | `claude-haiku-3` | No |
-
-</div>
 
 **Quick Setup:**
 ```bash
@@ -521,8 +510,8 @@ export ANTHROPIC_MODEL="claude-sonnet-4"
 
 ### Claude Code Specific Variables
 
-<details>
-<summary><strong>Cloud Provider Integration</strong></summary>
+
+<strong>Cloud Provider Integration</strong>
 
 | Variable | Cloud | Purpose |
 |----------|-------|----------|
@@ -531,10 +520,10 @@ export ANTHROPIC_MODEL="claude-sonnet-4"
 | `CLAUDE_CODE_SKIP_BEDROCK_AUTH` | **AWS** | Skip authentication (gateways) |
 | `CLAUDE_CODE_SKIP_VERTEX_AUTH` | **GCP** | Skip authentication (gateways) |
 
-</details>
 
-<details>
-<summary><strong>Telemetry & Privacy</strong></summary>
+
+
+<strong>Telemetry & Privacy</strong>
 
 | Variable | Purpose | Privacy Impact |
 |----------|---------|----------------|
@@ -547,12 +536,12 @@ export ANTHROPIC_MODEL="claude-sonnet-4"
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 ```
 
-</details>
+
 
 ### Feature Control Variables
 
-<details>
-<summary><strong>Privacy & Security Controls</strong></summary>
+
+<strong>Privacy & Security Controls</strong>
 
 | Variable | Feature | Privacy Level |
 |----------|---------|---------------|
@@ -561,10 +550,10 @@ export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 | `DISABLE_ERROR_REPORTING=1` | Error reports | **High** |
 | `DISABLE_TELEMETRY=1` | Analytics | **High** |
 
-</details>
 
-<details>
-<summary><strong>Cost & Performance Controls</strong></summary>
+
+
+<strong>Cost & Performance Controls</strong>
 
 | Variable | Feature | Cost Impact |
 |----------|---------|-------------|
@@ -572,7 +561,7 @@ export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 | `DISABLE_NON_ESSENTIAL_MODEL_CALLS=1` | Extra AI calls | **Saves Money** |
 | `DISABLE_PROMPT_CACHING=1` | Caching | **Costs More** |
 
-</details>
+
 
 **Recommended Privacy Setup:**
 ```bash
@@ -587,14 +576,10 @@ export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1
 
 ### Network & Proxy Variables
 
-<div align="center">
-
 | Variable | Protocol | Example |
 |----------|----------|----------|
 | `HTTP_PROXY` | HTTP | `http://proxy.company.com:8080` |
 | `HTTPS_PROXY` | HTTPS | `https://proxy.company.com:8443` |
-
-</div>
 
 **Corporate Network Setup:**
 ```bash
@@ -605,18 +590,18 @@ export HTTPS_PROXY="https://proxy.company.com:8443"
 
 ### Advanced Configuration Variables
 
-<details>
-<summary><strong>AI Behavior Tuning</strong></summary>
+
+<strong>AI Behavior Tuning</strong>
 
 | Variable | Purpose | Example |
 |----------|---------|----------|
 | `MAX_THINKING_TOKENS` | Thinking budget | `MAX_THINKING_TOKENS=50000` |
 | `MCP_TIMEOUT` | MCP startup timeout | `MCP_TIMEOUT=10000` |
 
-</details>
 
-<details>
-<summary><strong>Regional Configuration</strong></summary>
+
+
+<strong>Regional Configuration</strong>
 
 | Variable | Cloud Provider | Purpose |
 |----------|---------------|----------|
@@ -632,12 +617,12 @@ export AWS_REGION="us-east-1"
 export CLAUDE_ML_REGION="us-central1"
 ```
 
-</details>
+
 
 ### Recent Updates (2025)
 
-<details>
-<summary><strong>Version 1.0.25 (Latest)</strong></summary>
+
+<strong>Version 1.0.25 (Latest)</strong>
 
 #### New Features
 - Fixed slash command reliability issues
@@ -650,7 +635,7 @@ export CLAUDE_ML_REGION="us-central1"
 - **Remote MCP**: Cloud MCP functionality
 - **Enhanced Auth**: Better MCP authentication
 
-</details>
+
 
 ---
 
@@ -660,8 +645,8 @@ export CLAUDE_ML_REGION="us-central1"
 
 ### Tool Permission Patterns
 
-<details>
-<summary><strong>Precise Tool Control</strong></summary>
+
+<strong>Precise Tool Control</strong>
 
 #### **Allowlist Patterns**
 
@@ -688,14 +673,14 @@ claude --allowedTools "Edit,View,Bash(npm:*),Bash(git:*)"
 claude --allowedTools "mcp__puppeteer__puppeteer_navigate,mcp__puppeteer__puppeteer_click"
 ```
 
-</details>
+
 
 ## Advanced Usage
 
 ### Automation Patterns
 
-<details>
-<summary><strong>Headless Automation</strong></summary>
+
+<strong>Headless Automation</strong>
 
 ```bash
 # JSON output for scripts
@@ -708,12 +693,12 @@ claude --resume abc123 --dangerously-skip-permissions
 claude --verbose --mcp-debug
 ```
 
-</details>
+
 
 ### AI Behavior Control
 
-<details>
-<summary><strong>Prompt Engineering</strong></summary>
+
+<strong>Prompt Engineering</strong>
 
 ```bash
 # Custom system prompt
@@ -728,12 +713,12 @@ claude "think hard about this"      # Enhanced
 claude "ultrathink about this"      # Maximum (128K tokens)
 ```
 
-</details>
+
 
 ### Interactive Mode Tricks
 
-<details>
-<summary><strong>Keyboard Shortcuts</strong></summary>
+
+<strong>Keyboard Shortcuts</strong>
 
 | Shortcut | Mode | Purpose |
 |----------|------|----------|
@@ -748,12 +733,12 @@ claude "ultrathink about this"      # Maximum (128K tokens)
 3. Describe task → Claude plans without executing
 4. Review plan → Exit planning mode to execute
 
-</details>
+
 
 ### Advanced Configurations
 
-<details>
-<summary><strong>Power User Setup</strong></summary>
+
+<strong>Power User Setup</strong>
 
 ```bash
 # Multi-directory workspace
@@ -772,12 +757,12 @@ claude --model claude-sonnet-4-20250514 "analyze codebase"
 claude "ultrathink about this migration and use tools as needed"
 ```
 
-</details>
+
 
 ### Power User Aliases
 
-<details>
-<summary><strong>Community Shortcuts</strong></summary>
+
+<strong>Community Shortcuts</strong>
 
 > ⚠️ **Warning**: Use dangerous aliases only in safe environments!
 
@@ -796,21 +781,17 @@ alias clp="claude -p"                              # Print mode
 alias cls="claude /status"                         # Quick status
 ```
 
-</details>
+
 
 ## Configuration Files
 
 ### Settings Files
-
-<div align="center">
 
 | File | Scope | Purpose |
 |------|-------|----------|
 | `~/.claude.json` | **Global** | User-wide settings |
 | `.claude/settings.json` | **Project** | Project-specific config |
 | `~/.config/claude-code/auth.json` | **Auth** | Authentication data |
-
-</div>
 
 ### Custom Commands
 
@@ -834,14 +815,10 @@ alias cls="claude /status"                         # Quick status
 
 ### MCP Configuration
 
-<div align="center">
-
 | File | Purpose |
 |------|----------|
 | `.claude/mcp.json` | MCP server config |
 | `~/.claude-code-mcp.env` | MCP environment vars |
-
-</div>
 
 ## Security
 
@@ -849,13 +826,9 @@ alias cls="claude /status"                         # Quick status
 
 > ⚠️ **EXTREME CAUTION REQUIRED**
 
-<div align="center">
-
 | Flag | Risk Level | Impact |
 |------|------------|--------|
 | `--dangerously-skip-permissions` | **CRITICAL** | Bypasses ALL security checks |
-
-</div>
 
 **Safe Usage Guidelines:**
 - **Only use in containerized environments**
@@ -865,8 +838,8 @@ alias cls="claude /status"                         # Quick status
 
 ### Safe Usage Patterns
 
-<details>
-<summary><strong>Security Best Practices</strong></summary>
+
+<strong>Security Best Practices</strong>
 
 #### **Always Review First**
 - Review commands before granting permissions
@@ -890,7 +863,7 @@ claude /permissions
 claude --allowedTools "Edit,View"
 ```
 
-</details>
+
 
 ## Output Formats
 
@@ -901,14 +874,14 @@ claude --allowedTools "Edit,View"
 claude -p "explain this function" --output-format text
 ```
 
-<details>
-<summary><strong>Example Output</strong></summary>
+
+<strong>Example Output</strong>
 
 ```
 This function calculates the factorial of a number recursively...
 ```
 
-</details>
+
 
 ### JSON Output
 
@@ -917,8 +890,8 @@ This function calculates the factorial of a number recursively...
 claude -p "analyze this code" --output-format json
 ```
 
-<details>
-<summary><strong>Example Output</strong></summary>
+
+<strong>Example Output</strong>
 
 ```json
 {
@@ -931,7 +904,7 @@ claude -p "analyze this code" --output-format json
 }
 ```
 
-</details>
+
 
 ### Streaming JSON Output
 
@@ -940,8 +913,8 @@ claude -p "analyze this code" --output-format json
 claude -p "process large file" --output-format stream-json
 ```
 
-<details>
-<summary><strong>Example Output</strong></summary>
+
+<strong>Example Output</strong>
 
 ```json
 {"type": "start", "timestamp": "2025-06-23T10:00:00Z"}
@@ -952,14 +925,14 @@ claude -p "process large file" --output-format stream-json
 
 > ⚠️ **Note**: Each line is valid JSON, but concatenated output is not valid JSON
 
-</details>
+
 
 ## Integration Examples
 
 ### CI/CD Integration
 
-<details>
-<summary><strong>Build Pipeline Examples</strong></summary>
+
+<strong>Build Pipeline Examples</strong>
 
 ```bash
 # Automated fixing in build scripts
@@ -977,12 +950,12 @@ else
 fi
 ```
 
-</details>
+
 
 ### Scripting Integration
 
-<details>
-<summary><strong>Automation Scripts</strong></summary>
+
+<strong>Automation Scripts</strong>
 
 ```bash
 # Log analysis
@@ -998,13 +971,11 @@ journal_errors=$(journalctl --since "1 hour ago" --priority=err)
 echo "$journal_errors" | claude -p "analyze system errors" --output-format json > /tmp/error_analysis.json
 ```
 
-</details>
+
 
 ## Troubleshooting
 
 ### Health Checks
-
-<div align="center">
 
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
@@ -1013,12 +984,9 @@ echo "$journal_errors" | claude -p "analyze system errors" --output-format json 
 | `/status` | 📊 Current config | Check settings |
 | `claude config list` | 📝 List all settings | Audit configuration |
 
-</div>
-
 ### Debug Mode
 
-<details>
-<summary><strong>Debug Commands</strong></summary>
+<strong>Debug Commands</strong>
 
 ```bash
 # Detailed logging
@@ -1034,12 +1002,12 @@ claude --mcp-debug
 claude --verbose --debug --mcp-debug
 ```
 
-</details>
+
 
 ### Reset & Recovery
 
-<details>
-<summary><strong>Emergency Recovery</strong></summary>
+
+<strong>Emergency Recovery</strong>
 
 ```bash
 # Reset authentication
@@ -1057,13 +1025,11 @@ rm -rf .claude/settings.json
 claude /doctor
 ```
 
-</details>
+
 
 ## Beta Features
 
 ### Interactive Mode Controls
-
-<div align="center">
 
 | Shortcut | Action | Mode |
 |----------|--------|------|
@@ -1072,14 +1038,12 @@ claude /doctor
 | `Escape` | Interrupt | Stop Claude anytime |
 | `Escape` (2x) | History | Edit previous prompts |
 
-</div>
-
 ### Thinking Budget Control
 
 > **Secret**: Special phrases control AI thinking depth
 
-<details>
-<summary><strong>Thinking Levels</strong></summary>
+
+<strong>Thinking Levels</strong>
 
 | Phrase | Thinking Budget | Use Case |
 |--------|----------------|----------|
@@ -1102,12 +1066,12 @@ claude "think hard about the security implications"
 claude "ultrathink about this database migration"
 ```
 
-</details>
+
 
 ### Extended Thinking Mode
 
-<details>
-<summary><strong>Advanced Thinking Controls</strong></summary>
+
+<strong>Advanced Thinking Controls</strong>
 
 ```bash
 # Slash command trigger
@@ -1117,12 +1081,12 @@ claude "ultrathink about this database migration"
 --thinking-budget 50000
 ```
 
-</details>
+
 
 ### Permission Prompt Tool Integration
 
-<details>
-<summary><strong>Custom Permission Handler</strong></summary>
+
+<strong>Custom Permission Handler</strong>
 
 The `--permission-prompt-tool` expects an MCP tool that returns JSON:
 
@@ -1142,11 +1106,9 @@ The `--permission-prompt-tool` expects an MCP tool that returns JSON:
 }
 ```
 
-</details>
+
 
 ### GitHub Integration Features
-
-<div align="center">
 
 | Feature | Status | Description |
 |---------|--------|-------------|
@@ -1156,12 +1118,10 @@ The `--permission-prompt-tool` expects an MCP tool that returns JSON:
 | IDE extensions | **Beta** | VS Code & JetBrains |
 | Inline edits | **Beta** | IDE interface edits |
 
-</div>
-
 ### Experimental Features
 
-<details>
-<summary><strong>Cutting-Edge Capabilities</strong></summary>
+
+<strong>Cutting-Edge Capabilities</strong>
 
 #### **AI Enhancements**
 - **Extended thinking with tool use**: Claude uses tools during thinking
@@ -1176,14 +1136,14 @@ The `--permission-prompt-tool` expects an MCP tool that returns JSON:
 - **IDE integrations**: VS Code and JetBrains extensions
 - **Advanced memory system**: Multi-tiered contextual memory
 
-</details>
+
 
 ---
 
 ## Important Notes
 
-<details>
-<summary><strong>Command Precedence & Behavior</strong></summary>
+
+<strong>Command Precedence & Behavior</strong>
 
 ### **Command Precedence**
 ```
@@ -1201,13 +1161,11 @@ Query > Session > App Config > Environment Variables > Defaults
 8. **Latest Version**: 1.0.25 (June 2025) with improved reliability
 9. **Real-time Features**: SSE transport enables real-time MCP communication
 
-</details>
+
 
 ---
 
 ## ✅ Research Verification
-
-<div align="center">
 
 ### **COMPLETE RESEARCH CONDUCTED**
 
@@ -1222,7 +1180,5 @@ Query > Session > App Config > Environment Variables > Defaults
 | Hidden Features | **Discovered & Documented** |
 | 2025 Updates | **Latest Changelog Reviewed** |
 | Source Code Analysis | **Completed (pre-DMCA)** |
-
-</div>
 
 
