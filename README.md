@@ -110,9 +110,7 @@ claude mcp                 # Setup MCP servers
 
 ---
 
-## 🚀 Installation & Setup
-
-### Prerequisites & Requirements
+## Installation & Setup
 
 **System Requirements:**
 - Node.js 16+ or standalone binary
