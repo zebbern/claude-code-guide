@@ -1,5 +1,27 @@
 <div align="center">
 
+---
+
+### **The Most Complete Claude Code Reference**
+
+> This comprehensive guide covers **every discoverable Claude Code command** as of June 2025,  
+> including many features that are not widely known or documented in basic tutorials.
+
+**This represents the most complete Claude Code command reference available.**
+
+---
+
+*For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
+
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
+[![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
+
+
+</div>
+
+<div align="center">
+
 <kbd>
 
 # <code>Visit: [https://zebbern.github.io/](https://zebbern.github.io/) for more detailed info!</code>
@@ -16,20 +38,11 @@
 
 </kbd>
 
-# Complete Command Reference
-
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
-[![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
-
-
-<kbd> The most comprehensive Claude Code command reference available 📚  </kbd>
-
-<kbd> Discover hidden commands, advanced flags, and power-user techniques that most developers don't know about.</kbd>
-
+</div>
 </div>
 
 ---
+
 
 ## Table of Contents
 
@@ -1212,19 +1225,4 @@ Query > Session > App Config > Environment Variables > Defaults
 
 </div>
 
----
 
-<div align="center">
-
-### **The Most Complete Claude Code Reference**
-
-> This comprehensive guide covers **every discoverable Claude Code command** as of June 2025,  
-> including many features that are not widely known or documented in basic tutorials.
-
-**This represents the most complete Claude Code command reference available.**
-
----
-
-*For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
-
-</div>
