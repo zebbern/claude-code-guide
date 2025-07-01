@@ -2,7 +2,7 @@
   
 ### **Claude Code Guide**
 
-> This comprehensive guide covers **every discoverable Claude Code command** as of June 2025,  
+> This guide covers **every discoverable Claude Code command** as of Juli 2025,  
 > including many features that are not widely known or documented in basic tutorials.
 
 **This represents the most complete Claude Code command reference available.**
@@ -11,7 +11,7 @@
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
 
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.25-blue?logo=anthropic)](https://claude.ai/code)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.38-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
@@ -103,7 +103,7 @@ claude mcp                 # Setup MCP servers
 **Supported Platforms:**
 - macOS (Intel/Apple Silicon)
 - Linux (Ubuntu 18+, Debian 10+, CentOS 7+)
-- Windows 10/11 (WSL recommended)
+- Windows 10/11 (WSL recommended)[Win 10 Not Tested]
 
 ### Installation Methods
 
