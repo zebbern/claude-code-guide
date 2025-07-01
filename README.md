@@ -516,30 +516,9 @@ claude config list
 
 ---
 
-# Claude Code Configuration Guide
+### Configuration Guide
 
 > A practical guide for editing your `~/.claude.json` configuration file safely
-
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.38+-blue)](https://claude.ai/code)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
-## Table of Contents
-
-- [Overview](#overview)
-- [File Location](#file-location)
-- [What You Can Safely Edit](#what-you-can-safely-edit)
-  - [Theme Settings](#1-theme-settings)
-  - [Editor Mode](#2-editor-mode)
-  - [Auto Updates](#3-auto-updates)
-  - [Global MCP Servers](#4-global-mcp-servers)
-  - [Feature Flags](#5-feature-flags)
-  - [Resetting Tips and Onboarding](#6-resetting-tips-and-onboarding)
-- [What NOT to Edit](#what-you-should-not-edit)
-- [How to Make Changes Safely](#how-to-make-changes-safely)
-- [Common Editing Tasks](#common-editing-tasks)
-- [Troubleshooting](#troubleshooting)
-- [Security Notes](#security-notes)
-- [Contributing](#contributing)
 
 ## Overview
 
