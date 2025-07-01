@@ -188,6 +188,9 @@ Expected output might include:
 # ✅ API Key: Valid
 # ✅ Network: Connected  
 # ✅ Model Access: Available
+
+# Also check if everything is correct at
+~/claude/local/package-lock.json
 ```
 
 ---
@@ -209,7 +212,7 @@ Claude Code ←→ MCP Protocol ←→ MCP Servers ←→ External Services
 #### Basic MCP Commands
 ```bash
 claude mcp                    # Interactive MCP configuration
-claude mcp list              # List configured servers             # Check server health
+claude mcp list              # List configured servers            
 claude mcp add <name> <cmd>  # Add new server
 claude mcp remove <name>     # Remove server
 ```
@@ -510,6 +513,374 @@ claude config list
 ```
 
 ---
+
+# Claude Code Configuration Guide
+
+> A practical guide for editing your `~/.claude.json` configuration file safely
+
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.38+-blue)](https://claude.ai/code)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [File Location](#file-location)
+- [What You Can Safely Edit](#what-you-can-safely-edit)
+  - [Theme Settings](#1-theme-settings)
+  - [Editor Mode](#2-editor-mode)
+  - [Auto Updates](#3-auto-updates)
+  - [Global MCP Servers](#4-global-mcp-servers)
+  - [Feature Flags](#5-feature-flags)
+  - [Resetting Tips and Onboarding](#6-resetting-tips-and-onboarding)
+- [What NOT to Edit](#what-you-should-not-edit)
+- [How to Make Changes Safely](#how-to-make-changes-safely)
+- [Common Editing Tasks](#common-editing-tasks)
+- [Troubleshooting](#troubleshooting)
+- [Security Notes](#security-notes)
+- [Contributing](#contributing)
+
+## Overview
+
+This guide shows you what you can safely edit in your `~/.claude.json` configuration file based on real, working configurations. **Always backup your file before making changes.**
+
+## File Location
+
+| Operating System | File Path |
+|-----------------|-----------|
+| **Linux/macOS** | `~/.claude.json` |
+| **Windows** | `%USERPROFILE%\.claude.json` |
+
+## What You Can Safely Edit
+
+### 1. Theme Settings
+
+```json
+{
+  "theme": "dark-daltonized"
+}
+```
+
+**Known working themes** (based on actual configurations):
+- `"dark-daltonized"` - Dark theme optimized for colorblind users
+- `"dark"` - Standard dark theme
+- `"light"` - Light theme
+
+### 2. Editor Mode
+
+```json
+{
+  "editorMode": "vim"
+}
+```
+
+**Options:**
+- `"vim"` - Vim keybindings
+- `"emacs"` - Default mode
+
+### 3. Auto Updates
+
+```json
+{
+  "autoUpdates": true
+}
+```
+
+**Options:**
+- `true` - Enable automatic updates
+- `false` - Disable automatic updates
+
+### 4. Global MCP Servers
+
+This is the most commonly edited section. Add new MCP servers to extend Claude's capabilities:
+
+```json
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {}
+    },
+    "puppeteer": {
+      "type": "stdio",
+      "command": "npx", 
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {}
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@kazuph/mcp-fetch"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### MCP Server Structure
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| `type` | Connection type | `"stdio"` (most common) |
+| `command` | Executable command | `"npx"` for npm packages |
+| `args` | Command arguments | `["-y", "package-name"]` |
+| `env` | Environment variables | `{"API_KEY": "value"}` |
+
+#### Adding MCP Servers with API Keys
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "your-github-token-here"
+      }
+    },
+    "brave-search": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "your-brave-api-key-here"
+      }
+    }
+  }
+}
+```
+
+#### Popular MCP Servers You Can Add
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/directory"],
+      "env": {}
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+### 5. Feature Flags
+
+Based on actual configurations, these can be safely modified:
+
+```json
+{
+  "bypassPermissionsModeAccepted": true,
+  "hasAcknowledgedCostThreshold": true,
+  "isQualifiedForDataSharing": false
+}
+```
+
+| Flag | Description |
+|------|-------------|
+| `bypassPermissionsModeAccepted` | Whether you've accepted bypass permissions mode |
+| `hasAcknowledgedCostThreshold` | Cost warning acknowledgment |
+| `isQualifiedForDataSharing` | Data sharing preferences |
+
+### 6. Resetting Tips and Onboarding
+
+If you want to see tips again or restart onboarding:
+
+```json
+{
+  "tipsHistory": {
+    "new-user-warmup": 0,
+    "ide-hotkey": 0,
+    "shift-enter": 0
+  },
+  "hasCompletedOnboarding": false
+}
+```
+
+💡 **Tip**: Set tip counters to `0` to see them again, or set `hasCompletedOnboarding` to `false` to restart onboarding.
+
+## What You Should NOT Edit
+
+> ⚠️ **Warning**: Don't manually edit these sections unless you know exactly what you're doing:
+
+<details>
+<summary>Authentication Data (Click to expand)</summary>
+
+```json
+{
+  "oauthAccount": { ... },
+  "primaryApiKey": "sk-ant-api03-...",
+  "customApiKeyResponses": { ... }
+}
+```
+</details>
+
+<details>
+<summary>Application State (Click to expand)</summary>
+
+```json
+{
+  "numStartups": 45,
+  "userID": "...",
+  "firstStartTime": "...",
+  "autoUpdaterStatus": "...",
+  "cachedChangelog": "..."
+}
+```
+</details>
+
+<details>
+<summary>Project-Specific Data (Click to expand)</summary>
+
+```json
+{
+  "projects": {
+    "/path/to/project": {
+      "lastCost": 0.11092260000000002,
+      "lastTotalInputTokens": 40329,
+      "lastSessionId": "..."
+    }
+  }
+}
+```
+</details>
+
+## How to Make Changes Safely
+
+### 1. Always Backup First
+
+```bash
+cp ~/.claude.json ~/.claude.json.backup
+```
+
+### 2. Validate JSON After Editing
+
+```bash
+# Check if your JSON is valid
+python -m json.tool ~/.claude.json
+
+# or if you have jq installed
+jq . ~/.claude.json
+```
+
+### 3. Restart Claude Code
+
+After making changes, restart Claude Code for them to take effect:
+
+```bash
+# If Claude is running, exit it first
+# Then restart
+claude
+```
+
+## Common Editing Tasks
+
+### Adding a New MCP Server
+
+1. **Backup** your config
+2. **Add** your server to the `mcpServers` object
+3. **Validate** JSON syntax
+4. **Restart** Claude Code
+5. **Check** with `/mcp` command that it loaded
+
+### Changing Theme
+
+1. **Backup** your config
+2. **Change** the `"theme"` value
+3. **Restart** Claude Code
+
+### ⌨️ Enabling Vim Mode
+
+1. **Backup** your config  
+2. **Set** `"editorMode": "vim"`
+3. **Restart** Claude Code
+
+## Troubleshooting
+
+### 🚫 If Claude Won't Start After Editing
+
+```bash
+# Restore your backup
+cp ~/.claude.json.backup ~/.claude.json
+```
+
+1. Check JSON syntax with validator
+2. Look for missing commas, quotes, or brackets
+
+### 🔧 If MCP Server Won't Load
+
+1. Check the `/mcp` command in Claude Code
+2. Verify the package name and spelling
+3. Check that environment variables are set correctly
+4. Try running the server manually: `npx -y package-name`
+
+### Reset Everything
+
+If you want to start fresh:
+
+```bash
+# Backup first
+cp ~/.claude.json ~/.claude.json.backup
+
+# Remove config (will be recreated)
+rm ~/.claude.json
+
+# Restart Claude Code
+claude
+```
+
+## JSON Structure Reference
+
+Here's the basic structure you should maintain:
+
+```json
+{
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
+  "autoUpdates": true,
+  "mcpServers": {
+    "server-name": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "package-name"],
+      "env": {}
+    }
+  },
+  "bypassPermissionsModeAccepted": true,
+  "hasCompletedOnboarding": true,
+  "projects": { },
+  "oauthAccount": { },
+  "primaryApiKey": "..."
+}
+```
+
+## Security Notes
+
+🔒 **Important Security Guidelines:**
+
+- **Never share your `~/.claude.json` file** - it contains your API keys and personal data
+- **Use environment variables for sensitive data** instead of putting API keys directly in the file
+- **Set proper file permissions**: `chmod 600 ~/.claude.json` on Unix systems
+
+
+### Guidelines
+
+- Only include configuration options that have been verified to work
+- Always include examples from real configurations
+- Add safety warnings for potentially dangerous changes
+
+---
+
+**Disclaimer**: This is an unofficial community guide based on real Claude Code configurations (version 1.0.38+). Only edit what you understand and always backup first.
 
 ## 🤖 Automation & Scripting
 
