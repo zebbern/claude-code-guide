@@ -128,7 +128,7 @@ claude mcp                 # Setup MCP servers
 #### Method 1: NPM Installation (Recommended)
 ```bash
 # Install globally
-npm install -g @anthropic/claude-code
+npm install -g @anthropic-ai/claude-code
 
 # Verify installation
 claude --version
@@ -328,7 +328,7 @@ alias cc="claude --dangerously-skip-permissions"
 #### Common Installation Issues
 ```bash
 # Permission errors (Linux/macOS)
-sudo npm install -g @anthropic/claude-code
+sudo npm install -g @anthropic-ai/claude-code
 
 # Node.js version issues
 nvm install 18
@@ -342,8 +342,8 @@ which claude
 npm cache clean --force
 
 # Reinstall
-npm uninstall -g @anthropic/claude-code
-npm install -g @anthropic/claude-code
+npm uninstall -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code
 ```
 
 #### Windows-Specific Issues
@@ -2034,7 +2034,7 @@ jobs:
           node-version: '18'
       
       - name: Install Claude Code
-        run: npm install -g @anthropic/claude-code
+        run: npm install -g @anthropic-ai/claude-code
       
       - name: Run Claude Code Review
         env:
@@ -2072,7 +2072,7 @@ claude-review:
   stage: review
   image: node:18
   before_script:
-    - npm install -g @anthropic/claude-code
+    - npm install -g @anthropic-ai/claude-code
   script:
     - |
       claude -p "Analyze this merge request for security vulnerabilities and code quality issues" \
@@ -2106,7 +2106,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh 'npm install -g @anthropic/claude-code'
+                sh 'npm install -g @anthropic-ai/claude-code'
             }
         }
         
@@ -3068,8 +3068,8 @@ rm -rf ~/.claude/logs/*
 rm -rf ~/.claude/sessions/*
 
 # 5. Reinstall Claude Code
-npm uninstall -g @anthropic/claude-code
-npm install -g @anthropic/claude-code
+npm uninstall -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code
 
 # 6. Reconfigure
 claude config
