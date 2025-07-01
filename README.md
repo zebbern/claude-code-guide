@@ -225,7 +225,7 @@ claude mcp remove <name>     # Remove server
 ### Scope-Based Configuration Files
 
 User/Global Scope:
-Global MCP servers are configured in `~/.claude-code/mcp/global.json`
+Global MCP servers
 Project Scope:
 Project-scoped servers are stored in a `.mcp.json` file at your project's root directory
 
