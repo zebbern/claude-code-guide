@@ -424,6 +424,8 @@ export DISABLE_TELEMETRY=1
 export CLAUDE_CODE_USE_BEDROCK=1
 export CLAUDE_CODE_USE_VERTEX=1
 ```
+![image](https://github.com/user-attachments/assets/d07be233-3322-4510-bb98-4165589d1924)
+
 
 #### Network & Proxy
 ```bash
