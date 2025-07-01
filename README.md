@@ -107,9 +107,9 @@ claude mcp                 # Setup MCP servers
 
 ### Installation Methods
 
-#### Method 1: NPM Installation (Verified ✅)
+#### Method 1: NPM Installation 
 ```bash
-# Install globally - CORRECT PACKAGE NAME
+# Install globally
 npm install -g @anthropic-ai/claude-code
 
 # Verify installation
@@ -119,7 +119,7 @@ claude --version
 
 ### Initial Setup
 
-#### 1. API Key Configuration (Verified ✅)
+#### 1. API Key Configuration 
 ```bash
 # Required: Get your API key from https://console.anthropic.com
 export ANTHROPIC_API_KEY="sk-your-key-here"
@@ -137,7 +137,7 @@ source ~/.zshrc
 echo 'set -gx ANTHROPIC_API_KEY "sk-your-key-here"' >> ~/.config/fish/config.fish
 ```
 
-#### 2. Basic Configuration (Mostly Verified ✅)
+#### 2. Basic Configuration
 ```bash
 # Interactive setup
 claude config
