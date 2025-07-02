@@ -48,11 +48,12 @@
 
 ## Method 1 – NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
-# Requires Node 18+ on macOS / Linux / WSL 
+# Requires Node 18+ on macOS / Linux / WSL  
 
-## Method 2 – Homebrew Tap (macOS & Linux) *️⃣
-brew install anthropic/tap/claude-code
-# Formula contributed by the community 
+## Method 2 MacOS
+brew install node
+npm install -g @anthropic-ai/claude-code
+# issue with clsude bot found? run export PATH="$PATH:$(npm bin -g)"
 
 ## Method 3 – Arch Linux AUR *️⃣
 yay -S claude-code        # or paru -S claude-code
@@ -75,6 +76,8 @@ npm install -g @anthropic-ai/claude-code
 git clone https://github.com/anthropics/claude-code.git
 cd claude-code && pnpm install && pnpm build
 pnpm --filter cli run cli:install
+which claude
+claude --version
 # Handy for cutting-edge commits or local patches 
 
 # Interactive Mode
