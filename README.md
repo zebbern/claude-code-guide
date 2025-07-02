@@ -72,13 +72,10 @@ sudo apt update && sudo apt install -y nodejs npm
 npm install -g @anthropic-ai/claude-code
 # Step-by-step guide 
 
-## Method 6 – Build from source (any OS) *️⃣
-git clone https://github.com/anthropics/claude-code.git
-cd claude-code && pnpm install && pnpm build
-pnpm --filter cli run cli:install
+## Checn if claude is installed
 which claude
 claude --version
-# Handy for cutting-edge commits or local patches 
+
 
 # Interactive Mode
 claude                      # Start interactive REPL
