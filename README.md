@@ -423,10 +423,27 @@ Claude Code uses a hierarchical configuration system:
 
 #### Variables
 ```bash
-export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1  
+export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1
+# This environment variable instructs Claude Code to skip “non-essential” API calls, such as:
+#	•	Auto-summarizations
+#	•	Background code explanations
+# •	Git-aware diff scanning
+# •	Some preflight safety checks
 export MAX_THINKING_TOKENS=50000
+# This sets the maximum number of tokens Claude Code will allocate to:
+# •	Reading your codebase
+# •	Analyzing diffs
+# •	Processing prompts before replying
+# •	Planning answers
+# The default is usually around 30,000–40,000 tokens, depending on context and model, so setting it to 50000 allows longer or deeper analysis.
 export DISABLE_TELEMETRY=1
+# This tells the Claude Code CLI not to send any telemetry or usage statistics back to Anthropic.
 
+# This includes things like:
+# •	Command usage frequency
+# •	Error metrics (non-identifying)
+# •	CLI version info
+# •	Aggregate performance stats
 
 # Cloud provider variables
 export CLAUDE_CODE_USE_BEDROCK=1
