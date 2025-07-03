@@ -190,9 +190,6 @@ Expected output might include:
 # ✅ API Key: Valid
 # ✅ Network: Connected  
 # ✅ Model Access: Available
-
-# Also check if everything is correct at
-~/claude/local/package-lock.json
 ```
 
 ---
