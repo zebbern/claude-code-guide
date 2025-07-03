@@ -606,7 +606,30 @@ claude config list
 
 ---
 
-## Claude CLI Configuration
+### Thinking Keywords
+
+Certain phrases in your prompt can **hint to the CLI** that you want extra reasoning time. These keywords are not part of the official public API, so use them with the understanding that they might change or disappear in future versions.
+
+| Tier       | Keyword(s) you can use *(case‑insensitive)*                                                                                 |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Tier 1** | `think`                                                                                                                     |
+| **Tier 2** | `think about it`, `think a lot`, `think deeply`, `think hard`, `think more`, `megathink`                                    |
+| **Tier 3** | `think harder`, `think intensely`, `think longer`, `think really hard`, `think super hard`, `think very hard`, `ultrathink` |
+
+### Quick Example
+
+```bash
+claude -p "We have a tricky concurrency bug. ultrathink and propose a fix."
+```
+
+* Keyword can appear anywhere in your prompt (case doesn’t matter).
+* If multiple keywords are present, the **highest tier** takes precedence.
+
+> ⚠️ **Note:** Because this mechanism is undocumented, Anthropic may alter or remove it without notice.
+
+
+
+### Claude CLI Configuration
 
 > Configuration keys
 
