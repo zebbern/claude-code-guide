@@ -351,6 +351,7 @@ claude --allowedTools "Edit,View,mcp__git__*"
 | `/exit` | Exit Claude safely | 
 | `/bug` | Report issues | 
 
+
 #### Commands
 ```bash
 /doctor        # Complete health check
@@ -360,6 +361,7 @@ claude --allowedTools "Edit,View,mcp__git__*"
 /permissions   # Manage tool access
 /memory        # Edit memory files
 /sessions      # List all sessions
+/compact       # Compress and summarize data
 ```
 
 ---
