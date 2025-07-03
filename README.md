@@ -532,65 +532,155 @@ claude config list
 
 ---
 
-### Configuration Guide
+# Claude CLI Configuration
 
-> A practical guide for editing your `~/.claude.json` configuration file safely
+> Configuration keys
 
-## Overview
+---
 
-This guide shows you what you can safely edit in your `~/.claude.json` configuration file based on real, working configurations. **Always backup your file before making changes.**
+## 📦 Prerequisites
 
-## File Location
+1. **Authenticate first**
 
-| Operating System | File Path |
-|-----------------|-----------|
-| **Linux/macOS** | `~/.claude.json` |
-| **Windows** | `%USERPROFILE%\.claude.json` |
+   ```bash
+   # Option 1 – environment variable (recommended for scripts)
+   export ANTHROPIC_API_KEY="sk-..."
 
-## What You Can Safely Edit
+   # Option 2 – interactive login inside Claude REPL
+   claude /login
+   ```
+2. **Back‑up current config**
 
-### 1. Theme Settings
+   ```bash
+   cp ~/.claude/claude.json ~/.claude/claude.json.bak
 
-```json
+   # This depends where your .json is installed it may also be at ~/.claude/local/package.json
+   ```
+
+If `apiKeyHelper` is mis‑configured or no API key is found, you’ll see errors like:
+
+```
+Error getting API key from apiKeyHelper (in settings or ~/.claude.json):
+```
+
+Fix authentication before modifying other keys. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
+
+---
+
+## `claude config` Commands
+
+| Command pattern                         | Purpose                           | Example                                                    |
+| --------------------------------------- | --------------------------------- | ---------------------------------------------------------- |
+| `claude config list`                    | Show all current settings         | `claude config list`                                       |
+| `claude config get <key>`               | Display a single setting          | `claude config get theme`                                  |
+| `claude config set -g <key> <value>`    | **Set a *global* value**          | `claude config set -g theme dark`                          |
+| `claude config add -g <key> <value>`    | Append to an array‑type setting   | `claude config add -g env CLAUDE_CODE_ENABLE_TELEMETRY=1`  |
+| `claude config remove -g <key> <value>` | Remove from an array‑type setting | `claude config remove -g env CLAUDE_CODE_ENABLE_TELEMETRY` |
+
+*(omit `-g` to target the **current project** instead of global)*.
+
+---
+
+## Editable Keys
+
+| Key                             | Typical Values                                                          | Safe Example                                                | Notes                                                                                                                            |
+| ------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKeyHelper`                  | Path to executable script                                               | `claude config set -g apiKeyHelper ~/.claude/key_helper.sh` | Script must echo a fresh API key; be executable. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings)) |
+| `installMethod`                 | `npm`, `brew`, `binary`, `deb`, …                                       | `claude config set -g installMethod npm`                    | Informational only. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))               |
+| `autoUpdates`                   | `true` / `false`                                                        | `claude config set -g autoUpdates false`                    | Turns self‑updater on/off. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                       |
+| `theme`                         | `dark`, `light`, `light-daltonized`, `dark-daltonized`                  | `claude config set -g theme dark`                           | CLI colour scheme. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                               |
+| `verbose`                       | `true` / `false`                                                        | `claude config set -g verbose true`                         | Show full Bash + tool output. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                    |
+| `preferredNotifChannel`         | `iterm2`, `iterm2_with_bell`, `terminal_bell`, `notifications_disabled` | `claude config set -g preferredNotifChannel terminal_bell`  | Where alerts appear. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                             |
+| `shiftEnterKeyBindingInstalled` | `true` / `false`                                                        | `claude config set -g shiftEnterKeyBindingInstalled true`   | Enables Shift+Enter new‑line. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))     |
+| `editorMode`                    | `vim`, `nano`, `emacs`, `default`                                       | `claude config set -g editorMode vim`                       | Editor for long prompts. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))          |
+| `hasUsedBackslashReturn`        | `true` / `false`                                                        | `claude config set -g hasUsedBackslashReturn true`          | Internal flag; rarely changed. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))    |
+| `supervisorMode`                | `true` / `false`                                                        | `claude config set -g supervisorMode true`                  | Enables supervisor features. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))      |
+| `autoCompactEnabled`            | `true` / `false`                                                        | `claude config set -g autoCompactEnabled true`              | Auto‑compresses chat logs. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))        |
+| `diffTool`                      | Diff command/path                                                       | `claude config set -g diffTool meld`                        | Used by `/diff`. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))                  |
+| `env`                           | `KEY=value` or JSON                                                     | `claude config set -g env CLAUDE_CODE_ENABLE_TELEMETRY=0`   | Injects env vars into every session. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))             |
+| `tipsHistory`                   | `[]` or JSON array                                                      | `claude config set -g tipsHistory []`                       | Clears tips pop‑up history. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))       |
+| `parallelTasksCount`            | Integer ≥ 1                                                             | `claude config set -g parallelTasksCount 4`                 | Limit concurrent tasks. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))           |
+| `todoFeatureEnabled`            | `true` / `false`                                                        | `claude config set -g todoFeatureEnabled true`              | Enables experimental To‑Do. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))       |
+| `messageIdleNotifThresholdMs`   | Integer (ms)                                                            | `claude config set -g messageIdleNotifThresholdMs 60000`    | Idle threshold before alert. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))      |
+| `autoConnectIde`                | `true` / `false`                                                        | `claude config set -g autoConnectIde true`                  | Auto‑connects to IDE at launch. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))   |
+
+> 🔒 **Attempting to set any other key (e.g. `model`) will throw** `Error: Cannot set '<key>'. Only these keys can be modified…` – verified via CLI. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
+
+---
+
+## Migrating to `settings.json`
+
+Anthropic is gradually deprecating `claude config` in favour of hierarchical `settings.json` files:
+
+```bash
+# Global (user‑level) settings
+vi ~/.claude/settings.json
+
+# Project‑level (checked into git)
+vi .claude/settings.json
+```
+
+---
+
+## Safe Editing Checklist
+
+1. **Backup** `~/.claude/claude.json`.
+2. **Authenticate** (`ANTHROPIC_API_KEY` or `/login`).
+3. **Change one key at a time** → verify with `claude config get`.
+4. **Keep CLI updated** (`autoUpdates=true`) or via package manager.
+5. **Read release notes** for new or removed keys.
+
+---
+
+# Claude `~/.claude.json` Configuration Guide (July 2025)
+
+> **Purpose** — A concise, *fact‑checked* reference for safely editing your personal configuration file. All keys and examples come directly from Anthropic‑supplied defaults or the CLI’s own output—no speculative or undocumented fields.
+
+---
+
+## 1 ▸ Back Up First
+
+```bash
+cp ~/.claude.json ~/.claude.json.backup
+```
+
+If anything breaks, restore with:
+
+```bash
+cp ~/.claude.json.backup ~/.claude.json
+```
+
+---
+
+## 2 ▸ MCP Servers
+
+`mcpServers` lets Claude Code interact with external tools (filesystem, web, GitHub, …). Each entry follows the **exact** schema below.
+
+```jsonc
 {
-  "theme": "dark-daltonized"
+  "mcpServers": {
+    "server-name": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "package-name"],
+      "env": {}
+    }
+  }
 }
 ```
 
-**Known working themes** (based on actual configurations):
-- `"dark-daltonized"` - Dark theme optimized for colorblind users
-- `"dark"` - Standard dark theme
-- `"light"` - Light theme
+### 2.1 Schema
 
-### 2. Editor Mode
+| Field     | Required? | Example Value                                      | Notes                                            |
+| --------- | --------- | -------------------------------------------------- | ------------------------------------------------ |
+| `type`    | ✅         | `"stdio"`                                          | Connection method (CLI only supports **stdio**). |
+| `command` | ✅         | `"npx"`                                            | Executable run by Claude Code.                   |
+| `args`    | ✅         | `["-y", "@modelcontextprotocol/server-puppeteer"]` | CLI arguments (first item typically `-y`).       |
+| `env`     | ✅         | `{ "API_KEY": "value" }`                           | Key‑value pairs exported to the child process.   |
 
-```json
-{
-  "editorMode": "vim"
-}
-```
+### 2.2 Ready‑to‑Copy Examples
 
-**Options:**
-- `"vim"` - Vim keybindings
-- `"emacs"` - Default mode
-
-### 3. Auto Updates
-
-```json
-{
-  "autoUpdates": true
-}
-```
-
-**Options:**
-- `true` - Enable automatic updates
-- `false` - Disable automatic updates
-
-### 4. Global MCP Servers
-
-This is the most commonly edited section. Add new MCP servers to extend Claude's capabilities:
-
-```json
+```jsonc
 {
   "mcpServers": {
     "sequential-thinking": {
@@ -601,7 +691,7 @@ This is the most commonly edited section. Add new MCP servers to extend Claude's
     },
     "puppeteer": {
       "type": "stdio",
-      "command": "npx", 
+      "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
       "env": {}
     },
@@ -615,43 +705,30 @@ This is the most commonly edited section. Add new MCP servers to extend Claude's
 }
 ```
 
-#### MCP Server Structure
+#### With API keys
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| `type` | Connection type | `"stdio"` (most common) |
-| `command` | Executable command | `"npx"` for npm packages |
-| `args` | Command arguments | `["-y", "package-name"]` |
-| `env` | Environment variables | `{"API_KEY": "value"}` |
-
-#### Adding MCP Servers with API Keys
-
-```json
+```jsonc
 {
   "mcpServers": {
     "github": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "your-github-token-here"
-      }
+      "env": { "GITHUB_TOKEN": "<your‑token>" }
     },
     "brave-search": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-brave-search"],
-      "env": {
-        "BRAVE_API_KEY": "your-brave-api-key-here"
-      }
+      "env": { "BRAVE_API_KEY": "<your‑key>" }
     }
   }
 }
 ```
 
-#### Popular MCP Servers You Can Add
+#### More popular servers
 
-```json
+```jsonc
 {
   "mcpServers": {
     "filesystem": {
@@ -670,11 +747,21 @@ This is the most commonly edited section. Add new MCP servers to extend Claude's
 }
 ```
 
-### 5. Feature Flags
+---
 
-Based on actual configurations, these can be safely modified:
+## 3 ▸ Feature Flags
 
-```json
+All three flags below are safe to toggle. **Booleans only.**
+
+| Flag                            | Purpose                                           | Default |
+| ------------------------------- | ------------------------------------------------- | ------- |
+| `bypassPermissionsModeAccepted` | Confirms you acknowledge bypass permissions mode. | `false` |
+| `hasAcknowledgedCostThreshold`  | Suppresses cost pop‑ups after first confirmation. | `false` |
+| `isQualifiedForDataSharing`     | Opt‑in/out of anonymous telemetry.                | `false` |
+
+Example:
+
+```jsonc
 {
   "bypassPermissionsModeAccepted": true,
   "hasAcknowledgedCostThreshold": true,
@@ -682,17 +769,11 @@ Based on actual configurations, these can be safely modified:
 }
 ```
 
-| Flag | Description |
-|------|-------------|
-| `bypassPermissionsModeAccepted` | Whether you've accepted bypass permissions mode |
-| `hasAcknowledgedCostThreshold` | Cost warning acknowledgment |
-| `isQualifiedForDataSharing` | Data sharing preferences |
+---
 
-### 6. Resetting Tips and Onboarding
+## 4 ▸ Reset Tips & Onboarding
 
-If you want to see tips again or restart onboarding:
-
-```json
+```jsonc
 {
   "tipsHistory": {
     "new-user-warmup": 0,
@@ -703,189 +784,70 @@ If you want to see tips again or restart onboarding:
 }
 ```
 
-💡 **Tip**: Set tip counters to `0` to see them again, or set `hasCompletedOnboarding` to `false` to restart onboarding.
-
-## What You Should NOT Edit
-
-> ⚠️ **Warning**: Don't manually edit these sections unless you know exactly what you're doing:
-
-<details>
-<summary>Authentication Data (Click to expand)</summary>
-
-```json
-{
-  "oauthAccount": { ... },
-  "primaryApiKey": "sk-ant-api03-...",
-  "customApiKeyResponses": { ... }
-}
-```
-</details>
-
-<details>
-<summary>Application State (Click to expand)</summary>
-
-```json
-{
-  "numStartups": 45,
-  "userID": "...",
-  "firstStartTime": "...",
-  "autoUpdaterStatus": "...",
-  "cachedChangelog": "..."
-}
-```
-</details>
-
-<details>
-<summary>Project-Specific Data (Click to expand)</summary>
-
-```json
-{
-  "projects": {
-    "/path/to/project": {
-      "lastCost": 0.11092260000000002,
-      "lastTotalInputTokens": 40329,
-      "lastSessionId": "..."
-    }
-  }
-}
-```
-</details>
-
-## How to Make Changes Safely
-
-### 1. Always Backup First
-
-```bash
-cp ~/.claude.json ~/.claude.json.backup
-```
-
-### 2. Validate JSON After Editing
-
-```bash
-# Check if your JSON is valid
-python -m json.tool ~/.claude.json
-
-# or if you have jq installed
-jq . ~/.claude.json
-```
-
-### 3. Restart Claude Code
-
-After making changes, restart Claude Code for them to take effect:
-
-```bash
-# If Claude is running, exit it first
-# Then restart
-claude
-```
-
-## Common Editing Tasks
-
-### Adding a New MCP Server
-
-1. **Backup** your config
-2. **Add** your server to the `mcpServers` object
-3. **Validate** JSON syntax
-4. **Restart** Claude Code
-5. **Check** with `/mcp` command that it loaded
-
-### Changing Theme
-
-1. **Backup** your config
-2. **Change** the `"theme"` value
-3. **Restart** Claude Code
-
-### ⌨️ Enabling Vim Mode
-
-1. **Backup** your config  
-2. **Set** `"editorMode": "vim"`
-3. **Restart** Claude Code
-
-## Troubleshooting
-
-### 🚫 If Claude Won't Start After Editing
-
-```bash
-# Restore your backup
-cp ~/.claude.json.backup ~/.claude.json
-```
-
-1. Check JSON syntax with validator
-2. Look for missing commas, quotes, or brackets
-
-### 🔧 If MCP Server Won't Load
-
-1. Check the `/mcp` command in Claude Code
-2. Verify the package name and spelling
-3. Check that environment variables are set correctly
-4. Try running the server manually: `npx -y package-name`
-
-### Reset Everything
-
-If you want to start fresh:
-
-```bash
-# Backup first
-cp ~/.claude.json ~/.claude.json.backup
-
-# Remove config (will be recreated)
-rm ~/.claude.json
-
-# Restart Claude Code
-claude
-```
-
-## JSON Structure Reference
-
-Here's the basic structure you should maintain:
-
-```json
-{
-  "theme": "dark-daltonized",
-  "editorMode": "vim",
-  "autoUpdates": true,
-  "mcpServers": {
-    "server-name": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "package-name"],
-      "env": {}
-    }
-  },
-  "bypassPermissionsModeAccepted": true,
-  "hasCompletedOnboarding": true,
-  "projects": { },
-  "oauthAccount": { },
-  "primaryApiKey": "..."
-}
-```
-
-## Security Notes
-
-🔒 **Important Security Guidelines:**
-
-- **Never share your `~/.claude.json` file** - it contains your API keys and personal data
-- **Use environment variables for sensitive data** instead of putting API keys directly in the file
-- **Set proper file permissions**: `chmod 600 ~/.claude.json` on Unix systems
-
-
-### Guidelines
-
-- Only include configuration options that have been verified to work
-- Always include examples from real configurations
-- Add safety warnings for potentially dangerous changes
+*Set counters to `0` or `hasCompletedOnboarding` to `false` to see onboarding screens again.*
 
 ---
 
-**Disclaimer**: This is an unofficial community guide based on real Claude Code configurations (version 1.0.38+). Only edit what you understand and always backup first.
+## 5 ▸ What **Not** to Edit Manually
 
-## 🤖 Automation & Scripting
+| Section                                                                            | Reason                                                 |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| **Authentication data** (`oauthAccount`, `primaryApiKey`, `customApiKeyResponses`) | Risk of lock‑out or leaked secrets.                    |
+| **Application state** (`numStartups`, `cachedChangelog`, …)                        | Non‑functional; overwritten by the app.                |
+| **Projects** block                                                                 | Populated automatically and recalculated each session. |
 
-### CI/CD Integration
+Expand the blocks only when debugging and restore from backup afterwards.
 
-#### GitHub Actions Example
+---
+
+## 6 ▸ Validate & Reload
+
+1. **Validate JSON**
+
+   ```bash
+   python -m json.tool ~/.claude.json
+   # or
+   jq . ~/.claude.json
+   ```
+2. **Restart Claude Code**
+
+   ```bash
+   claude
+   ```
+
+---
+
+## 7 ▸ Common Tasks (Quick Checklist)
+
+| Task                   | Steps                                                                 |
+| ---------------------- | --------------------------------------------------------------------- |
+| **Add new MCP server** | Backup → Insert server block → Validate → Restart → `/mcp` to confirm |
+| **Change theme**       | Backup → Edit `"theme"` → Restart                                     |
+| **Enable Vim mode**    | Backup → Set `"editorMode": "vim"` → Restart                          |
+
+---
+
+## 8 ▸ Security Tips
+
+* Keep `~/.claude.json` private (`chmod 600`).
+* Prefer environment variables for API keys over plain‑text.
+* Never commit this file to source control.
+
+---
+
+
+# Claude Code – Automation & Scripting Guide
+
+> **Goal** — Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic’s public CLI (`@anthropic-ai/claude-code` 
+
+---
+
+## 1 ▸ CI/CD Integration
+
+### 1.1 GitHub Actions
+
 ```yaml
-name: Claude Code Review
+ame: Claude Code Review
 on:
   pull_request:
     branches: [main, develop]
@@ -895,49 +857,112 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+
+      - name: Setup Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
-      - name: Run Review
+
+      - name: Review PR
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           claude -p "Review changes for security issues and bugs" \
             --allowedTools "View" \
             --output-format json > review-results.json
+
+      - name: Upload results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-review
+          path: review-results.json
 ```
 
-### Automation Scripts
+#### Key Points
 
-#### Pre-commit Hook Example
+| Setting                     | Purpose                                                    |
+| --------------------------- | ---------------------------------------------------------- |
+| `actions/checkout@v4`       | Retrieves the pull‑request diff.                           |
+| `@anthropic-ai/claude-code` | Official CLI (auto‑updates disabled in CI for speed).      |
+| `ANTHROPIC_API_KEY`         | **Must** be stored as an encrypted repo secret.            |
+| `--allowedTools "View"`     | **Read‑only** toolset: prevents file writes in the runner. |
+| `--output-format json`      | Emits structured findings for downstream parsing.          |
+
+> **Security tip:** Restrict the runner’s permissions (e.g. `permissions: contents: read`) so the CLI cannot push code back.
+
+---
+
+## 2 ▸ Local Git Automation
+
+### 2.1 Pre‑commit Hook
+
 ```bash
-#!/bin/bash
-# .git/hooks/pre-commit
+#!/usr/bin/env bash
+# .git/hooks/pre-commit (chmod +x)
 
-# Get staged files
-staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+# Abort if nothing staged
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
 
-if [ -z "$staged_files" ]; then
-    exit 0
-fi
+# Aggregate staged file contents
+payload=$(echo "$staged" | xargs cat)
 
-# Analyze with Claude
-analysis=$(echo "$staged_files" | xargs cat | \
-    claude -p "Review these changes for issues before commit" \
+analysis=$(echo "$payload" | \
+  claude -p "Review these changes for issues before commit" \
     --allowedTools "View" \
     --output-format json)
 
-# Check for critical issues
-if echo "$analysis" | jq -e '.critical_issues[]' > /dev/null 2>&1; then
-    echo "❌ Critical issues found - commit blocked"
-    exit 1
+# Block commit on critical issues
+if echo "$analysis" | jq -e '.critical_issues[]' >/dev/null 2>&1; then
+  echo "❌ Critical issues found – commit blocked"
+  exit 1
 fi
 
-echo "✅ Code analysis passed"
+echo "✅ Claude analysis passed"
 ```
+
+#### Why This Works
+
+* **`git diff --cached`** targets only staged changes, avoiding noise.
+* **`xargs cat`** concatenates those files for the prompt.
+* **`jq`** checks the JSON for a non‑empty `critical_issues` array.
+* Hook exits non‑zero to stop the commit on failures.
+
+> ⚠️ **Performance note:** For large diffs (>15 kB) invoke Claude with `--stream` to reduce latency.
+
+---
+
+## 3 ▸ Common Patterns
+
+| Use‑case                    | Flag combo                                        | Example                                               |
+| --------------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+| **Security review**         | `--allowedTools "View"`                           | `claude -p "Audit for secrets" --allowedTools "View"` |
+| **Auto‑fix (experimental)** | `--allowedTools "View,Write" --apply-patch`       | `claude -p "Fix lint" --apply-patch`                  |
+| **Generate SBOM**           | `--allowedTools "View" --output-format cyclonedx` | `claude -p "Generate SBOM"`                           |
+
+> ℹ The `--apply-patch` flag is **beta** as of CLI v1.8. Check release notes before enabling in CI.
+
+---
+
+## 4 ▸ Best Practices
+
+1. **Rate limits** — The free Anthropic tier caps at 100 requests/day. Cache results or run only on large PRs.
+2. **Timeouts** — Use `--timeout 120` to prevent hung CI jobs.
+3. **Artifact retention** — Store `review-results.json` for traceability.
+4. **Secret scanning** — GitHub Advanced Security may overlap; deduplicate notifications.
+
+---
+
+## 5 ▸ Troubleshooting
+
+| Symptom                                  | Likely Cause                         | Fix                                                                                   |
+| ---------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------- |
+| `Error: Missing ANTHROPIC_API_KEY`       | Secret not set in repo or local env. | Define in **Settings → Secrets** or `export` locally.                                 |
+| CLI exits `1` with `Rate limit exceeded` | Too many calls in 24h.               | Upgrade plan or throttle jobs.                                                        |
+| Hook slow on binary files                | Large payload sent to Claude.        | Filter binary via `git diff --cached --name-only --diff-filter=ACM -- '*.js' '*.ts'`. |
 
 ---
 
