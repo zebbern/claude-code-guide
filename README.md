@@ -280,12 +280,12 @@ Expected output might include:
 | `--permission-prompt-tool <tool>` | MCP tool for permission checks | `--permission-prompt-tool mcp__auth__prompt` |
 | `--dangerously-skip-permissions`  | Skip all prompts (⚠️)          | `--dangerously-skip-permissions`             |
 
-### Advanced
+### Extra
 
 | Flag                  | Purpose            | Example                     |
 | --------------------- | ------------------ | --------------------------- |
 | `--add-dir <paths>`   | Extra working dirs | `--add-dir ../lib ../src`   |
-| `--model <name>`      | Choose model       | `--model sonnet`            |
+| `--model <name>`      | Choose model       | `--model claude-opus-4-20250514` |
 | `--verbose`           | Verbose logs       | `--verbose`                 |
 | `--mcp-config <file>` | Load MCP servers   | `--mcp-config servers.json` |
 
