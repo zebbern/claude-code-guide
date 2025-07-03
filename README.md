@@ -1205,14 +1205,6 @@ claude "check my code"
 
 ---
 
-## Getting Help
-
-- **Official Documentation**: https://docs.anthropic.com/en/docs/claude-code/overview
-- **Report Issues**: Use `/bug` command (if it works) or file GitHub issues
-- **Test First**: Always test commands in safe environments before relying on them
-
----
-
 **Last Updated**: Based on package version 1.0.38 and available documentation. Many features require verification in your specific installation.
 
 #### Monitoring & Alerting
