@@ -54,7 +54,7 @@
 11. [Security & Permissions](#security--permissions)
 12. [Claude CLI Configuration](#claude-cli-configuration)
 13. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
-14. [Automation & Scripting](#automation-&-scripting-guide)
+14. [Automation & Scripting](#automation--scripting-guide)
 15. [Troubleshooting](#-troubleshooting)
 16. [Advanced Features](#-advanced-features)
 17. [Best Practices](#-best-practices)
