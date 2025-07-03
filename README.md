@@ -606,7 +606,7 @@ claude config list
 
 ---
 
-# Claude CLI Configuration
+## Claude CLI Configuration
 
 > Configuration keys
 
