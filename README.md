@@ -54,7 +54,7 @@
 11. [Security & Permissions](#security--permissions)
 12. [Claude CLI Configuration](#claude-cli-configuration)
 13. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
-14. [Automation & Scripting](#automation--scripting)
+14. [Automation & Scripting](#automation-&-scripting-guide)
 15. [Troubleshooting](#-troubleshooting)
 16. [Advanced Features](#-advanced-features)
 17. [Best Practices](#-best-practices)
@@ -909,7 +909,7 @@ Expand the blocks only when debugging and restore from backup afterwards.
 
 ---
 
-# Claude Code – Automation & Scripting Guide
+# Automation & Scripting Guide
 
 > **Goal** — Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic's public CLI (`@anthropic-ai/claude-code` 
 
