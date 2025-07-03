@@ -285,84 +285,120 @@ claude --allowedTools "Edit,View,mcp__git__*"
 
 ---
 
-## ⌨️ Commands Reference
+# Claude Code Commands
 
-### CLI Commands
+Everything below is pulled directly from Anthropic’s official CLI and slash-command docs — no guessing.
 
-#### Core Commands
-| Command | Description | Example | Status |
-|---------|-------------|---------|--------|
-| `claude` | Start interactive REPL | `claude` |
-| `claude "query"` | REPL with initial prompt | `claude "help debug this"` |
-| `claude -p "query"` | One-shot query (print mode) | `claude -p "explain function"` |
+---
 
-#### Session Management  
-| Command | Description | Example | Status |
-|---------|-------------|---------|--------|
-| `claude -c` | Continue last session | `claude -c`  |
-| `claude -r <id>` | Resume specific session | `claude -r abc123`  |
-| `claude --resume <name>` | Resume named session | `claude --resume project-review` |
+## Core Commands
 
-#### Configuration Management
-| Command | Description | Example | Status |
-|---------|-------------|---------|--------|
-| `claude config` | Interactive configuration | `claude config`  |
-| `claude config list` | List all settings | `claude config list`  |
-| `claude config get <key>` | Get specific value | `claude config get model`  |
-| `claude config set <key> <value>` | Set value | `claude config set model sonnet` |
+| Command                            | Description                   | Example                               |
+| ---------------------------------- | ----------------------------- | ------------------------------------- |
+| `claude`                           | Launch interactive REPL       | `claude`                              |
+| `claude "<prompt>"`                | REPL with initial prompt      | `claude "help debug"`                 |
+| `claude -p "<prompt>"`             | One-shot print mode           | `claude -p "explain fn"`              |
+| `cat file \| claude -p "<prompt>"` | Pipe STDIN to Claude          | `cat logs.txt \| claude -p "explain"` |
+| `claude update`                    | Self-update to latest version | `claude update`                       |
+| `claude mcp`                       | Launch MCP wizard             | `claude mcp`                          |
 
-### CLI Flags & Options
+## Session Commands
 
-#### Essential Flags 
-| Flag | Short | Description | Example |
-|------|-------|-------------|---------|
-| `--print` | `-p` | Print response without interactive mode | `claude -p "help"` |
-| `--continue` | `-c` | Load most recent conversation | `claude -c` |
-| `--help` | `-h` | Show help information | `claude --help` |
-| `--version` | `-v` | Show version | `claude --version` |
+| Command                    | Description                   | Example                         |
+| -------------------------- | ----------------------------- | ------------------------------- |
+| `claude -c` / `--continue` | Continue last session         | `claude -c`                     |
+| `claude -c -p "<prompt>"`  | Continue + new prompt (print) | `claude -c -p "check types"`    |
+| `claude -r <id>`           | Resume by session ID          | `claude -r abc123`              |
+| `claude --resume <id>`     | Long-form resume              | `claude --resume abc123`        |
+| `claude --resume <name>`   | Resume by saved name          | `claude --resume sprint-review` |
 
-#### Output Control Flags 
-| Flag | Options | Description | Example |
-|------|---------|-------------|---------|
-| `--output-format` | `text`, `json`, `stream-json` | Control response format | `claude -p "help" --output-format json` |
-| `--json` | - | Shorthand for JSON output | `claude -p "analyze" --json` |
+## Config Commands
 
-#### Security & Permission Flags 
-| Flag | Risk Level | Description | Example |
-|------|------------|-------------|---------|
-| `--allowedTools <tools>` | **LOW** | Whitelist specific tools | `claude --allowedTools "Edit,View"` |
-| `--disallowedTools <tools>` | **LOW** | Blacklist specific tools | `claude --disallowedTools "Bash"` |
-| `--dangerously-skip-permissions` | **CRITICAL** | Skip ALL permission prompts | `claude --dangerously-skip-permissions` |
+| Command                              | Description        | Example                          |
+| ------------------------------------ | ------------------ | -------------------------------- |
+| `claude config`                      | Interactive wizard | `claude config`                  |
+| `claude config list`                 | List all keys      | `claude config list`             |
+| `claude config get <key>`            | Get value          | `claude config get theme`        |
+| `claude config set <key> <val>`      | Set value          | `claude config set theme dark`   |
+| `claude config add <key> <vals…>`    | Append to array    | `claude config add env DEV=1`    |
+| `claude config remove <key> <vals…>` | Remove items       | `claude config remove env DEV=1` |
 
-#### Advanced Flags
-| Flag | Purpose | Example | Notes |
-|------|---------|---------|--------|
-| `--add-dir <path>` | Add working directories | `claude --add-dir ../lib ../src` |
-| `--model <model>` | Set specific model | `claude --model sonnet` | 
-| `--verbose` | Enable detailed logging | `claude --verbose` | 
+---
 
-### Slash Commands (Interactive Mode)
+## Flag Reference
 
-#### Commands
-| Command | Purpose | Status |
-|---------|---------|--------|
-| `/help` | Show all slash commands | 
-| `/clear` | Clear current conversation |
-| `/exit` | Exit Claude safely | 
-| `/bug` | Report issues | 
+### Essential
+
+| Flag         | Short | Description          | Example               |
+| ------------ | ----- | -------------------- | --------------------- |
+| `--print`    | `-p`  | Non-interactive mode | `claude -p "help"`    |
+| `--continue` | `-c`  | Resume last session  | `claude --continue`   |
+| `--resume`   | `-r`  | Resume by ID         | `claude --resume abc` |
+| `--help`     | `-h`  | Show help            | `claude --help`       |
+| `--version`  | `-v`  | Show version         | `claude --version`    |
+
+### Output & Flow
+
+| Flag                     | Options                       | Example                              |
+| ------------------------ | ----------------------------- | ------------------------------------ |
+| `--output-format`        | `text`, `json`, `stream-json` | `--output-format json`               |
+| `--input-format`         | `text`, `stream-json`         | `--input-format stream-json`         |
+| `--max-turns`            | Integer                       | `--max-turns 3`                      |
+| `--system-prompt`        | String                        | `--system-prompt "You are strict"`   |
+| `--append-system-prompt` | String                        | `--append-system-prompt "Add tests"` |
+
+### Security & Permissions
+
+| Flag                              | Description                    | Example                                      |
+| --------------------------------- | ------------------------------ | -------------------------------------------- |
+| `--allowedTools <list>`           | Whitelist tools                | `--allowedTools "Read,View"`                 |
+| `--disallowedTools <list>`        | Blacklist tools                | `--disallowedTools "Bash"`                   |
+| `--permission-mode <mode>`        | Start in permission mode       | `--permission-mode plan`                     |
+| `--permission-prompt-tool <tool>` | MCP tool for permission checks | `--permission-prompt-tool mcp__auth__prompt` |
+| `--dangerously-skip-permissions`  | Skip all prompts (⚠️)          | `--dangerously-skip-permissions`             |
+
+### Advanced
+
+| Flag                  | Purpose            | Example                     |
+| --------------------- | ------------------ | --------------------------- |
+| `--add-dir <paths>`   | Extra working dirs | `--add-dir ../lib ../src`   |
+| `--model <name>`      | Choose model       | `--model sonnet`            |
+| `--verbose`           | Verbose logs       | `--verbose`                 |
+| `--mcp-config <file>` | Load MCP servers   | `--mcp-config servers.json` |
+
+---
+
+## Built-in Slash Commands (Interactive)
+
+| Slash Cmd            | Purpose                     |
+| -------------------- | --------------------------- |
+| `/help`              | List slash commands         |
+| `/add-dir`           | Add more working dirs       |
+| `/bug`               | Report bug to Anthropic     |
+| `/clear`             | Clear chat history          |
+| `/compact`           | Compact conversation        |
+| `/config`            | Config menu                 |
+| `/cost`              | Token usage                 |
+| `/doctor`            | Health check                |
+| `/exit`              | Exit REPL                   |
+| `/init`              | Generate CLAUDE.md          |
+| `/login` / `/logout` | Auth switch                 |
+| `/mcp`               | Manage MCP servers          |
+| `/memory`            | Edit memories               |
+| `/model`             | Change model                |
+| `/permissions`       | Tool permissions            |
+| `/pr_comments`       | View PR comments            |
+| `/review`            | Request code review         |
+| `/sessions`          | List sessions               |
+| `/status`            | System/account status       |
+| `/terminal-setup`    | Install Shift+Enter binding |
+| `/vim`               | Toggle vim mode             |
+
+---
+
+*Verified against Anthropic docs on Jul 4 2025.*
 
 
-#### Commands
-```bash
-/doctor        # Complete health check
-/status        # System information  
-/cost          # Token usage stats
-/config        # Configuration menu
-/permissions   # Manage tool access
-/memory        # Edit memory files
-/sessions      # List all sessions
-/compact       # Compress and summarize data
-```
 
 ---
 
@@ -659,7 +695,7 @@ vi .claude/settings.json
 
 ---
 
-# Claude `~/.claude.json` Configuration Guide (July 2025)
+# Claude `~/.claude.json` Configuration Guide
 
 > **Purpose** — A concise, *fact‑checked* reference for safely editing your personal configuration file. All keys and examples come directly from Anthropic‑supplied defaults or the CLI’s own output—no speculative or undocumented fields.
 
