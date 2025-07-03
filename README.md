@@ -1,6 +1,6 @@
 <div align="center">
   
-### **Claude Code Guide**
+### **Claude Code Complete Guide**
 
 > This guide covers **every discoverable Claude Code command** as of Juli 2025,  
 > including many features that are not widely known or documented in basic tutorials.
@@ -14,7 +14,6 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.38-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
-
 
 </div>
 
@@ -37,7 +36,28 @@
 </kbd>
 
 </div>
-</div>
+
+---
+
+## 📚 Table of Contents
+
+1. [Quick Start](#quick-start)
+2. [Installation & Setup](#-installation--setup)
+3. [Core Commands](#core-commands)
+4. [Session Commands](#session-commands)
+5. [Config Commands](#config-commands)
+6. [Flag Reference](#flag-reference)
+7. [Built-in Slash Commands](#built-in-slash-commands-interactive)
+8. [MCP Integration](#-mcp-integration)
+9. [Configuration](#️-configuration)
+10. [Environment Variables](#environment-variables)
+11. [Security & Permissions](#security--permissions)
+12. [Claude CLI Configuration](#claude-cli-configuration)
+13. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
+14. [Automation & Scripting](#automation--scripting)
+15. [Troubleshooting](#-troubleshooting)
+16. [Advanced Features](#-advanced-features)
+17. [Best Practices](#-best-practices)
 
 ---
 
@@ -63,7 +83,7 @@ yay -S claude-code        # or paru -S claude-code
 docker pull ghcr.io/rchgrav/claudebox:latest
 docker run -it -v "$PWD":"$PWD" -w "$PWD" \
 ghcr.io/rchgrav/claudebox:latest
-# Nice when you can’t touch the host system
+# Nice when you can't touch the host system
 
 ## Method 5 – Windows via WSL (Anthropic-recommended path)
 # 1) Enable WSL 2 and install Ubuntu
@@ -91,6 +111,7 @@ claude update              # Update to latest
 claude mcp                 # Setup MCP servers
 ```
 
+---
 
 ## 🚀 Installation & Setup
 
@@ -115,7 +136,6 @@ npm install -g @anthropic-ai/claude-code
 # Verify installation
 claude --version
 ```
-
 
 ### Initial Setup
 
@@ -191,103 +211,6 @@ Expected output might include:
 # ✅ Network: Connected  
 # ✅ Model Access: Available
 ```
-
----
-
-## 🔌 MCP Integration
-
-### Understanding MCP (Model Context Protocol)
-
-**What is MCP?**
-MCP extends Claude's capabilities by connecting to external services, databases, APIs, and tools.
-
-**MCP Architecture:**
-```
-Claude Code ←→ MCP Protocol ←→ MCP Servers ←→ External Services
-```
-
-### MCP Setup & Configuration
-
-#### Basic MCP Commands
-```bash
-claude mcp                    # Interactive MCP configuration
-claude mcp list              # List configured servers            
-claude mcp add <name> <cmd>  # Add new server
-claude mcp remove <name>     # Remove server
-```
-
-#### MCP Configuration File 
-**Location**:`~/.claude.json` 
-
-### Scope-Based Configuration Files
-
-User/Global Scope:
-Global MCP servers
-Project Scope:
-Project-scoped servers are stored in a `.mcp.json` file at your project's root directory
-
-```json
-{
-  "mcpServers": {
-    "git": {
-      "command": "git-mcp-server",
-      "args": [],
-      "env": {}
-    },
-    "postgres": {
-      "command": "postgres-mcp-server", 
-      "args": ["--host", "localhost", "--port", "5432"],
-      "env": {
-        "POSTGRES_USER": "developer",
-        "POSTGRES_PASSWORD": "dev_password",
-        "POSTGRES_DB": "myapp_development"
-      }
-    }
-  }
-}
-```
-
-### MCP Servers
-
-**Note**: The exact package names and installation commands below may not be accurate. Consult official MCP documentation for current server packages.
-
-#### Development Tools
-```bash
-# npm install -g git-mcp-server         
-
-# claude mcp add git "git-mcp-server"
-# claude mcp add github "github-mcp-server --token $GITHUB_TOKEN"
-```
-
-#### Database Integration  
-```bash
-npm install -g postgres-mcp-server               
-npm install -g mysql-mcp-server                  
-npm install -g sqlite-mcp-server               
-
-# Setup examples
-# export POSTGRES_URL="postgresql://user:password@localhost:5432/mydb"
-# claude mcp add postgres "postgres-mcp-server --url $POSTGRES_URL"
-```
-
-### MCP Tool Permissions
-
-```bash
-# Allow specific MCP tools 
-claude --allowedTools "mcp__git__commit,mcp__git__push"
-
-# Allow all tools from specific server
-claude --allowedTools "mcp__postgres__*"
-
-# Combined with built-in tools
-claude --allowedTools "Edit,View,mcp__git__*"
-```
-
----
-
-# Claude Code Commands
-
-Everything below is pulled directly from Anthropic’s official CLI and slash-command docs — no guessing.
 
 ---
 
@@ -398,7 +321,96 @@ Everything below is pulled directly from Anthropic’s official CLI and slash-co
 
 *Verified against Anthropic docs on Jul 4 2025.*
 
+---
 
+## 🔌 MCP Integration
+
+### Understanding MCP (Model Context Protocol)
+
+**What is MCP?**
+MCP extends Claude's capabilities by connecting to external services, databases, APIs, and tools.
+
+**MCP Architecture:**
+```
+Claude Code ←→ MCP Protocol ←→ MCP Servers ←→ External Services
+```
+
+### MCP Setup & Configuration
+
+#### Basic MCP Commands
+```bash
+claude mcp                    # Interactive MCP configuration
+claude mcp list              # List configured servers            
+claude mcp add <name> <cmd>  # Add new server
+claude mcp remove <name>     # Remove server
+```
+
+#### MCP Configuration File 
+**Location**:`~/.claude.json` 
+
+### Scope-Based Configuration Files
+
+User/Global Scope:
+Global MCP servers
+Project Scope:
+Project-scoped servers are stored in a `.mcp.json` file at your project's root directory
+
+```json
+{
+  "mcpServers": {
+    "git": {
+      "command": "git-mcp-server",
+      "args": [],
+      "env": {}
+    },
+    "postgres": {
+      "command": "postgres-mcp-server", 
+      "args": ["--host", "localhost", "--port", "5432"],
+      "env": {
+        "POSTGRES_USER": "developer",
+        "POSTGRES_PASSWORD": "dev_password",
+        "POSTGRES_DB": "myapp_development"
+      }
+    }
+  }
+}
+```
+
+### MCP Servers
+
+**Note**: The exact package names and installation commands below may not be accurate. Consult official MCP documentation for current server packages.
+
+#### Development Tools
+```bash
+# npm install -g git-mcp-server         
+
+# claude mcp add git "git-mcp-server"
+# claude mcp add github "github-mcp-server --token $GITHUB_TOKEN"
+```
+
+#### Database Integration  
+```bash
+npm install -g postgres-mcp-server               
+npm install -g mysql-mcp-server                  
+npm install -g sqlite-mcp-server               
+
+# Setup examples
+# export POSTGRES_URL="postgresql://user:password@localhost:5432/mydb"
+# claude mcp add postgres "postgres-mcp-server --url $POSTGRES_URL"
+```
+
+### MCP Tool Permissions
+
+```bash
+# Allow specific MCP tools 
+claude --allowedTools "mcp__git__commit,mcp__git__push"
+
+# Allow all tools from specific server
+claude --allowedTools "mcp__postgres__*"
+
+# Combined with built-in tools
+claude --allowedTools "Edit,View,mcp__git__*"
+```
 
 ---
 
@@ -453,15 +465,15 @@ Claude Code uses a hierarchical configuration system:
 | `ANTHROPIC_MODEL` | No | Default model | `claude-sonnet-4` |
 | `ANTHROPIC_BASE_URL` | No | API endpoint override | `https://api.anthropic.com` |
 
-## Variables
+## Environment Variables
 
-| Env Var                             | Default    | Example Value | Effect                                                                                       |
+| Env Var                             | Default    | Example Value | Effect                                                                                       |
 | ----------------------------------- | ---------- | ------------- | -------------------------------------------------------------------------------------------- |
 | `DISABLE_NON_ESSENTIAL_MODEL_CALLS` | `0`        | `1`           | Skip auto‑summaries, background explanations & git diff scans ⇒ faster, cheaper.             |
-| `MAX_THINKING_TOKENS`               | *≈30‑40 k* | `50000`       | Higher token budget for reading code, analyzing diffs & planning.                            |
+| `MAX_THINKING_TOKENS`               | *≈30‑40 k* | `50000`       | Higher token budget for reading code, analyzing diffs & planning.                            |
 | `DISABLE_TELEMETRY`                 | `0`        | `1`           | Block anonymous usage + error telemetry.                                                     |
-| `CLAUDE_CODE_USE_BEDROCK`           | `0`        | `1`           | Route requests via **AWS Bedrock** (needs IAM creds; falls back if absent).                  |
-| `CLAUDE_CODE_USE_VERTEX`            | `0`        | `1`           | Route requests via **Google Vertex AI** (needs service‑account creds; falls back if absent). |
+| `CLAUDE_CODE_USE_BEDROCK`           | `0`        | `1`           | Route requests via **AWS Bedrock** (needs IAM creds; falls back if absent).                  |
+| `CLAUDE_CODE_USE_VERTEX`            | `0`        | `1`           | Route requests via **Google Vertex AI** (needs service‑account creds; falls back if absent). |
 
 ```
 ```
@@ -470,7 +482,7 @@ Claude Code uses a hierarchical configuration system:
 
 
 
-| Env Var       | Default               | Example Value                       | What It Does                                       |
+| Env Var       | Default               | Example Value                       | What It Does                                       |
 | ------------- | --------------------- | ----------------------------------- | -------------------------------------------------- |
 | `HTTP_PROXY`  | *(unset)*             | `http://proxy.company.com:8080`     | Routes **HTTP** requests through the given proxy.  |
 | `HTTPS_PROXY` | *(unset)*             | `https://proxy.company.com:8443`    | Routes **HTTPS** requests through the given proxy. |
@@ -478,10 +490,10 @@ Claude Code uses a hierarchical configuration system:
 
 ---
 
-## How to Set
+## How to Set
 
 <details>
-<summary><strong>Shell (temporary)</strong></summary>
+<summary><strong>Shell (temporary)</strong></summary>
 
 ```bash
 export HTTP_PROXY="http://proxy.company.com:8080"
@@ -493,7 +505,7 @@ claude "Test request via proxy"
 </details>
 
 <details>
-<summary><strong>Shell Profile (persistent)</strong></summary>
+<summary><strong>Shell Profile (persistent)</strong></summary>
 
 ```bash
 # ~/.bashrc or ~/.zshenv
@@ -507,7 +519,7 @@ Reload with `source ~/.bashrc`.
 </details>
 
 <details>
-<summary><strong>GitHub Actions</strong></summary>
+<summary><strong>GitHub Actions</strong></summary>
 
 ```yaml
 env:
@@ -517,7 +529,6 @@ env:
 ```
 
 </details>
-
 
 ---
 
@@ -606,10 +617,10 @@ claude config list
 1. **Authenticate first**
 
    ```bash
-   # Option 1 – environment variable (recommended for scripts)
+   # Option 1 – environment variable (recommended for scripts)
    export ANTHROPIC_API_KEY="sk-..."
 
-   # Option 2 – interactive login inside Claude REPL
+   # Option 2 – interactive login inside Claude REPL
    claude /login
    ```
 2. **Back‑up current config**
@@ -620,7 +631,7 @@ claude config list
    # This depends where your .json is installed it may also be at ~/.claude/local/package.json
    ```
 
-If `apiKeyHelper` is mis‑configured or no API key is found, you’ll see errors like:
+If `apiKeyHelper` is mis‑configured or no API key is found, you'll see errors like:
 
 ```
 Error getting API key from apiKeyHelper (in settings or ~/.claude.json):
@@ -662,7 +673,7 @@ Fix authentication before modifying other keys. ([docs.anthropic.com](https://do
 | `diffTool`                      | Diff command/path                                                       | `claude config set -g diffTool meld`                        | Used by `/diff`. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))                  |
 | `env`                           | `KEY=value` or JSON                                                     | `claude config set -g env CLAUDE_CODE_ENABLE_TELEMETRY=0`   | Injects env vars into every session. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))             |
 | `tipsHistory`                   | `[]` or JSON array                                                      | `claude config set -g tipsHistory []`                       | Clears tips pop‑up history. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))       |
-| `parallelTasksCount`            | Integer ≥ 1                                                             | `claude config set -g parallelTasksCount 4`                 | Limit concurrent tasks. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))           |
+| `parallelTasksCount`            | Integer ≥ 1                                                             | `claude config set -g parallelTasksCount 4`                 | Limit concurrent tasks. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))           |
 | `todoFeatureEnabled`            | `true` / `false`                                                        | `claude config set -g todoFeatureEnabled true`              | Enables experimental To‑Do. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))       |
 | `messageIdleNotifThresholdMs`   | Integer (ms)                                                            | `claude config set -g messageIdleNotifThresholdMs 60000`    | Idle threshold before alert. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))      |
 | `autoConnectIde`                | `true` / `false`                                                        | `claude config set -g autoConnectIde true`                  | Auto‑connects to IDE at launch. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code?utm_source=chatgpt.com))   |
@@ -687,21 +698,21 @@ vi .claude/settings.json
 
 ## Safe Editing Checklist
 
-1. **Backup** `~/.claude/claude.json`.
-2. **Authenticate** (`ANTHROPIC_API_KEY` or `/login`).
-3. **Change one key at a time** → verify with `claude config get`.
-4. **Keep CLI updated** (`autoUpdates=true`) or via package manager.
-5. **Read release notes** for new or removed keys.
+1. **Backup** `~/.claude/claude.json`.
+2. **Authenticate** (`ANTHROPIC_API_KEY` or `/login`).
+3. **Change one key at a time** → verify with `claude config get`.
+4. **Keep CLI updated** (`autoUpdates=true`) or via package manager.
+5. **Read release notes** for new or removed keys.
 
 ---
 
 # Claude `~/.claude.json` Configuration Guide
 
-> **Purpose** — A concise, *fact‑checked* reference for safely editing your personal configuration file. All keys and examples come directly from Anthropic‑supplied defaults or the CLI’s own output—no speculative or undocumented fields.
+> **Purpose** — A concise, *fact‑checked* reference for safely editing your personal configuration file. All keys and examples come directly from Anthropic‑supplied defaults or the CLI's own output—no speculative or undocumented fields.
 
 ---
 
-## 1 ▸ Back Up First
+## 1 ▸ Back Up First
 
 ```bash
 cp ~/.claude.json ~/.claude.json.backup
@@ -715,9 +726,9 @@ cp ~/.claude.json.backup ~/.claude.json
 
 ---
 
-## 2 ▸ MCP Servers
+## 2 ▸ MCP Servers
 
-`mcpServers` lets Claude Code interact with external tools (filesystem, web, GitHub, …). Each entry follows the **exact** schema below.
+`mcpServers` lets Claude Code interact with external tools (filesystem, web, GitHub, …). Each entry follows the **exact** schema below.
 
 ```jsonc
 {
@@ -732,7 +743,7 @@ cp ~/.claude.json.backup ~/.claude.json
 }
 ```
 
-### 2.1 Schema
+### 2.1 Schema
 
 | Field     | Required? | Example Value                                      | Notes                                            |
 | --------- | --------- | -------------------------------------------------- | ------------------------------------------------ |
@@ -741,7 +752,7 @@ cp ~/.claude.json.backup ~/.claude.json
 | `args`    | ✅         | `["-y", "@modelcontextprotocol/server-puppeteer"]` | CLI arguments (first item typically `-y`).       |
 | `env`     | ✅         | `{ "API_KEY": "value" }`                           | Key‑value pairs exported to the child process.   |
 
-### 2.2 Ready‑to‑Copy Examples
+### 2.2 Ready‑to‑Copy Examples
 
 ```jsonc
 {
@@ -812,7 +823,7 @@ cp ~/.claude.json.backup ~/.claude.json
 
 ---
 
-## 3 ▸ Feature Flags
+## 3 ▸ Feature Flags
 
 All three flags below are safe to toggle. **Booleans only.**
 
@@ -834,7 +845,7 @@ Example:
 
 ---
 
-## 4 ▸ Reset Tips & Onboarding
+## 4 ▸ Reset Tips & Onboarding
 
 ```jsonc
 {
@@ -847,23 +858,23 @@ Example:
 }
 ```
 
-*Set counters to `0` or `hasCompletedOnboarding` to `false` to see onboarding screens again.*
+*Set counters to `0` or `hasCompletedOnboarding` to `false` to see onboarding screens again.*
 
 ---
 
-## 5 ▸ What **Not** to Edit Manually
+## 5 ▸ What **Not** to Edit Manually
 
 | Section                                                                            | Reason                                                 |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | **Authentication data** (`oauthAccount`, `primaryApiKey`, `customApiKeyResponses`) | Risk of lock‑out or leaked secrets.                    |
-| **Application state** (`numStartups`, `cachedChangelog`, …)                        | Non‑functional; overwritten by the app.                |
+| **Application state** (`numStartups`, `cachedChangelog`, …)                        | Non‑functional; overwritten by the app.                |
 | **Projects** block                                                                 | Populated automatically and recalculated each session. |
 
 Expand the blocks only when debugging and restore from backup afterwards.
 
 ---
 
-## 6 ▸ Validate & Reload
+## 6 ▸ Validate & Reload
 
 1. **Validate JSON**
 
@@ -880,7 +891,7 @@ Expand the blocks only when debugging and restore from backup afterwards.
 
 ---
 
-## 7 ▸ Common Tasks (Quick Checklist)
+## 7 ▸ Common Tasks (Quick Checklist)
 
 | Task                   | Steps                                                                 |
 | ---------------------- | --------------------------------------------------------------------- |
@@ -890,27 +901,26 @@ Expand the blocks only when debugging and restore from backup afterwards.
 
 ---
 
-## 8 ▸ Security Tips
+## 8 ▸ Security Tips
 
-* Keep `~/.claude.json` private (`chmod 600`).
+* Keep `~/.claude.json` private (`chmod 600`).
 * Prefer environment variables for API keys over plain‑text.
 * Never commit this file to source control.
 
 ---
 
-
 # Claude Code – Automation & Scripting Guide
 
-> **Goal** — Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic’s public CLI (`@anthropic-ai/claude-code` 
+> **Goal** — Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic's public CLI (`@anthropic-ai/claude-code` 
 
 ---
 
 ## 1 ▸ CI/CD Integration
 
-### 1.1 GitHub Actions
+### 1.1 GitHub Actions
 
 ```yaml
-ame: Claude Code Review
+name: Claude Code Review
 on:
   pull_request:
     branches: [main, develop]
@@ -954,13 +964,13 @@ jobs:
 | `--allowedTools "View"`     | **Read‑only** toolset: prevents file writes in the runner. |
 | `--output-format json`      | Emits structured findings for downstream parsing.          |
 
-> **Security tip:** Restrict the runner’s permissions (e.g. `permissions: contents: read`) so the CLI cannot push code back.
+> **Security tip:** Restrict the runner's permissions (e.g. `permissions: contents: read`) so the CLI cannot push code back.
 
 ---
 
 ## 2 ▸ Local Git Automation
 
-### 2.1 Pre‑commit Hook
+### 2.1 Pre‑commit Hook
 
 ```bash
 #!/usr/bin/env bash
@@ -994,7 +1004,7 @@ echo "✅ Claude analysis passed"
 * **`jq`** checks the JSON for a non‑empty `critical_issues` array.
 * Hook exits non‑zero to stop the commit on failures.
 
-> ⚠️ **Performance note:** For large diffs (>15 kB) invoke Claude with `--stream` to reduce latency.
+> ⚠️ **Performance note:** For large diffs (>15 kB) invoke Claude with `--stream` to reduce latency.
 
 ---
 
@@ -1006,16 +1016,16 @@ echo "✅ Claude analysis passed"
 | **Auto‑fix (experimental)** | `--allowedTools "View,Write" --apply-patch`       | `claude -p "Fix lint" --apply-patch`                  |
 | **Generate SBOM**           | `--allowedTools "View" --output-format cyclonedx` | `claude -p "Generate SBOM"`                           |
 
-> ℹ The `--apply-patch` flag is **beta** as of CLI v1.8. Check release notes before enabling in CI.
+> ℹ The `--apply-patch` flag is **beta** as of CLI v1.8. Check release notes before enabling in CI.
 
 ---
 
-## 4 ▸ Best Practices
+## 4 ▸ Best Practices
 
-1. **Rate limits** — The free Anthropic tier caps at 100 requests/day. Cache results or run only on large PRs.
-2. **Timeouts** — Use `--timeout 120` to prevent hung CI jobs.
-3. **Artifact retention** — Store `review-results.json` for traceability.
-4. **Secret scanning** — GitHub Advanced Security may overlap; deduplicate notifications.
+1. **Rate limits** — The free Anthropic tier caps at 100 requests/day. Cache results or run only on large PRs.
+2. **Timeouts** — Use `--timeout 120` to prevent hung CI jobs.
+3. **Artifact retention** — Store `review-results.json` for traceability.
+4. **Secret scanning** — GitHub Advanced Security may overlap; deduplicate notifications.
 
 ---
 
@@ -1023,7 +1033,7 @@ echo "✅ Claude analysis passed"
 
 | Symptom                                  | Likely Cause                         | Fix                                                                                   |
 | ---------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------- |
-| `Error: Missing ANTHROPIC_API_KEY`       | Secret not set in repo or local env. | Define in **Settings → Secrets** or `export` locally.                                 |
+| `Error: Missing ANTHROPIC_API_KEY`       | Secret not set in repo or local env. | Define in **Settings → Secrets** or `export` locally.                                 |
 | CLI exits `1` with `Rate limit exceeded` | Too many calls in 24h.               | Upgrade plan or throttle jobs.                                                        |
 | Hook slow on binary files                | Large payload sent to Claude.        | Filter binary via `git diff --cached --name-only --diff-filter=ACM -- '*.js' '*.ts'`. |
 
@@ -1295,4 +1305,3 @@ claude "create sequence diagrams for the new authentication flow"
 - Test automation in safe environments
 
 ---
-
