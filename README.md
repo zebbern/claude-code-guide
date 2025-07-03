@@ -417,44 +417,71 @@ Claude Code uses a hierarchical configuration system:
 | `ANTHROPIC_MODEL` | No | Default model | `claude-sonnet-4` |
 | `ANTHROPIC_BASE_URL` | No | API endpoint override | `https://api.anthropic.com` |
 
-#### Variables
-```bash
-export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1
-# This environment variable instructs Claude Code to skip “non-essential” API calls, such as:
-#	•	Auto-summarizations
-#	•	Background code explanations
-# •	Git-aware diff scanning
-# •	Some preflight safety checks
-export MAX_THINKING_TOKENS=50000
-# This sets the maximum number of tokens Claude Code will allocate to:
-# •	Reading your codebase
-# •	Analyzing diffs
-# •	Processing prompts before replying
-# •	Planning answers
-# The default is usually around 30,000–40,000 tokens, depending on context and model, so setting it to 50000 allows longer or deeper analysis.
-export DISABLE_TELEMETRY=1
-# This tells the Claude Code CLI not to send any telemetry or usage statistics back to Anthropic.
+## Variables
 
-# This includes things like:
-# •	Command usage frequency
-# •	Error metrics (non-identifying)
-# •	CLI version info
-# •	Aggregate performance stats
+| Env Var                             | Default    | Example Value | Effect                                                                                       |
+| ----------------------------------- | ---------- | ------------- | -------------------------------------------------------------------------------------------- |
+| `DISABLE_NON_ESSENTIAL_MODEL_CALLS` | `0`        | `1`           | Skip auto‑summaries, background explanations & git diff scans ⇒ faster, cheaper.             |
+| `MAX_THINKING_TOKENS`               | *≈30‑40 k* | `50000`       | Higher token budget for reading code, analyzing diffs & planning.                            |
+| `DISABLE_TELEMETRY`                 | `0`        | `1`           | Block anonymous usage + error telemetry.                                                     |
+| `CLAUDE_CODE_USE_BEDROCK`           | `0`        | `1`           | Route requests via **AWS Bedrock** (needs IAM creds; falls back if absent).                  |
+| `CLAUDE_CODE_USE_VERTEX`            | `0`        | `1`           | Route requests via **Google Vertex AI** (needs service‑account creds; falls back if absent). |
 
-# Cloud provider variables
-export CLAUDE_CODE_USE_BEDROCK=1
-export CLAUDE_CODE_USE_VERTEX=1
 ```
+```
+
 ![image](https://github.com/user-attachments/assets/d07be233-3322-4510-bb98-4165589d1924)
 
 
-#### Network & Proxy
+
+| Env Var       | Default               | Example Value                       | What It Does                                       |
+| ------------- | --------------------- | ----------------------------------- | -------------------------------------------------- |
+| `HTTP_PROXY`  | *(unset)*             | `http://proxy.company.com:8080`     | Routes **HTTP** requests through the given proxy.  |
+| `HTTPS_PROXY` | *(unset)*             | `https://proxy.company.com:8443`    | Routes **HTTPS** requests through the given proxy. |
+| `NO_PROXY`    | `localhost,127.0.0.1` | `localhost,127.0.0.1,*.company.com` | Comma‑separated hosts/IPs that bypass the proxy.   |
+
+---
+
+## How to Set
+
+<details>
+<summary><strong>Shell (temporary)</strong></summary>
+
 ```bash
-# Standard proxy variables
 export HTTP_PROXY="http://proxy.company.com:8080"
-export HTTPS_PROXY="https://proxy.company.com:8443"  
+export HTTPS_PROXY="https://proxy.company.com:8443"
+export NO_PROXY="localhost,127.0.0.1,*.company.com"
+claude "Test request via proxy"
+```
+
+</details>
+
+<details>
+<summary><strong>Shell Profile (persistent)</strong></summary>
+
+```bash
+# ~/.bashrc or ~/.zshenv
+export HTTP_PROXY="http://proxy.company.com:8080"
+export HTTPS_PROXY="https://proxy.company.com:8443"
 export NO_PROXY="localhost,127.0.0.1,*.company.com"
 ```
+
+Reload with `source ~/.bashrc`.
+
+</details>
+
+<details>
+<summary><strong>GitHub Actions</strong></summary>
+
+```yaml
+env:
+  HTTP_PROXY:  "http://proxy.company.com:8080"
+  HTTPS_PROXY: "https://proxy.company.com:8443"
+  NO_PROXY:    "localhost,127.0.0.1,*.company.com"
+```
+
+</details>
+
 
 ---
 
