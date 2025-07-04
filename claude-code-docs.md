@@ -1,8 +1,6 @@
 # Claude Code Official Documentation
 
 > **Source**: This documentation is compiled directly from the official Anthropic Claude Code documentation at https://docs.anthropic.com/en/docs/claude-code/
-> 
-> **Last Updated**: Based on official documentation as of January 2025
 
 ## Table of Contents
 
