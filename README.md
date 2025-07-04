@@ -80,9 +80,11 @@ yay -S claude-code        # or paru -S claude-code
 # Keeps pace with npm releases
 
 ## Method 4 – Docker (containerised)
-docker pull ghcr.io/rchgrav/claudebox:latest
-docker run -it -v "$PWD":"$PWD" -w "$PWD" \
-ghcr.io/rchgrav/claudebox:latest
+mkdir -p ~/.docker/cli-plugins
+curl -SL https://github.com/docker/buildx/releases/download/v0.11.2/buildx-v0.11.2.linux-amd64 -o ~/.docker/cli-plugins/docker-buildx
+chmod +x ~/.docker/cli-plugins/docker-buildx
+curl -O https://raw.githubusercontent.com/RchGrav/claudebox/main/claudebox
+chmod +x claudebox
 # Nice when you can't touch the host system
 
 ## Method 5 – Windows via WSL (Anthropic-recommended path)
