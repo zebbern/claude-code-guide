@@ -39,7 +39,7 @@
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
 1. [Quick Start](#quick-start)
 2. [Installation & Setup](#-installation--setup)
@@ -75,11 +75,11 @@ brew install node
 npm install -g @anthropic-ai/claude-code
 # issue with clsude bot found? run export PATH="$PATH:$(npm bin -g)"
 
-## Method 3 – Arch Linux AUR *️⃣
+## Method 3 – Arch Linux AUR
 yay -S claude-code        # or paru -S claude-code
 # Keeps pace with npm releases
 
-## Method 4 – Docker (containerised) *️⃣
+## Method 4 – Docker (containerised)
 docker pull ghcr.io/rchgrav/claudebox:latest
 docker run -it -v "$PWD":"$PWD" -w "$PWD" \
 ghcr.io/rchgrav/claudebox:latest
