@@ -1,6 +1,8 @@
-# Claude Code Official Documentation
+# Claude Code - Complete Official Documentation
 
 > **Source**: This documentation is compiled directly from the official Anthropic Claude Code documentation at https://docs.anthropic.com/en/docs/claude-code/
+> 
+> **Last Updated**: Based on official documentation as of January 2025
 
 ## Table of Contents
 
@@ -206,25 +208,37 @@ Claude Code provides a comprehensive set of tools:
 
 ### Interactive REPL Commands
 
-| Command | Description |
-|---------|-------------|
-| `/help` | Show all available commands |
-| `/config` | Configure Claude Code settings |
-| `/permissions` | Manage tool permissions |
-| `/allowed-tools` | Configure allowed tools |
-| `/hooks` | Manage hooks |
-| `/mcp` | Manage MCP servers |
-| `/vim` | Toggle Vim mode |
-| `/terminal-setup` | Configure terminal shortcuts |
-| `/bug` | Report bugs |
-| `/continue` | Continue most recent conversation |
-| `/resume` | Show conversation picker |
-| `/ide` | Connect to IDE |
+Based on the official documentation, the following commands are available:
+
+| Command | Description | Source |
+|---------|-------------|---------|
+| `/config` | Configure Claude Code settings and preferences | Multiple mentions in docs |
+| `/permissions` | View and manage Claude Code's tool permissions | "You can view & manage Claude Code's tool permissions with /permissions" |
+| `/allowed-tools` | Configure allowed tools | "Permission rules can be configured using /allowed-tools" |
+| `/hooks` | Manage hooks for automating actions | "Run the /hooks slash command" |
+| `/mcp` | Manage Model Context Protocol servers | "Check MCP server status any time using the /mcp command" |
+| `/vim` | Toggle Vim mode keybindings | "Enable vim-style editing with /vim command" |
+| `/terminal-setup` | Configure terminal shortcuts | "Run /terminal-setup within Claude Code" |
+| `/bug` | Report bugs | "Report bugs directly with the /bug command" |
+| `/ide` | Connect to IDE from external terminal | "use the /ide command in any external terminal to connect to the IDE" |
+| `/cost` | View current session usage | "Use /cost to see current session usage" |
+| `/status` | Verify configuration | "Use the /status slash command to verify your configuration" |
+| `/install-github-app` | Set up GitHub app | "Just open claude and run /install-github-app" |
+
+**Note**: The `--continue` and `--resume` are CLI flags for launching Claude Code, not interactive slash commands within the REPL.
 
 ### Slash Commands
-Create custom commands as Markdown files:
 
-#### Project Commands
+Control Claude's behavior during an interactive session with slash commands.
+
+#### Built-in System Commands
+See [Interactive REPL Commands](#interactive-repl-commands) above for system commands like `/config`, `/permissions`, etc.
+
+#### Custom Slash Commands
+Create custom commands as Markdown files that Claude Code can execute:
+
+##### Project Commands
+Commands stored in your repository and shared with your team:
 ```bash
 # Create a project command
 mkdir -p .claude/commands
@@ -234,7 +248,8 @@ echo "Analyze this code for performance issues and suggest optimizations:" > .cl
 > /project:optimize
 ```
 
-#### Personal Commands
+##### Personal Commands
+Commands available across all your projects:
 ```bash
 # Create a personal command
 mkdir -p ~/.claude/commands
@@ -244,21 +259,42 @@ echo "Review this code for security vulnerabilities:" > ~/.claude/commands/secur
 > /user:security-review
 ```
 
-#### Dynamic Commands with Arguments
+##### Namespaced Commands
+Organize commands in subdirectories:
 ```bash
-# Create command with arguments
+# Create namespaced command
+mkdir -p .claude/commands/frontend
+echo "Create a new React component" > .claude/commands/frontend/component.md
+
+# Use in Claude
+> /project:frontend:component
+```
+
+#### Dynamic Commands with Arguments
+Pass dynamic values using the `$ARGUMENTS` placeholder:
+```bash
+# Command definition
 echo 'Fix issue #$ARGUMENTS following our coding standards' > .claude/commands/fix-issue.md
 
-# Use with arguments
+# Usage
 > /project:fix-issue 123
 ```
 
-#### Advanced Features
-- **Execute bash before command**: Use `!` prefix
-- **Include file contents**: Use `@` prefix
-- **Namespacing**: Organize in subdirectories
+#### MCP Server Commands
+MCP servers can expose prompts as slash commands:
+```bash
+# Without arguments
+> /mcp__github__list_prs
 
-Example with all features:
+# With arguments
+> /mcp__github__pr_review 456
+> /mcp__jira__create_issue "Bug title" high
+```
+
+#### Advanced Features
+
+##### Execute Bash Commands Before Slash Command
+Use the `!` prefix to execute bash commands and include output:
 ```markdown
 ---
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*)
@@ -267,13 +303,33 @@ description: Create a git commit
 
 ## Context
 - Current git status: !`git status`
-- Current git diff: !`git diff HEAD`
+- Current git diff (staged and unstaged changes): !`git diff HEAD`
+- Current branch: !`git branch --show-current`
 - Recent commits: !`git log --oneline -10`
 
 ## Your task
 Based on the above changes, create a single git commit.
+```
 
+##### Include File Contents
+Use the `@` prefix to reference files:
+```markdown
+# Reference a specific file
 Review the implementation in @src/utils/helpers.js
+
+# Reference multiple files
+Compare @src/old-version.js with @src/new-version.js
+```
+
+##### Command Metadata
+Add metadata to commands using frontmatter:
+```markdown
+---
+allowed-tools: Bash(npm test), Write(src/*)
+description: Run tests and fix any failures
+---
+
+Your command content here...
 ```
 
 ---
@@ -295,6 +351,23 @@ claude -p "Generate a hello world function" --output-format json
 # Stream JSON output as it arrives
 claude -p "Build a React component" --output-format stream-json
 ```
+
+### CLI Flags and Options
+
+Based on the official documentation:
+
+| Flag | Description |
+|------|-------------|
+| `-p, --print` | Run in non-interactive print mode |
+| `--output-format` | Set output format: `text` (default), `json`, `stream-json` |
+| `--continue` | Continue the most recent conversation |
+| `--resume` | Resume a specific conversation by ID or show picker |
+| `--system-prompt` | Override system prompt (only works with --print) |
+| `--append-system-prompt` | Append to default system prompt |
+| `--mcp-config` | Load MCP servers from configuration file |
+| `--allowedTools` | Specify allowed tools for the session |
+| `--permission-prompt-tool` | MCP tool for handling permission prompts |
+| `--debug` | Enable debug output |
 
 ### Conversation Management
 
@@ -1297,26 +1370,6 @@ If you send feedback (via `/bug` or transcripts):
 For full details:
 - [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms)
 - [Privacy Policy](https://www.anthropic.com/legal/privacy)
-
----
-
-## Additional Resources
-
-### Official Links
-- **Documentation**: https://docs.anthropic.com/en/docs/claude-code/
-- **GitHub Repository**: https://github.com/anthropics/claude-code
-- **Bug Reports**: Use `/bug` command or GitHub issues
-- **MCP Documentation**: https://modelcontextprotocol.io
-
-### Support
-- **In-app**: Use `/bug` command
-- **GitHub**: File issues on the repository
-- **Enterprise**: Contact your account manager
-
-### Community
-- Share feedback and suggestions
-- Contribute to open-source integrations
-- Build MCP servers for new capabilities
 
 ---
 
