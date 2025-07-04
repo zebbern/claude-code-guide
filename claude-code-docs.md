@@ -1,4 +1,4 @@
-# Claude Code - Complete Official Documentation
+# Claude Code Official Documentation
 
 > **Source**: This documentation is compiled directly from the official Anthropic Claude Code documentation at https://docs.anthropic.com/en/docs/claude-code/
 > 
@@ -35,26 +35,6 @@
 ## Overview
 
 Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster through natural language commands. By integrating directly with your development environment, Claude Code streamlines your workflow without requiring additional servers or complex setup.
-
-### Research Preview Status
-Claude Code is in **beta as a research preview**. We're gathering developer feedback on:
-- AI collaboration preferences
-- Which workflows benefit most from AI assistance
-- How to improve the agent experience
-
-This early version will evolve based on user feedback. Planned enhancements include:
-- Improved tool execution reliability
-- Support for long-running commands
-- Better terminal rendering
-- Enhanced Claude's self-knowledge of its capabilities
-
-### Why Claude Code?
-
-- **Direct Terminal Integration**: Operates directly in your terminal environment
-- **Automatic Context Understanding**: No need to manually add files to context - Claude will explore your codebase as needed
-- **Project Awareness**: Maintains awareness of your entire project structure
-- **Real Actions**: Performs real operations like editing files and creating commits
-- **Default Model**: Uses `claude-3-7-sonnet-20250219` by default
 
 ---
 
