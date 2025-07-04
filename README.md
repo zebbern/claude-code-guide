@@ -94,6 +94,12 @@ sudo apt update && sudo apt install -y nodejs npm
 npm install -g @anthropic-ai/claude-code
 # Step-by-step guide 
 
+# You can also open claude code in vscode or cursor easy with:
+cursor .
+# or
+code . 
+# remeber to have the claude code extention installed
+
 ## Checn if claude is installed
 which claude
 claude --version
