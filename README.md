@@ -262,7 +262,7 @@ Expected output might include:
 | `--help`     | `-h`  | Show help            | `claude --help`       |
 | `--version`  | `-v`  | Show version         | `claude --version`    |
 
-### Output & Flow
+### Output & Flow with -p
 
 | Flag                     | Options                       | Example                              |
 | ------------------------ | ----------------------------- | ------------------------------------ |
