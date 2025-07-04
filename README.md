@@ -635,7 +635,7 @@ claude -p "We have a tricky concurrency bug. ultrathink and propose a fix."
 
 ---
 
-## 📦 Prerequisites
+## Prerequisites
 
 1. **Authenticate first**
 
