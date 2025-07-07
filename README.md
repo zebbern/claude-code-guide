@@ -124,15 +124,19 @@ claude mcp                 # Setup MCP servers
 
 ## 🚀 Installation & Setup
 
-**System Requirements:**
-- Node.js 16+ or standalone binary
-- API key from Anthropic
-- 4GB RAM minimum (8GB+ recommended for large projects)
+System requirements
+
+Operating Systems: macOS 10.15+, Ubuntu 20.04+/Debian 10+, or Windows via WSL
+Hardware: 4GB RAM minimum 8GB+ recommended
+Software:
+Node.js 18+
+git 2.23+ (optional)
+GitHub or GitLab CLI for PR workflows (optional)
 - Internet connection for API calls
 
 **Supported Platforms:**
 - macOS (Intel/Apple Silicon)
-- Linux (Ubuntu 18+, Debian 10+, CentOS 7+)
+- Linux (Ubuntu, Debian, CentOS)
 - Windows 10/11 (WSL recommended)[Win 10 Not Tested]
 
 ### Installation Methods
