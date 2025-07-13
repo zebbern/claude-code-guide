@@ -122,7 +122,7 @@ claude mcp                 # Setup MCP servers
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 System requirements
 
@@ -329,10 +329,6 @@ Expected output might include:
 | `/status`            | System/account status       |
 | `/terminal-setup`    | Install Shift+Enter binding |
 | `/vim`               | Toggle vim mode             |
-
----
-
-*Verified against Anthropic docs on Jul 4 2025.*
 
 ---
 
