@@ -21,8 +21,6 @@
 
 <kbd>
 
-# <code>Visit: [https://zebbern.github.io/](https://zebbern.github.io/) for more detailed info!</code>
-
 | Section                                    | Status          |
 |---------------------------------------------|------------------------------|
 | Guides on how to install on Windows, Linux, MacOS | ✅ |
