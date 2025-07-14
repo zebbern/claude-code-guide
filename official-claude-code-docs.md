@@ -1348,29 +1348,13 @@ Claude Code is provided as a Beta research preview under Anthropic's [Commercial
 
 © Anthropic PBC. All rights reserved.
 
-### How We Use Your Data
-
-**Transparency Commitment**:
-- We may use feedback to improve our products and services
-- **We will NOT train generative models using your feedback from Claude Code**
-- User feedback transcripts are stored for only 30 days
-
 ### Feedback Transcripts
 If you send feedback (via `/bug` or transcripts):
 - Used to debug issues and improve functionality
 - Helps reduce similar bugs in the future
 - **NOT used for model training**
 
-### Privacy Safeguards
-- Limited retention periods (30 days for feedback)
-- Restricted access to user session data
-- Clear policies against using feedback for model training
-- No intermediate servers between you and Anthropic
 
 For full details:
 - [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms)
 - [Privacy Policy](https://www.anthropic.com/legal/privacy)
-
----
-
-*This documentation is compiled exclusively from official Anthropic Claude Code documentation available at https://docs.anthropic.com/en/docs/claude-code/. All information, examples, commands, and configurations listed here are directly sourced from Anthropic's official documentation. No custom additions or interpretations have been made. For the most current information and updates, always refer to the official documentation.*
