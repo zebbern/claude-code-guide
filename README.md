@@ -135,7 +135,7 @@ GitHub or GitLab CLI for PR workflows (optional)
 **Supported Platforms:**
 - macOS (Intel/Apple Silicon)
 - Linux (Ubuntu, Debian, CentOS)
-- Windows 10/11 (WSL recommended)[Win 10 Not Tested]
+- Windows 10/11 (**WSL recommended** as regular windows terminal is currently not supported)
 
 ### Installation Methods
 
