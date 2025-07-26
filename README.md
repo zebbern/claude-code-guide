@@ -1176,6 +1176,10 @@ claude "analyze this thoroughly and provide detailed recommendations"
 
 ```
 
+Use the escalating prompts — "think" < "think hard" < "think harder" < "ultrathink" — to give Claude progressively larger thinking budgets.
+
+For more details, see Anthropic's official *[Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)* page.
+
 ### Multi-Directory Workspaces
 ```bash
 # Add multiple directories
