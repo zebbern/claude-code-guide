@@ -174,7 +174,6 @@ echo 'set -gx ANTHROPIC_API_KEY "sk-your-key-here"' >> ~/.config/fish/config.fis
 claude config
 
 # Set basic defaults 
-claude config set -g model claude-sonnet-4
 claude config set -g verbose true
 claude config set -g outputFormat text
 
