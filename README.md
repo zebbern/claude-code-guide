@@ -2,7 +2,7 @@
   
 ### **Claude Code Complete Guide**
 
-> This guide covers **every discoverable Claude Code command** as of Juli 2025,  
+> This guide covers **every discoverable Claude Code command** as of August 2025,  
 > including many features that are not widely known or documented in basic tutorials.
 
 **This represents the most complete Claude Code command reference available.**
@@ -47,7 +47,7 @@
 6. [Flag Reference](#flag-reference)
 7. [Built-in Slash Commands](#built-in-slash-commands-interactive)
 8. [MCP Integration](#-mcp-integration)
-9. [Configuration](#️-configuration)
+9. [Configuration]( -configuration)
 10. [Environment Variables](#environment-variables)
 11. [Security & Permissions](#security--permissions)
 12. [Claude CLI Configuration](#claude-cli-configuration)
@@ -401,7 +401,7 @@ npm install -g postgres-mcp-server
 npm install -g mysql-mcp-server                  
 npm install -g sqlite-mcp-server               
 
-# Setup examples
+# Setup examples may look like this:
 # export POSTGRES_URL="postgresql://user:password@localhost:5432/mydb"
 # claude mcp add postgres "postgres-mcp-server --url $POSTGRES_URL"
 ```
@@ -423,7 +423,7 @@ claude --allowedTools "Edit,View,mcp__git__*"
 
 ## ⚙️ Configuration
 
-### Configuration System Overview
+### System Overview
 
 Claude Code uses a hierarchical configuration system:
 1. **Command-line flags** (highest priority)
@@ -557,7 +557,7 @@ env:
 
 #### Tool Permission Patterns 
 ```bash
-# Allow specific tools
+# Allow specific tools choose ur own can also be used like: Bash(*)
 claude --allowedTools "Edit,View"
 
 # Allow tool categories  
@@ -632,7 +632,7 @@ claude -p "We have a tricky concurrency bug. ultrathink and propose a fix."
 * Keyword can appear anywhere in your prompt (case doesn’t matter).
 * If multiple keywords are present, the **highest tier** takes precedence.
 
-> ⚠️ **Note:** Because this mechanism is undocumented, Anthropic may alter or remove it without notice.
+> ⚠️ **Note:** Because this mechanism is undocumented, Anthropic may alter or remove it without notice so this is not official just what others have found to work better than without.
 
 
 
