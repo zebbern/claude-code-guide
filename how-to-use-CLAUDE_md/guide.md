@@ -32,7 +32,11 @@ Always run `turbo typecheck lint` to make sure type checking and linting passes.
 Imagine you are a human UX tester of the feature you implemented. 
 Output a comprehensive list of scenarios you would test, sorted by highest priority.
 ```
-This is super helpful because it outputs a UX testing list like this, which I test one-by-one: ![Image](https://substackcdn.com/image/fetch/$s_!o6mg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe49c5ca4-e001-4188-bb5b-5d8198cf7cdf_580x780.png)
+
+This is super helpful because it outputs a UX testing list like this, which I test one-by-one: 
+
+![Image](https://substackcdn.com/image/fetch/$s_!o6mg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe49c5ca4-e001-4188-bb5b-5d8198cf7cdf_580x780.png)
+
 11.  The very last step is to commit changes and push. I type qgit and Claude Code writes a nice commit message following Conventional Commits format.
 In the YouTube video, I walk through this entire process implementing a real feature in my codebase. Watch it here: [YouTube Video](https://www.youtube.com/watch?v=SDiDkK0r-9c)
 
