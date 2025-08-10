@@ -364,20 +364,13 @@ Your tester agent should produce a small diff or patch plus a short rationale:
 - Accept multi‑file diffs when you asked for one test.
 
 ### Cant find Subagents to look at? You can start with these under!
+- [Configurations, Agents, Mcps, Templates](https://www.aitmpl.com/)
+
 - [github-awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file)
   
 - [medium-claude-code-subagents-examples-with-templates-you-can-use](https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308)
 
 ---
-
-### Try It Yourself
-**30 minutes**
-1. `claude update` → `/agents`
-2. Add `planner` and `tester` (read‑only).
-3. Ask for a minimal test plan and a single failing test.
-4. Capture both outputs in `docs/` and a new branch.
-
-
 
 ## Flag Reference
 
@@ -736,24 +729,43 @@ claude config list
 
 ### Thinking Keywords
 
-Certain phrases in your prompt can **hint to the CLI** that you want extra reasoning time. These keywords are not part of the official public API, so use them with the understanding that they might change or disappear in future versions.
+Claude Code supports **extended thinking** — extra pre‑answer planning time for harder problems. You can nudge that
+planning budget with specific trigger words that map to progressively larger “thinking budgets”.
 
-| Tier       | Keyword(s) you can use *(case‑insensitive)*                                                                                 |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| **Tier 1** | `think`                                                                                                                     |
-| **Tier 2** | `think about it`, `think a lot`, `think deeply`, `think hard`, `think more`, `megathink`                                    |
-| **Tier 3** | `think harder`, `think intensely`, `think longer`, `think really hard`, `think super hard`, `think very hard`, `ultrathink` |
+## keywords
 
-### Quick Example
+These map in order of increasing budget: `think` < `think hard` < `think harder` < `ultrathink`.
+
+> Use **only** the four keywords above. Other phrases (e.g., “think more”, “megathink”, etc.) are **not documented** and should not be relied on.
+
+## What extended thinking does
+
+Before Claude starts producing the final answer, it spends more time:
+- planning a solution,
+- breaking down steps,
+- considering alternatives and trade‑offs,
+- checking constraints and edge cases.
+
+## How to use it
+
+You can place the keyword anywhere in your prompt (case‑insensitive). If multiple appear, assume the **strongest one wins**.
 
 ```bash
-claude -p "We have a tricky concurrency bug. ultrathink and propose a fix."
+# Small boost
+claude -p "Think. Outline a plan to refactor the auth module."
+
+# Medium boost
+claude -p "Think harder. Draft a migration plan for moving from REST to gRPC."
+
+# Maximum planning budget
+claude -p "Ultrathink. Propose a step‑by‑step strategy to fix flaky payments tests and add guardrails."
 ```
 
-* Keyword can appear anywhere in your prompt (case doesn’t matter).
-* If multiple keywords are present, the **highest tier** takes precedence.
+## Notes & caveats
 
-> ⚠️ **Note:** Because this mechanism is undocumented, Anthropic may alter or remove it without notice so this is not official just what others have found to work better than without.
+- This is a **Claude Code (CLI) behavior**, not a public API parameter; naming or effects may evolve over time.
+- Higher budgets usually increase **latency** and **token usage**. Prefer the smallest keyword that gets the job done.
+- Keep prompts crisp. The keyword asks Claude to plan; your prompt should still provide goals, constraints, and success criteria.
 
 
 
