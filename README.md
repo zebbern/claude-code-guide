@@ -69,7 +69,7 @@
 
 ## Method 1 – NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
-# Requires Node 18+ on macOS / Linux / WSL  
+# Requires Node 18+ on macOS / Linux / WSL | if only typing "claude" does not work try "npx claude"
 
 ## Method 2 MacOS
 brew install node
