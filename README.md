@@ -31,7 +31,7 @@
 | How to use Claude code the most optimal way| ✅ |
 ### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code> only use this if you know exactly what ur doing!
 
-#### /agents so create/edit subagents can be called with @agent-name when using claude code or simply by refering to it.
+#### Also use /agents to create/edit subagents that can be called with @agent-name when using claude code or simply by refering to it.
 
 </kbd>
 
