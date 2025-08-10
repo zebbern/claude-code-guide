@@ -11,7 +11,7 @@
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
 
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.38-blue?logo=anthropic)](https://claude.ai/code)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.72-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
@@ -45,7 +45,7 @@
 2. [Installation & Setup](#installation--setup)
 3. [Core Commands](#core-commands)
 4. [Session Commands](#session-commands)
-5. [Config Commands](#config-commands)
+5. [Config Commands](#config-commands) 
 6. [Sub Agents](#sub-agents)
 7. [Flag Reference](#flag-reference)
 8. [Built-in Slash Commands](#built-in-slash-commands-interactive)
