@@ -42,7 +42,7 @@
 ## Table of Contents
 
 1. [Quick Start](#quick-start)
-2. [Installation & Setup](#-installation--setup)
+2. [Installation & Setup](#installation--setup)
 3. [Core Commands](#core-commands)
 4. [Session Commands](#session-commands)
 5. [Config Commands](#config-commands)
