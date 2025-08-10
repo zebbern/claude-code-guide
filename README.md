@@ -363,9 +363,10 @@ Your tester agent should produce a small diff or patch plus a short rationale:
 - Give blanket write permissions.
 - Accept multi‑file diffs when you asked for one test.
 
-### Subagents Ideas To Learn From/Look at 
-- (github-awesome-claude-code-subagents)[https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file]
-- (medium-claude-code-subagents-examples-with-templates-you-can-use)[https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308]
+### Cant find Subagents to look at? You can start with these under!
+- [github-awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file)
+  
+- [medium-claude-code-subagents-examples-with-templates-you-can-use](https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308)
 
 ---
 
@@ -426,6 +427,7 @@ Your tester agent should produce a small diff or patch plus a short rationale:
 | Slash Cmd            | Purpose                     |
 | -------------------- | --------------------------- |
 | `/help`              | List slash commands         |
+| `/agents`            | List/Create/Edit Subagents  |
 | `/add-dir`           | Add more working dirs       |
 | `/bug`               | Report bug to Anthropic     |
 | `/clear`             | Clear chat history          |
