@@ -46,18 +46,19 @@
 3. [Core Commands](#core-commands)
 4. [Session Commands](#session-commands)
 5. [Config Commands](#config-commands)
-6. [Flag Reference](#flag-reference)
-7. [Built-in Slash Commands](#built-in-slash-commands-interactive)
-8. [MCP Integration](#-mcp-integration)
-9. [Configuration]( -configuration)
-10. [Environment Variables](#environment-variables)
-11. [Security & Permissions](#security--permissions)
-12. [Claude CLI Configuration](#claude-cli-configuration)
-13. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
-14. [Automation & Scripting](#automation--scripting-guide)
-15. [Troubleshooting](#-troubleshooting)
-16. [Advanced Features](#-advanced-features)
-17. [Best Practices](#-best-practices)
+6. [Sub Agents](#sub-agents)
+7. [Flag Reference](#flag-reference)
+8. [Built-in Slash Commands](#built-in-slash-commands-interactive)
+9. [MCP Integration](#-mcp-integration)
+10. [Configuration]( -configuration)
+11. [Environment Variables](#environment-variables)
+12. [Security & Permissions](#security--permissions)
+13. [Claude CLI Configuration](#claude-cli-configuration)
+14. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
+15. [Automation & Scripting](#automation--scripting-guide)
+16. [Troubleshooting](#-troubleshooting)
+17. [Advanced Features](#-advanced-features)
+18. [Best Practices](#-best-practices)
 
 ---
 
@@ -118,6 +119,7 @@ cat file | claude -p "fix"  # Process piped content
 claude config              # Configure settings
 claude update              # Update to latest
 claude mcp                 # Setup MCP servers
+claude /agents             # Configure/Setup Subagents for different tasks 
 ```
 
 ---
@@ -181,7 +183,8 @@ claude config set -g outputFormat text
 
 # Test installation
 claude "Hello, Claude!"
-claude /doctor  
+claude /doctor
+claude update
 ```
 
 #### 3. Settings i Turn Off
@@ -247,6 +250,7 @@ Expected output might include:
 | `claude --resume <id>`     | Long-form resume              | `claude --resume abc123`        |
 | `claude --resume <name>`   | Resume by saved name          | `claude --resume sprint-review` |
 
+
 ## Config Commands
 
 | Command                              | Description        | Example                          |
@@ -259,6 +263,120 @@ Expected output might include:
 | `claude config remove <key> <vals…>` | Remove items       | `claude config remove env DEV=1` |
 
 ---
+
+## Sub Agents
+Sub‑Agents are purpose‑built helpers with their **own prompts, tools, and isolated context windows**. Treat this like a “mixture‑of‑experts” you **compose** per repo.
+
+**When to use them**
+- You need high signal responses (plans, reviews, diffs) without side quests.
+- You want version‑controlled prompts and tool policies alongside the codebase.
+- You work in PR‑driven teams and want scoped edits by role.
+
+### Each Sub‑Agent Has Its Own Context
+**Design rules for your lineup**
+- Define **one clear responsibility** per agent.
+- Keep the **minimum** tool set needed for that role.
+- Prefer **read‑only** agents for analysis/review tasks.
+- Give edit powers to as few agents as possible.
+
+<img width="700" height="160" alt="image" src="https://github.com/user-attachments/assets/42767417-20aa-4bd4-aaf2-cfa0e515b54b" />
+
+*Caption: Agents selection UI in the terminal.*
+
+---
+
+## How I Configure Agents
+Keep agents **in the project** so they’re versioned with the repo and evolve via PRs.
+
+### Quick start
+```bash
+# Update CLI and open the agents panel
+claude update
+/agents
+```
+
+### Create your core agents
+- **planner** (read‑only): turns features/issues into small, testable tasks; outputs a task list or plan.md.
+- **codegen** (edit‑capable): implements tasks; limited to `src/` + `tests/`.
+- **tester** (read‑only or patch‑only): writes *one* failing test or a minimal repro.
+- **reviewer** (read‑only): leaves structured review comments; never edits.
+- **docs** (edit‑capable): updates `README.md`/`docs/` only.
+
+> **Policy tip:** Prefer *patch output* for edit‑capable agents so changes land through your normal Git workflow.
+
+<img width="700" height="173" alt="image" src="https://github.com/user-attachments/assets/84bc80de-35b8-4ef7-9b27-f74f7d4a51f9" />
+
+*Caption: Choose only the tools an agent truly needs (e.g., advisory vs editing access).*
+
+### Example prompts
+Keep prompts short, testable, and repo‑specific. Check them into `agents/`:
+
+<img width="700" height="217" alt="image" src="https://github.com/user-attachments/assets/b4f92591-ff5c-4775-aec2-051f145b9616" />
+
+*Caption: Example prompt for a **test‑coverage‑analyzer** agent.*
+
+**tester.prompt.md (sample)**
+```
+Role: Write a single, focused failing test for the specific scenario I describe.
+Scope: Only create/modify tests under tests/. Do not change src/.
+Output: A brief rationale + a unified diff or patch.
+If the scenario is unclear, ask exactly one clarifying question.
+```
+
+### Expected output
+Your tester agent should produce a small diff or patch plus a short rationale:
+
+<img width="700" height="273" alt="image" src="https://github.com/user-attachments/assets/839151ce-02c9-4283-a53b-9dd105802ada" />
+
+*Caption: Example response from the **test‑coverage‑analyzer** agent.*
+
+**Acceptance checklist**
+- [ ] Output is a single change set.
+- [ ] Only files in allowed paths are touched.
+- [ ] Rationale explains intent and edge cases.
+- [ ] If blocked, the agent asked one clear question.
+
+---
+
+### Why This Shift Matters
+**Operational benefits**
+- **Less context switching:** you stay in one mental mode; agents do the rest.
+- **Cleaner PRs:** narrow prompts + limited tools → smaller, reviewable diffs.
+- **Fewer regressions:** tester/reviewer agents catch gaps before merge.
+- **Repeatability:** prompts + policies live in the repo and travel with branches.
+
+**Security & governance**
+- Limit write access by path (e.g., `src/`, `tests/`, `docs/`).
+- Favor read‑only analysis for high‑risk areas.
+- Log/commit assistant outputs as patches for auditability.
+
+---
+
+### A Mindset Shift
+**Do**
+- Treat agents as teammates with job descriptions.
+- Start read‑only; grant write access *last*.
+- Keep prompts in version control and iterate via PR.
+
+**Don’t**
+- Ask one agent to plan, code, and test in a single turn.
+- Give blanket write permissions.
+- Accept multi‑file diffs when you asked for one test.
+
+### Subagents Ideas To Learn From/Look at 
+- (github-awesome-claude-code-subagents)[https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file]
+- (medium-claude-code-subagents-examples-with-templates-you-can-use)[https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308]
+
+---
+
+### Try It Yourself
+**30 minutes**
+1. `claude update` → `/agents`
+2. Add `planner` and `tester` (read‑only).
+3. Ask for a minimal test plan and a single failing test.
+4. Capture both outputs in `docs/` and a new branch.
+
+
 
 ## Flag Reference
 
