@@ -11,7 +11,7 @@
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
 
-![Claude Code](https://img.shields.io/npm/v/@anthropic-ai/claude-code?label=Claude%20Code)
+![Claude Code](https://img.shields.io/npm/v/@anthropic-ai/claude-code?label=Claude%20Code&logo=anthropic)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
