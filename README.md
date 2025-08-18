@@ -17,7 +17,7 @@
 
 [![ClaudeCode]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
 
-[ClaudeCode]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
+[ClaudeCode]: https://img.shields.io/badge/v/@anthropic-ai/claude-code.svg?style=flat-square
 
 </div>
 
