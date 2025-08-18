@@ -11,11 +11,12 @@
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
 
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.72-blue?logo=anthropic)](https://claude.ai/code)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-v1.0.83-blue?logo=anthropic)](https://claude.ai/code)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
 [![Claude Code]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
+
 [Claude Code]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
 
 </div>
