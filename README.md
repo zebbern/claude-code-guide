@@ -15,9 +15,9 @@
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-Anthropic-orange)](https://claude.ai/code)
 
-[![Claude Code]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
+[![ClaudeCode]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
 
-[Claude Code]: https://img.shields.io/Claude-Code/v/@anthropic-ai/claude-code.svg?style=flat-square
+[ClaudeCode]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
 
 </div>
 
