@@ -70,21 +70,37 @@
 
 ```bash
 # Quick Installment
+# Requires Node 18+ on macOS / Linux / WSL / Windows
 
-## Method 1 – NPM (global) ⭐️ Official
+## NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
-# Requires Node 18+ on macOS / Linux / WSL | if only typing "claude" does not work try "npx claude"
+# if only typing "claude" does not work try "npx claude"
 
-## Method 2 MacOS
+## Windows | You have 3 different options to xhoose from:
+Option 1. npm install -g @anthropic-ai/claude-code
+Option 2. irm https://claude.ai/install.ps1 | iex
+Option 3. curl -fsSL https://claude.ai/install.sh | bash
+
+## Windows WSL/GIT | You have 2 options tl choose from:
+Option 1. npm install -g @anthropic-ai/claude-code
+Option 2. curl -fsSL https://claude.ai/install.sh | bash
+
+## MacOS
 brew install node
 npm install -g @anthropic-ai/claude-code
-# issue with clsude bot found? run export PATH="$PATH:$(npm bin -g)"
+# issue with claude bot found? run export PATH="$PATH:$(npm bin -g)"
 
-## Method 3 – Arch Linux AUR
-yay -S claude-code        # or paru -S claude-code
-# Keeps pace with npm releases
+## Linux:
+sudo apt update && sudo apt install -y nodejs npm
+npm install -g @anthropic-ai/claude-code
 
-## Method 4 – Docker (containerised)
+curl -fsSL https://claude.ai/install.sh | bash
+
+## Arch Linux AUR
+yay -S claude-code 
+
+
+## Docker (containerised)
 mkdir -p ~/.docker/cli-plugins
 curl -SL https://github.com/docker/buildx/releases/download/v0.11.2/buildx-v0.11.2.linux-amd64 -o ~/.docker/cli-plugins/docker-buildx
 chmod +x ~/.docker/cli-plugins/docker-buildx
@@ -92,21 +108,13 @@ curl -O https://raw.githubusercontent.com/RchGrav/claudebox/main/claudebox
 chmod +x claudebox
 # Nice when you can't touch the host system
 
-## Method 5 – Windows via WSL (Anthropic-recommended path)
-# 1) Enable WSL 2 and install Ubuntu
-# 2) Inside Ubuntu:
-sudo apt update && sudo apt install -y nodejs npm
-npm install -g @anthropic-ai/claude-code
-# Step-by-step guide 
-
-# You can also open claude code with ur entire project in vscode or cursor easy with:
-cursor .
-# or
+# You can also open claude code with ur entire project in vscode or cursor by following this:
+# cd in the directory u want to work with then run the command
 code .
-# cd in the directory u want to work with and run the command above!
-# remeber to have the claude code extention installed
+# Have claude code extention installed!
+# This also works if your using WSL
 
-## Checn if claude is installed
+## check if claude is installed
 which claude
 claude --version
 
