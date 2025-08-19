@@ -448,6 +448,7 @@ Your tester agent should produce a small diff or patch plus a short rationale:
 | `/status`            | System/account status       |
 | `/terminal-setup`    | Install Shift+Enter binding |
 | `/vim`               | Toggle vim mode             |
+| `/output-style`      | Displays available output styles with descriptions.|
 
 ---
 
