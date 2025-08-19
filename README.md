@@ -69,21 +69,17 @@
 ## Quick Start
 
 ```bash
-# Quick Installment
-# Requires Node 18+ on macOS / Linux / WSL / Windows
-
 ## NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
 # if only typing "claude" does not work try "npx claude"
 
-## Windows | You have 3 different options to xhoose from:
-Option 1. npm install -g @anthropic-ai/claude-code
-Option 2. irm https://claude.ai/install.ps1 | iex
-Option 3. curl -fsSL https://claude.ai/install.sh | bash
+## Windows 
+npm install -g @anthropic-ai/claude-code
+irm https://claude.ai/install.ps1 | iex
 
-## Windows WSL/GIT | You have 2 options tl choose from:
-Option 1. npm install -g @anthropic-ai/claude-code
-Option 2. curl -fsSL https://claude.ai/install.sh | bash
+## WSL/GIT 
+npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 
 ## MacOS
 brew install node
@@ -98,7 +94,6 @@ curl -fsSL https://claude.ai/install.sh | bash
 
 ## Arch Linux AUR
 yay -S claude-code 
-
 
 ## Docker (containerised)
 mkdir -p ~/.docker/cli-plugins
