@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.0.85
-
-- Status line input now includes session cost info
-
 ## 1.0.84
 
 - Fix tool_use/tool_result id mismatch error when network is unstable
