@@ -543,20 +543,13 @@ Claude Code uses a hierarchical configuration system:
 | `CLAUDE_CODE_USE_BEDROCK`           | `0`        | `1`           | Route requests via **AWS Bedrock** (needs IAM creds; falls back if absent).                  |
 | `CLAUDE_CODE_USE_VERTEX`            | `0`        | `1`           | Route requests via **Google Vertex AI** (needs service‑account creds; falls back if absent). |
 
-```
-```
-
 ![image](https://github.com/user-attachments/assets/d07be233-3322-4510-bb98-4165589d1924)
-
-
 
 | Env Var       | Default               | Example Value                       | What It Does                                       |
 | ------------- | --------------------- | ----------------------------------- | -------------------------------------------------- |
 | `HTTP_PROXY`  | *(unset)*             | `http://proxy.company.com:8080`     | Routes **HTTP** requests through the given proxy.  |
 | `HTTPS_PROXY` | *(unset)*             | `https://proxy.company.com:8443`    | Routes **HTTPS** requests through the given proxy. |
 | `NO_PROXY`    | `localhost,127.0.0.1` | `localhost,127.0.0.1,*.company.com` | Comma‑separated hosts/IPs that bypass the proxy.   |
-
----
 
 ## How to Set
 
@@ -605,9 +598,9 @@ env:
 ### Permission System
 
 **How it works**:
-- Claude asks for permission before using tools
-- Permissions are remembered per session
-- Dangerous operations require confirmation
+> - Claude asks for permission before using tools
+> - Permissions are remembered per session
+> - Dangerous operations require confirmation
 
 #### Permission Levels
 | Level | Description | Risk | Use Case |
@@ -688,10 +681,10 @@ These map in order of increasing budget: `think` < `think hard` < `think harder`
 ## What extended thinking does
 
 Before Claude starts producing the final answer, it spends more time:
-- planning a solution,
-- breaking down steps,
-- considering alternatives and trade‑offs,
-- checking constraints and edge cases.
+> - planning a solution,
+> - breaking down steps,
+> - considering alternatives and trade‑offs,
+> - checking constraints and edge cases.
 
 ## How to use it
 
@@ -710,9 +703,9 @@ claude -p "Ultrathink. Propose a step‑by‑step strategy to fix flaky payments
 
 ## Notes & caveats
 
-- This is a **Claude Code (CLI) behavior**, not a public API parameter; naming or effects may evolve over time.
-- Higher budgets usually increase **latency** and **token usage**. Prefer the smallest keyword that gets the job done.
-- Keep prompts crisp. The keyword asks Claude to plan; your prompt should still provide goals, constraints, and success criteria.
+> - This is a **Claude Code (CLI) behavior**, not a public API parameter; naming or effects may evolve over time.
+> - Higher budgets usually increase **latency** and **token usage**. Prefer the smallest keyword that gets the job done.
+> - Keep prompts crisp. The keyword asks Claude to plan; your prompt should still provide goals, constraints, and success criteria.
 
 
 
@@ -787,7 +780,7 @@ Fix authentication before modifying other keys. ([docs.anthropic.com](https://do
 | `messageIdleNotifThresholdMs`   | Integer (ms)                                                            | `claude config set -g messageIdleNotifThresholdMs 60000`    | Idle threshold before alert. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))      |
 | `autoConnectIde`                | `true` / `false`                                                        | `claude config set -g autoConnectIde true`                  | Auto‑connects to IDE at launch. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))   |
 
-> 🔒 **Attempting to set any other key (e.g. `model`) will throw** `Error: Cannot set '<key>'. Only these keys can be modified…` – verified via CLI. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
+> 🔒 **Attempting to set any other key (e.g. `model`) will throw** `Error: Cannot set '<key>'. Only these keys can be modified…` for more check ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
 
 ---
 
@@ -1020,7 +1013,7 @@ Expand the blocks only when debugging and restore from backup afterwards.
 
 # Automation & Scripting Guide
 
-> **Goal** — Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic's public CLI (`@anthropic-ai/claude-code` 
+> **Goal** Show how to wire Claude Code into **CI/CD pipelines** and **local Git hooks** with verified, production‑tested snippets. All examples rely on Anthropic's public CLI (`@anthropic-ai/claude-code` 
 
 ---
 
