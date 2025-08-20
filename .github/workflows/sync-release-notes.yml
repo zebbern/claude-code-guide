@@ -23,14 +23,13 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
 
-      - name: Download latest Markdown files
+      - name: Download latest Markdown files and stage changes
         run: |
           set -euo pipefail
 
           FOLDER="Official Claude Releases"
           mkdir -p "$FOLDER"
 
-          # Source URL -> destination filename
           FILES=(
             "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md|CHANGELOG.md"
             "https://docs.anthropic.com/en/release-notes/api.md|api.md"
@@ -39,36 +38,81 @@ jobs:
             "https://docs.anthropic.com/en/release-notes/claude-code.md|claude-code.md"
           )
 
-          # Fetch each file and only overwrite if the content changed
+          CHANGED_FILES=()
+          COMMIT_BODY=""
+
           for entry in "${FILES[@]}"; do
             IFS="|" read -r URL NAME <<< "$entry"
-            TMP="$FOLDER/$NAME.tmp"
             OUT="$FOLDER/$NAME"
+            TMP="$OUT.tmp"
 
             echo "Fetching $URL -> $OUT"
             curl -fsSL -H "Accept: text/markdown, text/plain;q=0.9, text/x-markdown;q=0.9, */*;q=0.1" "$URL" -o "$TMP"
 
-            # If file exists and is identical, keep existing; otherwise replace
-            if [[ -f "$OUT" ]] && cmp -s "$TMP" "$OUT"; then
-              echo "No changes for $NAME"
-              rm -f "$TMP"
-            else
-              mv -f "$TMP" "$OUT"
-              echo "Updated $OUT"
+            if [[ -f "$OUT" ]]; then
+              # If content is identical ignoring whitespace, skip
+              if diff --no-index -w "$OUT" "$TMP" >/dev/null 2>&1; then
+                echo "No substantive changes for $NAME (whitespace-only or identical)"; rm -f "$TMP"; continue
+              fi
+            fi
+
+            # Build a small per-file summary BEFORE replacing the file
+            # 1) Diffstat
+            NUMSTAT=$(diff --no-index --numstat "${OUT:-/dev/null}" "$TMP" 2>/dev/null || true)
+            ADDED=$(echo "$NUMSTAT" | awk '{print $1}')
+            DELETED=$(echo "$NUMSTAT" | awk '{print $2}')
+
+            # 2) Highlights: first few added headings/bullets
+            HILITES=$(
+              diff -u --new-file "${OUT:-/dev/null}" "$TMP" \
+                | sed -n 's/^+[^+].*/\0/p' \
+                | sed 's/^+//' \
+                | grep -E '^(#|##|###|- |\* )' \
+                | head -n 6 || true
+            )
+            # If nothing matched, just show the first few added lines
+            if [[ -z "$HILITES" ]]; then
+              HILITES=$(
+                diff -u --new-file "${OUT:-/dev/null}" "$TMP" \
+                  | sed -n 's/^+[^+].*/\0/p' \
+                  | sed 's/^+//' \
+                  | head -n 3 || true
+              )
+            fi
+
+            # Replace file
+            mv -f "$TMP" "$OUT"
+            CHANGED_FILES+=("$OUT")
+
+            # Append to commit body
+            COMMIT_BODY+=$'- '"$NAME"' (+'"${ADDED:-0}"' / -'"${DELETED:-0}"')\n'
+            if [[ -n "$HILITES" ]]; then
+              while IFS= read -r line; do
+                COMMIT_BODY+="    • ${line}\n"
+              done <<< "$HILITES"
             fi
           done
 
-      - name: Commit and push if changes
-        run: |
-          set -euo pipefail
+          # Stage only the files that actually changed
+          if [[ ${#CHANGED_FILES[@]} -gt 0 ]]; then
+            git add "${CHANGED_FILES[@]}"
 
-          if ! git diff --quiet -- "Official Claude Releases/"; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add "Official Claude Releases/"
-            git commit -m "synced Anthropic latest release notes ($(date -u +%F))"
-            git push
-            echo "Changes pushed."
+            # Store commit body for next step
+            printf '%b' "$COMMIT_BODY" > /tmp/commit_body.txt
+            echo "CHANGES_MADE=true" >> $GITHUB_ENV
           else
             echo "No updates to commit."
+            echo "CHANGES_MADE=false" >> $GITHUB_ENV
           fi
+
+      - name: Commit and push if changes
+        if: env.CHANGES_MADE == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          TITLE="Synced Anthropic latest releases ($(date -u +%F))"
+          BODY=$(cat /tmp/commit_body.txt || true)
+          git commit -m "$TITLE" -m "$BODY"
+          git push
+          echo "Changes pushed."
