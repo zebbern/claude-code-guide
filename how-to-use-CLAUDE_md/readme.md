@@ -48,3 +48,14 @@ In the YouTube video, I walk through this entire process implementing a real fea
 
 All credits to [sabrina.dev](https://www.sabrina.dev/p/ultimate-ai-coding-guide-claude-code) for sharing their work.
 
+
+## Showcase of how it could look in terminal:
+
+<img width="1166" height="783" alt="{8479395A-E4B1-4A49-8AF3-1C87ADE3659C}" src="https://github.com/user-attachments/assets/d792ef1e-5e7d-4ac0-b8e8-c0e9e03a0087" />
+
+<img width="1137" height="1242" alt="{E133C2C3-F2AB-4836-91A7-E1F4F373D1DD}" src="https://github.com/user-attachments/assets/db8f4d03-2aa0-4aeb-bfb4-090f84bd38c4" />
+
+
+
+
+
