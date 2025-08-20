@@ -60,7 +60,7 @@
 13. [Troubleshooting](#-troubleshooting)
 14. [Advanced Features](#-advanced-features)
 15. [Best Practices](#-best-practices)
-16. [Hooks](#hooks)
+16. [Hooks](#-hooks-reference)
 
 ---
 
@@ -1428,7 +1428,7 @@ claude "create sequence diagrams for the new authentication flow"
 
 ---
 
-# Hooks reference
+## Hooks reference
 
 > This page provides reference documentation for implementing hooks in Claude Code.
 
