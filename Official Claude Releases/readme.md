@@ -1,1 +1,1 @@
-## Official Claude Releases Updates Every 24h
+## Official Claude Releases Checks for any changed logs and updates the files updated with the new information!
