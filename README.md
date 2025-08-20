@@ -47,18 +47,19 @@
 
 1. [Quick Start](#quick-start)
 2. [System requirements](#system-requirements)
-3. [Sub Agents](#sub-agents)
-4. [Claude Commands](#claude-commands)
-5. [MCP Integration](#-mcp-integration)
-6. [Configuration]( -configuration)
-7. [Environment Variables](#environment-variables)
-8. [Security & Permissions](#security--permissions)
-9. [Claude CLI Configuration](#claude-cli-configuration)
-10. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
-11. [Automation & Scripting](#automation--scripting-guide)
-12. [Troubleshooting](#-troubleshooting)
-13. [Advanced Features](#-advanced-features)
-14. [Best Practices](#-best-practices)
+3. [Health Check & Error Fixes](#health-check)
+4. [Sub Agents](#sub-agents)
+5. [Claude Commands](#claude-commands)
+6. [MCP Integration](#-mcp-integration)
+7. [Configuration]( -configuration)
+8. [Environment Variables](#environment-variables)
+9. [Security & Permissions](#security--permissions)
+10. [Claude CLI Configuration](#claude-cli-configuration)
+11. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
+12. [Automation & Scripting](#automation--scripting-guide)
+13. [Troubleshooting](#-troubleshooting)
+14. [Advanced Features](#-advanced-features)
+15. [Best Practices](#-best-practices)
 
 ---
 
@@ -185,20 +186,56 @@ claude config set ignorePatterns
 claude config set --global
 ```
 
-### Health Check & Testing
+### Health Check
 ```bash
-# Basic functionality test 
-claude "Explain what you can do"
+claude                         # opens Claude UI (if on PATH)
+where claude                   # shows path(s), e.g. C:\Users\<you>\AppData\Roaming\npm\claude.cmd
+claude /doctor                 # opens diagnostic/debug window
+"%USERPROFILE%\AppData\Roaming\npm\claude.cmd" --version   # e.g. 1.0.85 (Claude Code)
 
-# Print mode test 
-claude -p "What is 2+2?"
+CANT RUN 'claude' BUT 'npx claude' WORKS?
+Most likely your PATH is broken/missing the npm bin. Quick temporary fix (current CMD only):
+set PATH=%USERPROFILE%\AppData\Roaming\npm;C:\Program Files\nodejs;%PATH%
+where claude
+claude doctor
 
-# Tool permission test
-claude "Create a file called test.txt with 'Hello World'"
-# Should prompt for Edit permission
+Permanent, safe fix (Windows GUI):
+1. Start → type "Environment Variables" → Open "Edit the system environment variables" → Environment Variables…
+2. Under "User variables for <you>" select Path → Edit → Add:
+   C:\Users\<you>\AppData\Roaming\npm
+   (optional: C:\Users\<you>\.claude\local\bin and C:\Users\<you>\.local\bin)
+3. Remove duplicates, any entry containing %PATH% or stray quotes (") and click OK.
+4. Open a NEW Command Prompt and verify:
+   where claude
+   claude doctor
 
-# Session continuity test  
-claude -c  # Should continue from previous session
+If still failing, run the shim directly:
+npx claude doctor
+or
+"%USERPROFILE%\AppData\Roaming\npm\claude.cmd" doctor
+
+If none of these worked check if "npm" works in ur terminal if it does "npx claude" will also work then you know nothing is wrong with your node.js path try reinstalling claude code
+npm uninstall -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code
+if this did not work
+try
+npm uninstall -g @anthropic-ai/claude-code
+# Remove any leftover shim files (delete if they exist)
+Remove-Item -LiteralPath "$env:USERPROFILE\AppData\Roaming\npm\claude*" -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath "$env:USERPROFILE\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code" -Recurse -Force -ErrorAction SilentlyContinue
+
+# Delete cached installer & installed native files
+Remove-Item -LiteralPath "$env:USERPROFILE\.claude\downloads\*" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath "$env:USERPROFILE\.claude\local\bin\claude.exe" -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath "$env:USERPROFILE\.claude\local" -Recurse -Force -ErrorAction SilentlyContinue
+
+# Remove config and project-local files
+Remove-Item -LiteralPath "$env:USERPROFILE\.claude.json" -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath "$env:USERPROFILE\.claude" -Recurse -Force -ErrorAction SilentlyContinue
+
+then install and try "claude" again
+npm i -g @anthropic-ai\claude-code
+
 ```
 
 ---
