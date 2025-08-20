@@ -241,70 +241,160 @@ npm i -g @anthropic-ai\claude-code
 
 ## Claude Commands
 
-### Claude / Commands
-
-| Slash Cmd            | Purpose                                        |
-| -------------------- | ---------------------------------------------- |
-| `/help`              | List slash commands                            |
-| `/agents`            | List/Create/Edit Subagents                     |
-| `/add-dir`           | Add more working dirs                          |
-| `/bug`               | Report bug to Anthropic                        |
-| `/clear`             | Clear chat history                             |
-| `/compact`           | Compact conversation                           |
-| `/config`            | Config menu                                    |
-| `/cost`              | Token usage                                    |
-| `/doctor`            | Health check                                   |
-| `/exit`              | Exit REPL                                      |
-| `/init`              | Generate `CLAUDE.md`                           |
-| `/login` / `/logout` | Auth switch                                    |
-| `/mcp`               | Manage MCP servers                             |
-| `/memory`            | Edit memories                                  |
-| `/model`             | Change model                                   |
-| `/permissions`       | Tool permissions                               |
-| `/pr_comments`       | View PR comments                               |
-| `/review`            | Request code review                            |
-| `/sessions`          | List sessions                                  |
-| `/status`            | System/account status                          |
-| `/terminal-setup`    | Install Shift+Enter binding                    |
-| `/vim`               | Toggle vim mode                                |
-| `/output-style`      | Show available output styles with descriptions |
-
+| Command                   | Purpose                                                                                                                                      |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/add-dir`                | Add additional working directories                                                                                                           |
+| `/agents`                 | Manage custom AI subagents for specialized tasks                                                                                             |
+| `/bug`                    | Report bugs (sends conversation to Anthropic)                                                                                                |
+| `/clear`                  | Clear conversation history                                                                                                                   |
+| `/compact [instructions]` | Compact conversation with optional focus instructions                                                                                        |
+| `/config`                 | View/modify configuration                                                                                                                    |
+| `/cost`                   | Show token usage statistics (see [cost tracking guide](/en/docs/claude-code/costs#using-the-cost-command) for subscription-specific details) |
+| `/doctor`                 | Checks the health of your Claude Code installation                                                                                           |
+| `/help`                   | Get usage help                                                                                                                               |
+| `/init`                   | Initialize project with CLAUDE.md guide                                                                                                      |
+| `/login`                  | Switch Anthropic accounts                                                                                                                    |
+| `/logout`                 | Sign out from your Anthropic account                                                                                                         |
+| `/mcp`                    | Manage MCP server connections and OAuth authentication                                                                                       |
+| `/memory`                 | Edit CLAUDE.md memory files                                                                                                                  |
+| `/model`                  | Select or change the AI model                                                                                                                |
+| `/permissions`            | View or update [permissions](/en/docs/claude-code/iam#configuring-permissions)                                                               |
+| `/pr_comments`            | View pull request comments                                                                                                                   |
+| `/review`                 | Request code review                                                                                                                          |
+| `/status`                 | View account and system statuses                                                                                                             |
+| `/terminal-setup`         | Install Shift+Enter key binding for newlines (iTerm2 and VSCode only)                                                                        |
+| `/vim`                    | Enter vim mode for alternating insert and command modes                                                                                      |
 
 ### Claude -- Commands
 
-Session-related flags (`--continue`, `--resume`) are listed in **Session Commands**
+| Flag                             | Description                                                                                                                                              | Example                                                     |
+| :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------- |
+| `--add-dir`                      | Add additional working directories for Claude to access (validates each path exists as a directory)                                                      | `claude --add-dir ../apps ../lib`                           |
+| `--allowedTools`                 | A list of tools that should be allowed without prompting the user for permission, in addition to [settings.json files](/en/docs/claude-code/settings)    | `"Bash(git log:*)" "Bash(git diff:*)" "Read"`               |
+| `--disallowedTools`              | A list of tools that should be disallowed without prompting the user for permission, in addition to [settings.json files](/en/docs/claude-code/settings) | `"Bash(git log:*)" "Bash(git diff:*)" "Edit"`               |
+| `--print`, `-p`                  | Print response without interactive mode (see [SDK documentation](/en/docs/claude-code/sdk) for programmatic usage details)                               | `claude -p "query"`                                         |
+| `--append-system-prompt`         | Append to system prompt (only with `--print`)                                                                                                            | `claude --append-system-prompt "Custom instruction"`        |
+| `--output-format`                | Specify output format for print mode (options: `text`, `json`, `stream-json`)                                                                            | `claude -p "query" --output-format json`                    |
+| `--input-format`                 | Specify input format for print mode (options: `text`, `stream-json`)                                                                                     | `claude -p --output-format json --input-format stream-json` |
+| `--verbose`                      | Enable verbose logging, shows full turn-by-turn output (helpful for debugging in both print and interactive modes)                                       | `claude --verbose`                                          |
+| `--max-turns`                    | Limit the number of agentic turns in non-interactive mode                                                                                                | `claude -p --max-turns 3 "query"`                           |
+| `--model`                        | Sets the model for the current session with an alias for the latest model (`sonnet` or `opus`) or a model's full name                                    | `claude --model claude-sonnet-4-20250514`                   |
+| `--permission-mode`              | Begin in a specified [permission mode](iam#permission-modes)                                                                                             | `claude --permission-mode plan`                             |
+| `--permission-prompt-tool`       | Specify an MCP tool to handle permission prompts in non-interactive mode                                                                                 | `claude -p --permission-prompt-tool mcp_auth_tool "query"`  |
+| `--resume`                       | Resume a specific session by ID, or by choosing in interactive mode                                                                                      | `claude --resume abc123 "query"`                            |
+| `--continue`                     | Load the most recent conversation in the current directory                                                                                               | `claude --continue`                                         |
+| `--dangerously-skip-permissions` | Skip permission prompts (use with caution)                                                                                                               | `claude --dangerously-skip-permissions`                     |
 
-| Flag                        | Short | Options / Value               | Description                           | Example                                      |
-| --------------------------------- | ----- | ----------------------------- | ------------------------------------- | -------------------------------------------- |
-| `--print`                         | `-p`  |                               | Non-interactive “print” mode          | `claude -p "help"`                           |
-| `--help`                          | `-h`  |                               | Show help                             | `claude --help`                              |
-| `--version`                       | `-v`  |                               | Show version                          | `claude --version`                           |
-| `--model <name>`                  |       |                               | Choose model                          | `claude --model claude-opus-4-20250514`      |
-| `--verbose`                       |       |                               | Verbose logs                          | `claude --verbose`                           |
-| `--add-dir <paths…>`              |       |                               | Add extra working directories         | `claude --add-dir ../lib ../src`             |
-| `--mcp-config <file>`             |       |                               | Load MCP server config                | `claude --mcp-config servers.json`           |
-| `--output-format`                 |       | `text`, `json`, `stream-json` | Output format (works great with `-p`) | `--output-format json`                       |
-| `--input-format`                  |       | `text`, `stream-json`         | Input format for `-p`                 | `--input-format stream-json`                 |
-| `--max-turns <n>`                 |       | Integer                       | Limit number of turns with `-p`       | `--max-turns 3`                              |
-| `--system-prompt "<text>"`        |       | String                        | Set system prompt in `-p`             | `--system-prompt "You are strict"`           |
-| `--append-system-prompt "<text>"` |       | String                        | Append to system prompt in `-p`       | `--append-system-prompt "Add tests"`         |
-| `--allowedTools "<list>"`         |       | Comma/space list              | Whitelist tools                       | `--allowedTools "Read,View"`                 |
-| `--disallowedTools "<list>"`      |       | Comma/space list              | Blacklist tools                       | `--disallowedTools "Bash"`                   |
-| `--permission-mode <mode>`        |       | e.g., `plan`                  | Start in permission mode              | `--permission-mode plan`                     |
-| `--permission-prompt-tool <tool>` |       | Tool name                     | MCP tool for permission checks        | `--permission-prompt-tool mcp__auth__prompt` |
-| `--dangerously-skip-permissions`  |       |                               | Skip all permission prompts (⚠️)      | `--dangerously-skip-permissions`             |
+
+> The `--output-format json` flag is particularly useful for scripting and
+> automation, allowing you to parse Claude's responses programmatically.
+
 
 
 ### Claude Session Commands
 
-| Command / Flag                                  | What it does                       | Example                         |
-| ----------------------------------------------- | ---------------------------------- | ------------------------------- |
-| `claude -c` / `claude --continue`               | Continue last session              | `claude -c`                     |
-| `claude -c -p "<prompt>"`                       | Continue + new prompt in print     | `claude -c -p "check types"`    |
-| `claude -r <id>` / `claude --resume <id\|name>` | Resume by session ID or saved name | `claude --resume sprint-review` |
+| Command                            | Description                                    | Example                                                            |
+| :--------------------------------- | :--------------------------------------------- | :----------------------------------------------------------------- |
+| `claude`                           | Start interactive REPL                         | `claude`                                                           |
+| `claude "query"`                   | Start REPL with initial prompt                 | `claude "explain this project"`                                    |
+| `claude -p "query"`                | Query via SDK, then exit                       | `claude -p "explain this function"`                                |
+| `cat file \| claude -p "query"`    | Process piped content                          | `cat logs.txt \| claude -p "explain"`                              |
+| `claude -c`                        | Continue most recent conversation              | `claude -c`                                                        |
+| `claude -c -p "query"`             | Continue via SDK                               | `claude -c -p "Check for type errors"`                             |
+| `claude -r "<session-id>" "query"` | Resume session by ID                           | `claude -r "abc123" "Finish this PR"`                              |
+| `claude update`                    | Update to latest version                       | `claude update`                                                    |
+| `claude mcp`                       | Configure Model Context Protocol (MCP) servers | See the [Claude Code MCP documentation](/en/docs/claude-code/mcp). |
 
 > Tip: For non-interactive runs, you can also pipe input:
 > `cat logs.txt \| claude -p "explain"`
+
+> Complete reference for keyboard shortcuts, input modes, and interactive features in Claude Code sessions.
+
+## Keyboard shortcuts
+
+### General controls
+
+| Shortcut         | Description                        | Context                    |
+| :--------------- | :--------------------------------- | :------------------------- |
+| `Ctrl+C`         | Cancel current input or generation | Standard interrupt         |
+| `Ctrl+D`         | Exit Claude Code session           | EOF signal                 |
+| `Ctrl+L`         | Clear terminal screen              | Keeps conversation history |
+| `Up/Down arrows` | Navigate command history           | Recall previous inputs     |
+| `Esc` + `Esc`    | Edit previous message              | Double-escape to modify    |
+
+### Multiline input
+
+| Method           | Shortcut       | Context                           |
+| :--------------- | :------------- | :-------------------------------- |
+| Quick escape     | `\` + `Enter`  | Works in all terminals            |
+| macOS default    | `Option+Enter` | Default on macOS                  |
+| Terminal setup   | `Shift+Enter`  | After `/terminal-setup`           |
+| Control sequence | `Ctrl+J`       | Line feed character for multiline |
+| Paste mode       | Paste directly | For code blocks, logs             |
+
+### Quick commands
+
+| Shortcut     | Description                        | Notes                                                     |
+| :----------- | :--------------------------------- | :-------------------------------------------------------- |
+| `#` at start | Memory shortcut - add to CLAUDE.md | Prompts for file selection                                |
+| `/` at start | Slash command                      | See [slash commands](/en/docs/claude-code/slash-commands) |
+
+## Vim mode
+
+Enable vim-style editing with `/vim` command or configure permanently via `/config`.
+
+### Mode switching
+
+| Command | Action                      | From mode |
+| :------ | :-------------------------- | :-------- |
+| `Esc`   | Enter NORMAL mode           | INSERT    |
+| `i`     | Insert before cursor        | NORMAL    |
+| `I`     | Insert at beginning of line | NORMAL    |
+| `a`     | Insert after cursor         | NORMAL    |
+| `A`     | Insert at end of line       | NORMAL    |
+| `o`     | Open line below             | NORMAL    |
+| `O`     | Open line above             | NORMAL    |
+
+### Navigation (NORMAL mode)
+
+| Command         | Action                    |
+| :-------------- | :------------------------ |
+| `h`/`j`/`k`/`l` | Move left/down/up/right   |
+| `w`             | Next word                 |
+| `e`             | End of word               |
+| `b`             | Previous word             |
+| `0`             | Beginning of line         |
+| `$`             | End of line               |
+| `^`             | First non-blank character |
+| `gg`            | Beginning of input        |
+| `G`             | End of input              |
+
+### Editing (NORMAL mode)
+
+| Command        | Action                  |
+| :------------- | :---------------------- |
+| `x`            | Delete character        |
+| `dd`           | Delete line             |
+| `D`            | Delete to end of line   |
+| `dw`/`de`/`db` | Delete word/to end/back |
+| `cc`           | Change line             |
+| `C`            | Change to end of line   |
+| `cw`/`ce`/`cb` | Change word/to end/back |
+| `.`            | Repeat last change      |
+
+<Tip>
+  Configure your preferred line break behavior in terminal settings. Run `/terminal-setup` to install Shift+Enter binding for iTerm2 and VS Code terminals.
+</Tip>
+
+## Command history
+
+Claude Code maintains command history for the current session:
+
+* History is stored per working directory
+* Cleared with `/clear` command
+* Use Up/Down arrows to navigate (see keyboard shortcuts above)
+* **Ctrl+R**: Reverse search through history (if supported by terminal)
+* **Note**: History expansion (`!`) is disabled by default
 
 ### Subcommands:
 
@@ -778,47 +868,11 @@ Error getting API key from apiKeyHelper (in settings or ~/.claude.json):
 
 Fix authentication before modifying other keys. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
 
----
-
-## `claude config` Commands
-
-| Command pattern                         | Purpose                           | Example                                                    |
-| --------------------------------------- | --------------------------------- | ---------------------------------------------------------- |
-| `claude config list`                    | Show all current settings         | `claude config list`                                       |
-| `claude config get <key>`               | Display a single setting          | `claude config get theme`                                  |
-| `claude config set -g <key> <value>`    | **Set a *global* value**          | `claude config set -g theme dark`                          |
-| `claude config add -g <key> <value>`    | Append to an array‑type setting   | `claude config add -g env CLAUDE_CODE_ENABLE_TELEMETRY=1`  |
-| `claude config remove -g <key> <value>` | Remove from an array‑type setting | `claude config remove -g env CLAUDE_CODE_ENABLE_TELEMETRY` |
 
 *(omit `-g` to target the **current project** instead of global)*.
 
 ---
 
-## Editable Keys
-
-| Key                             | Typical Values                                                          | Safe Example                                                | Notes                                                                                                                            |
-| ------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `apiKeyHelper`                  | Path to executable script                                               | `claude config set -g apiKeyHelper ~/.claude/key_helper.sh` | Script must echo a fresh API key; be executable. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings)) |
-| `installMethod`                 | `npm`, `brew`, `binary`, `deb`, …                                       | `claude config set -g installMethod npm`                    | Informational only. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))               |
-| `autoUpdates`                   | `true` / `false`                                                        | `claude config set -g autoUpdates false`                    | Turns self‑updater on/off. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                       |
-| `theme`                         | `dark`, `light`, `light-daltonized`, `dark-daltonized`                  | `claude config set -g theme dark`                           | CLI colour scheme. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                               |
-| `verbose`                       | `true` / `false`                                                        | `claude config set -g verbose true`                         | Show full Bash + tool output. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                    |
-|         |  | `claude config set -g  | Where alerts appear. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))                             |
-| `shiftEnterKeyBindingInstalled` | `true` / `false`                                                        | `claude config set -g shiftEnterKeyBindingInstalled true`   | Enables Shift+Enter new‑line. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))     |
-| `hasUsedBackslashReturn`        | `true` / `false`                                                        | `claude config set -g hasUsedBackslashReturn true`          | Internal flag; rarely changed. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))    |
-| `supervisorMode`                | `true` / `false`                                                        | `claude config set -g supervisorMode true`                  | Enables supervisor features. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))      |
-| `autoCompactEnabled`            | `true` / `false`                                                        | `claude config set -g autoCompactEnabled true`              | Auto‑compresses chat logs. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))        |
-| `diffTool`                      | Diff command/path                                                       | `claude config set -g diffTool meld`                        | Used by `/diff`. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))                  |
-| `env`                           | `KEY=value` or JSON                                                     | `claude config set -g env CLAUDE_CODE_ENABLE_TELEMETRY=0`   | Injects env vars into every session. ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))             |
-| `tipsHistory`                   | `[]` or JSON array                                                      | `claude config set -g tipsHistory []`                       | Clears tips pop‑up history. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))       |
-| `parallelTasksCount`            | Integer ≥ 1                                                             | `claude config set -g parallelTasksCount 4`                 | Limit concurrent tasks. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))           |
-| `todoFeatureEnabled`            | `true` / `false`                                                        | `claude config set -g todoFeatureEnabled true`              | Enables experimental To‑Do. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))       |
-| `messageIdleNotifThresholdMs`   | Integer (ms)                                                            | `claude config set -g messageIdleNotifThresholdMs 60000`    | Idle threshold before alert. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))      |
-| `autoConnectIde`                | `true` / `false`                                                        | `claude config set -g autoConnectIde true`                  | Auto‑connects to IDE at launch. ([ainativedev.io](https://ainativedev.io/news/configuring-claude-code))   |
-
-> 🔒 **Attempting to set any other key (e.g. `model`) will throw** `Error: Cannot set '<key>'. Only these keys can be modified…` for more check ([docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/settings))
-
----
 
 ## Migrating to `settings.json`
 
@@ -834,17 +888,7 @@ vi .claude/settings.json
 
 ---
 
-## Safe Editing Checklist
-
-1. **Backup** `~/.claude/claude.json`.
-2. **Authenticate** (`ANTHROPIC_API_KEY` or `/login`).
-3. **Change one key at a time** → verify with `claude config get`.
-4. **Keep CLI updated** (`autoUpdates=true`) or via package manager.
-5. **Read release notes** for new or removed keys.
-
----
-
-# Claude `~/.claude.json` Configuration Guide
+## Claude `~/.claude.json` Configuration Guide
 
 > **Purpose** — A concise, *fact‑checked* reference for safely editing your personal configuration file. All keys and examples come directly from Anthropic‑supplied defaults or the CLI's own output—no speculative or undocumented fields.
 
@@ -1238,63 +1282,12 @@ claude --verbose
 # Check logs (verify log location)
 ```
 
----
-
-## 🚀 Advanced Features
-
-### Context Management
-
-#### CLAUDE.md - Project Memory
-**Purpose**: Store persistent project information that Claude remembers
-
-**Location**: Project root directory
-
-```markdown
-# Project: My Application
-
-## Overview
-This is a React/Node.js application with PostgreSQL database.
-
-## Architecture
-- Frontend: React 18 with TypeScript
-- Backend: Node.js with Express  
-- Database: PostgreSQL 14
-
-## Current Goals
-- [ ] Implement authentication
-- [ ] Add API documentation
-- [ ] Set up CI/CD pipeline
-
-## Development Guidelines
-- Use TypeScript for all new code
-- Follow ESLint configuration
-- Write tests for new features
-```
-
 #### Memory Commands 
 ```bash
 claude /memory           # Edit project memory
 claude /memory view      # View current memory
 ```
 
-### Advanced Thinking
-```bash
-# These "thinking" phrases may work:
-claude "think hard about the security implications of this code"
-claude "analyze this thoroughly and provide detailed recommendations"
-
-```
-
-### Multi-Directory Workspaces
-```bash
-# Add multiple directories
-claude --add-dir ../frontend ../backend ../shared
-
-# Project-wide analysis
-claude "analyze the entire application architecture"
-```
-
----
 
 ## 💡 Best Practices
 
@@ -1319,8 +1312,6 @@ claude "check my code"
 3. **Clean up regularly**: Remove old sessions and cache
 
 ---
-
-**Last Updated**: Based on package version 1.0.38 and available documentation. Many features require verification in your specific installation.
 
 #### Monitoring & Alerting
 
@@ -1435,3 +1426,748 @@ claude "create sequence diagrams for the new authentication flow"
 - Test automation in safe environments
 
 ---
+
+# Hooks reference
+
+> This page provides reference documentation for implementing hooks in Claude Code.
+
+<Tip>
+  For a quickstart guide with examples, see [Get started with Claude Code hooks](/en/docs/claude-code/hooks-guide).
+</Tip>
+
+## Configuration
+
+Claude Code hooks are configured in your [settings files](/en/docs/claude-code/settings):
+
+* `~/.claude/settings.json` - User settings
+* `.claude/settings.json` - Project settings
+* `.claude/settings.local.json` - Local project settings (not committed)
+* Enterprise managed policy settings
+
+### Structure
+
+Hooks are organized by matchers, where each matcher can have multiple hooks:
+
+```json
+{
+  "hooks": {
+    "EventName": [
+      {
+        "matcher": "ToolPattern",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "your-command-here"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+* **matcher**: Pattern to match tool names, case-sensitive (only applicable for
+  `PreToolUse` and `PostToolUse`)
+  * Simple strings match exactly: `Write` matches only the Write tool
+  * Supports regex: `Edit|Write` or `Notebook.*`
+  * Use `*` to match all tools. You can also use empty string (`""`) or leave
+    `matcher` blank.
+* **hooks**: Array of commands to execute when the pattern matches
+  * `type`: Currently only `"command"` is supported
+  * `command`: The bash command to execute (can use `$CLAUDE_PROJECT_DIR`
+    environment variable)
+  * `timeout`: (Optional) How long a command should run, in seconds, before
+    canceling that specific command.
+
+For events like `UserPromptSubmit`, `Notification`, `Stop`, and `SubagentStop`
+that don't use matchers, you can omit the matcher field:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/path/to/prompt-validator.py"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Project-Specific Hook Scripts
+
+You can use the environment variable `CLAUDE_PROJECT_DIR` (only available when
+Claude Code spawns the hook command) to reference scripts stored in your project,
+ensuring they work regardless of Claude's current directory:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/check-style.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Hook Events
+
+### PreToolUse
+
+Runs after Claude creates tool parameters and before processing the tool call.
+
+**Common matchers:**
+
+* `Task` - Subagent tasks (see [subagents documentation](/en/docs/claude-code/sub-agents))
+* `Bash` - Shell commands
+* `Glob` - File pattern matching
+* `Grep` - Content search
+* `Read` - File reading
+* `Edit`, `MultiEdit` - File editing
+* `Write` - File writing
+* `WebFetch`, `WebSearch` - Web operations
+
+### PostToolUse
+
+Runs immediately after a tool completes successfully.
+
+Recognizes the same matcher values as PreToolUse.
+
+### Notification
+
+Runs when Claude Code sends notifications. Notifications are sent when:
+
+1. Claude needs your permission to use a tool. Example: "Claude needs your
+   permission to use Bash"
+2. The prompt input has been idle for at least 60 seconds. "Claude is waiting
+   for your input"
+
+### UserPromptSubmit
+
+Runs when the user submits a prompt, before Claude processes it. This allows you
+to add additional context based on the prompt/conversation, validate prompts, or
+block certain types of prompts.
+
+### Stop
+
+Runs when the main Claude Code agent has finished responding. Does not run if
+the stoppage occurred due to a user interrupt.
+
+### SubagentStop
+
+Runs when a Claude Code subagent (Task tool call) has finished responding.
+
+### PreCompact
+
+Runs before Claude Code is about to run a compact operation.
+
+**Matchers:**
+
+* `manual` - Invoked from `/compact`
+* `auto` - Invoked from auto-compact (due to full context window)
+
+### SessionStart
+
+Runs when Claude Code starts a new session or resumes an existing session (which
+currently does start a new session under the hood). Useful for loading in
+development context like existing issues or recent changes to your codebase.
+
+**Matchers:**
+
+* `startup` - Invoked from startup
+* `resume` - Invoked from `--resume`, `--continue`, or `/resume`
+* `clear` - Invoked from `/clear`
+
+## Hook Input
+
+Hooks receive JSON data via stdin containing session information and
+event-specific data:
+
+```typescript
+{
+  // Common fields
+  session_id: string
+  transcript_path: string  // Path to conversation JSON
+  cwd: string              // The current working directory when the hook is invoked
+
+  // Event-specific fields
+  hook_event_name: string
+  ...
+}
+```
+
+### PreToolUse Input
+
+The exact schema for `tool_input` depends on the tool.
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "/path/to/file.txt",
+    "content": "file content"
+  }
+}
+```
+
+### PostToolUse Input
+
+The exact schema for `tool_input` and `tool_response` depends on the tool.
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "hook_event_name": "PostToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "/path/to/file.txt",
+    "content": "file content"
+  },
+  "tool_response": {
+    "filePath": "/path/to/file.txt",
+    "success": true
+  }
+}
+```
+
+### Notification Input
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "hook_event_name": "Notification",
+  "message": "Task completed successfully"
+}
+```
+
+### UserPromptSubmit Input
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "hook_event_name": "UserPromptSubmit",
+  "prompt": "Write a function to calculate the factorial of a number"
+}
+```
+
+### Stop and SubagentStop Input
+
+`stop_hook_active` is true when Claude Code is already continuing as a result of
+a stop hook. Check this value or process the transcript to prevent Claude Code
+from running indefinitely.
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "hook_event_name": "Stop",
+  "stop_hook_active": true
+}
+```
+
+### PreCompact Input
+
+For `manual`, `custom_instructions` comes from what the user passes into
+`/compact`. For `auto`, `custom_instructions` is empty.
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "hook_event_name": "PreCompact",
+  "trigger": "manual",
+  "custom_instructions": ""
+}
+```
+
+### SessionStart Input
+
+```json
+{
+  "session_id": "abc123",
+  "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "hook_event_name": "SessionStart",
+  "source": "startup"
+}
+```
+
+## Hook Output
+
+There are two ways for hooks to return output back to Claude Code. The output
+communicates whether to block and any feedback that should be shown to Claude
+and the user.
+
+### Simple: Exit Code
+
+Hooks communicate status through exit codes, stdout, and stderr:
+
+* **Exit code 0**: Success. `stdout` is shown to the user in transcript mode
+  (CTRL-R), except for `UserPromptSubmit` and `SessionStart`, where stdout is
+  added to the context.
+* **Exit code 2**: Blocking error. `stderr` is fed back to Claude to process
+  automatically. See per-hook-event behavior below.
+* **Other exit codes**: Non-blocking error. `stderr` is shown to the user and
+  execution continues.
+
+<Warning>
+  Reminder: Claude Code does not see stdout if the exit code is 0, except for
+  the `UserPromptSubmit` hook where stdout is injected as context.
+</Warning>
+
+#### Exit Code 2 Behavior
+
+| Hook Event         | Behavior                                                           |
+| ------------------ | ------------------------------------------------------------------ |
+| `PreToolUse`       | Blocks the tool call, shows stderr to Claude                       |
+| `PostToolUse`      | Shows stderr to Claude (tool already ran)                          |
+| `Notification`     | N/A, shows stderr to user only                                     |
+| `UserPromptSubmit` | Blocks prompt processing, erases prompt, shows stderr to user only |
+| `Stop`             | Blocks stoppage, shows stderr to Claude                            |
+| `SubagentStop`     | Blocks stoppage, shows stderr to Claude subagent                   |
+| `PreCompact`       | N/A, shows stderr to user only                                     |
+| `SessionStart`     | N/A, shows stderr to user only                                     |
+
+### Advanced: JSON Output
+
+Hooks can return structured JSON in `stdout` for more sophisticated control:
+
+#### Common JSON Fields
+
+All hook types can include these optional fields:
+
+```json
+{
+  "continue": true, // Whether Claude should continue after hook execution (default: true)
+  "stopReason": "string" // Message shown when continue is false
+  "suppressOutput": true, // Hide stdout from transcript mode (default: false)
+}
+```
+
+If `continue` is false, Claude stops processing after the hooks run.
+
+* For `PreToolUse`, this is different from `"permissionDecision": "deny"`, which
+  only blocks a specific tool call and provides automatic feedback to Claude.
+* For `PostToolUse`, this is different from `"decision": "block"`, which
+  provides automated feedback to Claude.
+* For `UserPromptSubmit`, this prevents the prompt from being processed.
+* For `Stop` and `SubagentStop`, this takes precedence over any
+  `"decision": "block"` output.
+* In all cases, `"continue" = false` takes precedence over any
+  `"decision": "block"` output.
+
+`stopReason` accompanies `continue` with a reason shown to the user, not shown
+to Claude.
+
+#### `PreToolUse` Decision Control
+
+`PreToolUse` hooks can control whether a tool call proceeds.
+
+* `"allow"` bypasses the permission system. `permissionDecisionReason` is shown
+  to the user but not to Claude. (*Deprecated `"approve"` value + `reason` has
+  the same behavior.*)
+* `"deny"` prevents the tool call from executing. `permissionDecisionReason` is
+  shown to Claude. (*`"block"` value + `reason` has the same behavior.*)
+* `"ask"` asks the user to confirm the tool call in the UI.
+  `permissionDecisionReason` is shown to the user but not to Claude.
+
+```json
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "allow" | "deny" | "ask",
+    "permissionDecisionReason": "My reason here (shown to user)"
+  },
+  "decision": "approve" | "block" | undefined, // Deprecated for PreToolUse but still supported
+  "reason": "Explanation for decision" // Deprecated for PreToolUse but still supported
+}
+```
+
+#### `PostToolUse` Decision Control
+
+`PostToolUse` hooks can control whether a tool call proceeds.
+
+* `"block"` automatically prompts Claude with `reason`.
+* `undefined` does nothing. `reason` is ignored.
+
+```json
+{
+  "decision": "block" | undefined,
+  "reason": "Explanation for decision"
+}
+```
+
+#### `UserPromptSubmit` Decision Control
+
+`UserPromptSubmit` hooks can control whether a user prompt is processed.
+
+* `"block"` prevents the prompt from being processed. The submitted prompt is
+  erased from context. `"reason"` is shown to the user but not added to context.
+* `undefined` allows the prompt to proceed normally. `"reason"` is ignored.
+* `"hookSpecificOutput.additionalContext"` adds the string to the context if not
+  blocked.
+
+```json
+{
+  "decision": "block" | undefined,
+  "reason": "Explanation for decision",
+  "hookSpecificOutput": {
+    "hookEventName": "UserPromptSubmit",
+    "additionalContext": "My additional context here"
+  }
+}
+```
+
+#### `Stop`/`SubagentStop` Decision Control
+
+`Stop` and `SubagentStop` hooks can control whether Claude must continue.
+
+* `"block"` prevents Claude from stopping. You must populate `reason` for Claude
+  to know how to proceed.
+* `undefined` allows Claude to stop. `reason` is ignored.
+
+```json
+{
+  "decision": "block" | undefined,
+  "reason": "Must be provided when Claude is blocked from stopping"
+}
+```
+
+#### `SessionStart` Decision Control
+
+`SessionStart` hooks allow you to load in context at the start of a session.
+
+* `"hookSpecificOutput.additionalContext"` adds the string to the context.
+
+```json
+{
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": "My additional context here"
+  }
+}
+```
+
+#### Exit Code Example: Bash Command Validation
+
+```python
+#!/usr/bin/env python3
+import json
+import re
+import sys
+
+# Define validation rules as a list of (regex pattern, message) tuples
+VALIDATION_RULES = [
+    (
+        r"\bgrep\b(?!.*\|)",
+        "Use 'rg' (ripgrep) instead of 'grep' for better performance and features",
+    ),
+    (
+        r"\bfind\s+\S+\s+-name\b",
+        "Use 'rg --files | rg pattern' or 'rg --files -g pattern' instead of 'find -name' for better performance",
+    ),
+]
+
+
+def validate_command(command: str) -> list[str]:
+    issues = []
+    for pattern, message in VALIDATION_RULES:
+        if re.search(pattern, command):
+            issues.append(message)
+    return issues
+
+
+try:
+    input_data = json.load(sys.stdin)
+except json.JSONDecodeError as e:
+    print(f"Error: Invalid JSON input: {e}", file=sys.stderr)
+    sys.exit(1)
+
+tool_name = input_data.get("tool_name", "")
+tool_input = input_data.get("tool_input", {})
+command = tool_input.get("command", "")
+
+if tool_name != "Bash" or not command:
+    sys.exit(1)
+
+# Validate the command
+issues = validate_command(command)
+
+if issues:
+    for message in issues:
+        print(f"• {message}", file=sys.stderr)
+    # Exit code 2 blocks tool call and shows stderr to Claude
+    sys.exit(2)
+```
+
+#### JSON Output Example: UserPromptSubmit to Add Context and Validation
+
+<Note>
+  For `UserPromptSubmit` hooks, you can inject context using either method:
+
+  * Exit code 0 with stdout: Claude sees the context (special case for `UserPromptSubmit`)
+  * JSON output: Provides more control over the behavior
+</Note>
+
+```python
+#!/usr/bin/env python3
+import json
+import sys
+import re
+import datetime
+
+# Load input from stdin
+try:
+    input_data = json.load(sys.stdin)
+except json.JSONDecodeError as e:
+    print(f"Error: Invalid JSON input: {e}", file=sys.stderr)
+    sys.exit(1)
+
+prompt = input_data.get("prompt", "")
+
+# Check for sensitive patterns
+sensitive_patterns = [
+    (r"(?i)\b(password|secret|key|token)\s*[:=]", "Prompt contains potential secrets"),
+]
+
+for pattern, message in sensitive_patterns:
+    if re.search(pattern, prompt):
+        # Use JSON output to block with a specific reason
+        output = {
+            "decision": "block",
+            "reason": f"Security policy violation: {message}. Please rephrase your request without sensitive information."
+        }
+        print(json.dumps(output))
+        sys.exit(0)
+
+# Add current time to context
+context = f"Current time: {datetime.datetime.now()}"
+print(context)
+
+"""
+The following is also equivalent:
+print(json.dumps({
+  "hookSpecificOutput": {
+    "hookEventName": "UserPromptSubmit",
+    "additionalContext": context,
+  },
+}))
+"""
+
+# Allow the prompt to proceed with the additional context
+sys.exit(0)
+```
+
+#### JSON Output Example: PreToolUse with Approval
+
+```python
+#!/usr/bin/env python3
+import json
+import sys
+
+# Load input from stdin
+try:
+    input_data = json.load(sys.stdin)
+except json.JSONDecodeError as e:
+    print(f"Error: Invalid JSON input: {e}", file=sys.stderr)
+    sys.exit(1)
+
+tool_name = input_data.get("tool_name", "")
+tool_input = input_data.get("tool_input", {})
+
+# Example: Auto-approve file reads for documentation files
+if tool_name == "Read":
+    file_path = tool_input.get("file_path", "")
+    if file_path.endswith((".md", ".mdx", ".txt", ".json")):
+        # Use JSON output to auto-approve the tool call
+        output = {
+            "decision": "approve",
+            "reason": "Documentation file auto-approved",
+            "suppressOutput": True  # Don't show in transcript mode
+        }
+        print(json.dumps(output))
+        sys.exit(0)
+
+# For other cases, let the normal permission flow proceed
+sys.exit(0)
+```
+
+## Working with MCP Tools
+
+Claude Code hooks work seamlessly with
+[Model Context Protocol (MCP) tools](/en/docs/claude-code/mcp). When MCP servers
+provide tools, they appear with a special naming pattern that you can match in
+your hooks.
+
+### MCP Tool Naming
+
+MCP tools follow the pattern `mcp__<server>__<tool>`, for example:
+
+* `mcp__memory__create_entities` - Memory server's create entities tool
+* `mcp__filesystem__read_file` - Filesystem server's read file tool
+* `mcp__github__search_repositories` - GitHub server's search tool
+
+### Configuring Hooks for MCP Tools
+
+You can target specific MCP tools or entire MCP servers:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__memory__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Memory operation initiated' >> ~/mcp-operations.log"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*__write.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/user/scripts/validate-mcp-write.py"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Examples
+
+<Tip>
+  For practical examples including code formatting, notifications, and file protection, see [More Examples](/en/docs/claude-code/hooks-guide#more-examples) in the get started guide.
+</Tip>
+
+## Security Considerations
+
+### Disclaimer
+
+**USE AT YOUR OWN RISK**: Claude Code hooks execute arbitrary shell commands on
+your system automatically. By using hooks, you acknowledge that:
+
+* You are solely responsible for the commands you configure
+* Hooks can modify, delete, or access any files your user account can access
+* Malicious or poorly written hooks can cause data loss or system damage
+* Anthropic provides no warranty and assumes no liability for any damages
+  resulting from hook usage
+* You should thoroughly test hooks in a safe environment before production use
+
+Always review and understand any hook commands before adding them to your
+configuration.
+
+### Security Best Practices
+
+Here are some key practices for writing more secure hooks:
+
+1. **Validate and sanitize inputs** - Never trust input data blindly
+2. **Always quote shell variables** - Use `"$VAR"` not `$VAR`
+3. **Block path traversal** - Check for `..` in file paths
+4. **Use absolute paths** - Specify full paths for scripts (use
+   `$CLAUDE_PROJECT_DIR` for the project path)
+5. **Skip sensitive files** - Avoid `.env`, `.git/`, keys, etc.
+
+### Configuration Safety
+
+Direct edits to hooks in settings files don't take effect immediately. Claude
+Code:
+
+1. Captures a snapshot of hooks at startup
+2. Uses this snapshot throughout the session
+3. Warns if hooks are modified externally
+4. Requires review in `/hooks` menu for changes to apply
+
+This prevents malicious hook modifications from affecting your current session.
+
+## Hook Execution Details
+
+* **Timeout**: 60-second execution limit by default, configurable per command.
+  * A timeout for an individual command does not affect the other commands.
+* **Parallelization**: All matching hooks run in parallel
+* **Environment**: Runs in current directory with Claude Code's environment
+  * The `CLAUDE_PROJECT_DIR` environment variable is available and contains the
+    absolute path to the project root directory
+* **Input**: JSON via stdin
+* **Output**:
+  * PreToolUse/PostToolUse/Stop: Progress shown in transcript (Ctrl-R)
+  * Notification: Logged to debug only (`--debug`)
+
+## Debugging
+
+### Basic Troubleshooting
+
+If your hooks aren't working:
+
+1. **Check configuration** - Run `/hooks` to see if your hook is registered
+2. **Verify syntax** - Ensure your JSON settings are valid
+3. **Test commands** - Run hook commands manually first
+4. **Check permissions** - Make sure scripts are executable
+5. **Review logs** - Use `claude --debug` to see hook execution details
+
+Common issues:
+
+* **Quotes not escaped** - Use `\"` inside JSON strings
+* **Wrong matcher** - Check tool names match exactly (case-sensitive)
+* **Command not found** - Use full paths for scripts
+
+### Advanced Debugging
+
+For complex hook issues:
+
+1. **Inspect hook execution** - Use `claude --debug` to see detailed hook
+   execution
+2. **Validate JSON schemas** - Test hook input/output with external tools
+3. **Check environment variables** - Verify Claude Code's environment is correct
+4. **Test edge cases** - Try hooks with unusual file paths or inputs
+5. **Monitor system resources** - Check for resource exhaustion during hook
+   execution
+6. **Use structured logging** - Implement logging in your hook scripts
+
+### Debug Output Example
+
+Use `claude --debug` to see hook execution details:
+
+```
+[DEBUG] Executing hooks for PostToolUse:Write
+[DEBUG] Getting matching hook commands for PostToolUse with query: Write
+[DEBUG] Found 1 hook matchers in settings
+[DEBUG] Matched 1 hooks for query "Write"
+[DEBUG] Found 1 hook commands to execute
+[DEBUG] Executing hook command: <Your command> with timeout 60000ms
+[DEBUG] Hook command completed with status 0: <Your stdout>
+```
+
+Progress messages appear in transcript mode (Ctrl-R) showing:
+
+* Which hook is running
+* Command being executed
+* Success/failure status
+* Output or error messages
+
