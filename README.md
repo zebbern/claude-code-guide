@@ -60,6 +60,7 @@
 13. [Troubleshooting](#-troubleshooting)
 14. [Advanced Features](#-advanced-features)
 15. [Best Practices](#-best-practices)
+16. [Hooks](#hooks)
 
 ---
 
