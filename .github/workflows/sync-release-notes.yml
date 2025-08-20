@@ -66,7 +66,7 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add "Official Claude Releases/"
-            git commit -m "chore: sync Anthropic release notes ($(date -u +%F))"
+            git commit -m "synced Anthropic latest release notes ($(date -u +%F))"
             git push
             echo "Changes pushed."
           else
