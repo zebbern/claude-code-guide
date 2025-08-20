@@ -2,11 +2,6 @@
   
 ### **Claude Code Complete Guide**
 
-> This guide covers **every discoverable Claude Code command** as of August 2025,  
-> including many features that are not widely known or documented in basic tutorials.
-
-**This represents the most complete Claude Code command reference available.**
-
 ---
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
@@ -18,8 +13,6 @@
 [![ClaudeCode]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
 
 [ClaudeCode]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
-
-###### For the latest claude code changelogs and news go to [Official Claude Code Latest News](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases) that checks and updates any new realeses or changelogs
 
 
 </div>
@@ -36,9 +29,12 @@
 | Community Guides                           | ✅ |
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
-### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code> only use this if you know exactly what ur doing!
+#### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code> only use this if you know exactly what ur doing!
 
 </kbd>
+
+###### For the latest claude code changelogs and news go to [Official Claude Code Latest News](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases) that checks and updates any new realeses or changelogs
+
 
 </div>
 
