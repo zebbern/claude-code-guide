@@ -186,20 +186,19 @@ claude config set ignorePatterns
 claude config set --global
 ```
 
-### Health Check
+## Health Check
 ```bash
 claude                         # opens Claude UI (if on PATH)
 where claude                   # shows path(s), e.g. C:\Users\<you>\AppData\Roaming\npm\claude.cmd
 claude /doctor                 # opens diagnostic/debug window
 "%USERPROFILE%\AppData\Roaming\npm\claude.cmd" --version   # e.g. 1.0.85 (Claude Code)
-
-CANT RUN 'claude' BUT 'npx claude' WORKS?
-Most likely your PATH is broken/missing the npm bin. Quick temporary fix (current CMD only):
+--------------------------------------------
+# CANT RUN 'claude' BUT 'npx claude' WORKS? In most cases it's PATH that's broken/missing. try a quick temporary fix (current CMD only):
 set PATH=%USERPROFILE%\AppData\Roaming\npm;C:\Program Files\nodejs;%PATH%
 where claude
 claude doctor
-
-Permanent, safe fix (Windows GUI):
+--------------------------------------------
+# Permanent, safe fix (Windows GUI):
 1. Start → type "Environment Variables" → Open "Edit the system environment variables" → Environment Variables…
 2. Under "User variables for <you>" select Path → Edit → Add:
    C:\Users\<you>\AppData\Roaming\npm
@@ -208,17 +207,17 @@ Permanent, safe fix (Windows GUI):
 4. Open a NEW Command Prompt and verify:
    where claude
    claude doctor
-
-If still failing, run the shim directly:
+--------------------------------------------
+# If still failing, run the shim directly:
 npx claude doctor
-or
+# or
 "%USERPROFILE%\AppData\Roaming\npm\claude.cmd" doctor
-
-If none of these worked check if "npm" works in ur terminal if it does "npx claude" will also work then you know nothing is wrong with your node.js path try reinstalling claude code
+--------------------------------------------
+# If none of these worked check if "npm" works in ur terminal if it does "npx claude" will also work then you know nothing is wrong with your node.js path try reinstalling claude code
 npm uninstall -g @anthropic-ai/claude-code
 npm install -g @anthropic-ai/claude-code
-if this did not work
-try
+--------------------------------------------
+# If this did not work try completely reinstalling
 npm uninstall -g @anthropic-ai/claude-code
 # Remove any leftover shim files (delete if they exist)
 Remove-Item -LiteralPath "$env:USERPROFILE\AppData\Roaming\npm\claude*" -Force -ErrorAction SilentlyContinue
