@@ -46,23 +46,19 @@
 ## Table of Contents
 
 1. [Quick Start](#quick-start)
-2. [Installation & Setup](#installation--setup)
-3. [Core Commands](#core-commands)
-4. [Session Commands](#session-commands)
-5. [Config Commands](#config-commands) 
-6. [Sub Agents](#sub-agents)
-7. [Flag Reference](#flag-reference)
-8. [Built-in Slash Commands](#built-in-slash-commands-interactive)
-9. [MCP Integration](#-mcp-integration)
-10. [Configuration]( -configuration)
-11. [Environment Variables](#environment-variables)
-12. [Security & Permissions](#security--permissions)
-13. [Claude CLI Configuration](#claude-cli-configuration)
-14. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
-15. [Automation & Scripting](#automation--scripting-guide)
-16. [Troubleshooting](#-troubleshooting)
-17. [Advanced Features](#-advanced-features)
-18. [Best Practices](#-best-practices)
+2. [System requirements](#system-requirements)
+3. [Sub Agents](#sub-agents)
+4. [Claude Commands](#claude-commands)
+5. [MCP Integration](#-mcp-integration)
+6. [Configuration]( -configuration)
+7. [Environment Variables](#environment-variables)
+8. [Security & Permissions](#security--permissions)
+9. [Claude CLI Configuration](#claude-cli-configuration)
+10. [Claude ~/.claude.json Configuration Guide](#claude-claudejson-configuration-guide)
+11. [Automation & Scripting](#automation--scripting-guide)
+12. [Troubleshooting](#-troubleshooting)
+13. [Advanced Features](#-advanced-features)
+14. [Best Practices](#-best-practices)
 
 ---
 
@@ -129,37 +125,17 @@ claude mcp                 # Setup MCP servers
 claude /agents             # Configure/Setup Subagents for different tasks 
 ```
 
----
+## System requirements
 
-## Installation & Setup
-
-System requirements
-
-Operating Systems: macOS 10.15+, Ubuntu 20.04+/Debian 10+, or Windows via WSL
+```env
+OS: macOS 10.15+, Ubuntu 20.04+/Debian 10+, or Windows 10/11 or WSL
 Hardware: 4GB RAM minimum 8GB+ recommended
-Software:
-Node.js 18+
-git 2.23+ (optional)
-GitHub or GitLab CLI for PR workflows (optional)
-- Internet connection for API calls
-
-**Supported Platforms:**
-- macOS (Intel/Apple Silicon)
-- Linux (Ubuntu, Debian, CentOS)
-- Windows 10/11 (**WSL recommended** as regular windows terminal is currently not supported)
-
-### Installation Methods
-
-#### Method 1: NPM Installation 
-```bash
-# Install globally
-npm install -g @anthropic-ai/claude-code
-
-# Verify installation
-claude --version
+Software: Node.js 18+ or git 2.23+ (optional) & GitHub or GitLab CLI for PR workflows (optional)
+Internett: Connection for API calls
 ```
 
-### Initial Setup
+
+## Initial Setup
 
 #### 1. API Key Configuration 
 ```bash
@@ -225,75 +201,112 @@ claude "Create a file called test.txt with 'Hello World'"
 claude -c  # Should continue from previous session
 ```
 
-# health check
-```
-claude /doctor
-Expected output might include:
-# ✅ API Key: Valid
-# ✅ Network: Connected  
-# ✅ Model Access: Available
-```
-
 ---
 
-## Core Commands
+## Claude Commands
 
-| Command                            | Description                   | Example                               |
-| ---------------------------------- | ----------------------------- | ------------------------------------- |
-| `claude`                           | Launch interactive REPL       | `claude`                              |
-| `claude "<prompt>"`                | REPL with initial prompt      | `claude "help debug"`                 |
-| `claude -p "<prompt>"`             | One-shot print mode           | `claude -p "explain fn"`              |
-| `cat file \| claude -p "<prompt>"` | Pipe STDIN to Claude          | `cat logs.txt \| claude -p "explain"` |
-| `claude update`                    | Self-update to latest version | `claude update`                       |
-| `claude mcp`                       | Launch MCP wizard             | `claude mcp`                          |
+### Claude / Commands
 
-## Session Commands
+| Slash Cmd            | Purpose                                        |
+| -------------------- | ---------------------------------------------- |
+| `/help`              | List slash commands                            |
+| `/agents`            | List/Create/Edit Subagents                     |
+| `/add-dir`           | Add more working dirs                          |
+| `/bug`               | Report bug to Anthropic                        |
+| `/clear`             | Clear chat history                             |
+| `/compact`           | Compact conversation                           |
+| `/config`            | Config menu                                    |
+| `/cost`              | Token usage                                    |
+| `/doctor`            | Health check                                   |
+| `/exit`              | Exit REPL                                      |
+| `/init`              | Generate `CLAUDE.md`                           |
+| `/login` / `/logout` | Auth switch                                    |
+| `/mcp`               | Manage MCP servers                             |
+| `/memory`            | Edit memories                                  |
+| `/model`             | Change model                                   |
+| `/permissions`       | Tool permissions                               |
+| `/pr_comments`       | View PR comments                               |
+| `/review`            | Request code review                            |
+| `/sessions`          | List sessions                                  |
+| `/status`            | System/account status                          |
+| `/terminal-setup`    | Install Shift+Enter binding                    |
+| `/vim`               | Toggle vim mode                                |
+| `/output-style`      | Show available output styles with descriptions |
 
-| Command                    | Description                   | Example                         |
-| -------------------------- | ----------------------------- | ------------------------------- |
-| `claude -c` / `--continue` | Continue last session         | `claude -c`                     |
-| `claude -c -p "<prompt>"`  | Continue + new prompt (print) | `claude -c -p "check types"`    |
-| `claude -r <id>`           | Resume by session ID          | `claude -r abc123`              |
-| `claude --resume <id>`     | Long-form resume              | `claude --resume abc123`        |
-| `claude --resume <name>`   | Resume by saved name          | `claude --resume sprint-review` |
+
+### Claude -- Commands
+
+Session-related flags (`--continue`, `--resume`) are listed in **Session Commands**
+
+| Flag                        | Short | Options / Value               | Description                           | Example                                      |
+| --------------------------------- | ----- | ----------------------------- | ------------------------------------- | -------------------------------------------- |
+| `--print`                         | `-p`  |                               | Non-interactive “print” mode          | `claude -p "help"`                           |
+| `--help`                          | `-h`  |                               | Show help                             | `claude --help`                              |
+| `--version`                       | `-v`  |                               | Show version                          | `claude --version`                           |
+| `--model <name>`                  |       |                               | Choose model                          | `claude --model claude-opus-4-20250514`      |
+| `--verbose`                       |       |                               | Verbose logs                          | `claude --verbose`                           |
+| `--add-dir <paths…>`              |       |                               | Add extra working directories         | `claude --add-dir ../lib ../src`             |
+| `--mcp-config <file>`             |       |                               | Load MCP server config                | `claude --mcp-config servers.json`           |
+| `--output-format`                 |       | `text`, `json`, `stream-json` | Output format (works great with `-p`) | `--output-format json`                       |
+| `--input-format`                  |       | `text`, `stream-json`         | Input format for `-p`                 | `--input-format stream-json`                 |
+| `--max-turns <n>`                 |       | Integer                       | Limit number of turns with `-p`       | `--max-turns 3`                              |
+| `--system-prompt "<text>"`        |       | String                        | Set system prompt in `-p`             | `--system-prompt "You are strict"`           |
+| `--append-system-prompt "<text>"` |       | String                        | Append to system prompt in `-p`       | `--append-system-prompt "Add tests"`         |
+| `--allowedTools "<list>"`         |       | Comma/space list              | Whitelist tools                       | `--allowedTools "Read,View"`                 |
+| `--disallowedTools "<list>"`      |       | Comma/space list              | Blacklist tools                       | `--disallowedTools "Bash"`                   |
+| `--permission-mode <mode>`        |       | e.g., `plan`                  | Start in permission mode              | `--permission-mode plan`                     |
+| `--permission-prompt-tool <tool>` |       | Tool name                     | MCP tool for permission checks        | `--permission-prompt-tool mcp__auth__prompt` |
+| `--dangerously-skip-permissions`  |       |                               | Skip all permission prompts (⚠️)      | `--dangerously-skip-permissions`             |
 
 
-## Config Commands
+### Claude Session Commands
 
-| Command                              | Description        | Example                          |
-| ------------------------------------ | ------------------ | -------------------------------- |
-| `claude config`                      | Interactive wizard | `claude config`                  |
-| `claude config list`                 | List all keys      | `claude config list`             |
-| `claude config get <key>`            | Get value          | `claude config get theme`        |
-| `claude config set <key> <val>`      | Set value          | `claude config set theme dark`   |
-| `claude config add <key> <vals…>`    | Append to array    | `claude config add env DEV=1`    |
-| `claude config remove <key> <vals…>` | Remove items       | `claude config remove env DEV=1` |
+| Command / Flag                                  | What it does                       | Example                         |
+| ----------------------------------------------- | ---------------------------------- | ------------------------------- |
+| `claude -c` / `claude --continue`               | Continue last session              | `claude -c`                     |
+| `claude -c -p "<prompt>"`                       | Continue + new prompt in print     | `claude -c -p "check types"`    |
+| `claude -r <id>` / `claude --resume <id\|name>` | Resume by session ID or saved name | `claude --resume sprint-review` |
+
+> Tip: For non-interactive runs, you can also pipe input:
+> `cat logs.txt \| claude -p "explain"`
+
+### Subcommands:
+
+| Subcommand                           | Description                   | Example                          |
+| ------------------------------------ | ----------------------------- | -------------------------------- |
+| `claude update`                      | Self-update to latest version | `claude update`                  |
+| `claude mcp`                         | Launch MCP wizard             | `claude mcp`                     |
+| `claude config`                      | Interactive config wizard     | `claude config`                  |
+| `claude config list`                 | List all keys                 | `claude config list`             |
+| `claude config get <key>`            | Get value                     | `claude config get theme`        |
+| `claude config set <key> <val>`      | Set value                     | `claude config set theme dark`   |
+| `claude config add <key> <vals…>`    | Append to array               | `claude config add env DEV=1`    |
+| `claude config remove <key> <vals…>` | Remove items                  | `claude config remove env DEV=1` |
+
 
 ---
 
 ## Sub Agents
-Sub‑Agents are purpose‑built helpers with their **own prompts, tools, and isolated context windows**. Treat this like a “mixture‑of‑experts” you **compose** per repo.
+> Sub‑Agents are purpose‑built helpers with their **own prompts, tools, and isolated context windows**. Treat this like a “mixture‑of‑experts” you **compose** per repo.
 
 **When to use them**
-- You need high signal responses (plans, reviews, diffs) without side quests.
-- You want version‑controlled prompts and tool policies alongside the codebase.
-- You work in PR‑driven teams and want scoped edits by role.
+> - You need high signal responses (plans, reviews, diffs) without side quests.
+> - You want version‑controlled prompts and tool policies alongside the codebase.
+> - You work in PR‑driven teams and want scoped edits by role.
 
 ### Each Sub‑Agent Has Its Own Context
 **Design rules for your lineup**
-- Define **one clear responsibility** per agent.
-- Keep the **minimum** tool set needed for that role.
-- Prefer **read‑only** agents for analysis/review tasks.
-- Give edit powers to as few agents as possible.
+> - Define **one clear responsibility** per agent.
+> - Keep the **minimum** tool set needed for that role.
+> - Prefer **read‑only** agents for analysis/review tasks.
+> - Give edit powers to as few agents as possible.
 
 <img width="700" height="160" alt="image" src="https://github.com/user-attachments/assets/42767417-20aa-4bd4-aaf2-cfa0e515b54b" />
 
 *Caption: Agents selection UI in the terminal.*
 
----
-
 ## How I Configure Agents
-Keep agents **in the project** so they’re versioned with the repo and evolve via PRs.
+> Keep agents **in the project** so they’re versioned with the repo and evolve via PRs.
 
 ### Quick start
 ```bash
@@ -303,11 +316,11 @@ claude update
 ```
 
 ### Create your core agents
-- **planner** (read‑only): turns features/issues into small, testable tasks; outputs a task list or plan.md.
-- **codegen** (edit‑capable): implements tasks; limited to `src/` + `tests/`.
-- **tester** (read‑only or patch‑only): writes *one* failing test or a minimal repro.
-- **reviewer** (read‑only): leaves structured review comments; never edits.
-- **docs** (edit‑capable): updates `README.md`/`docs/` only.
+> - **planner** (read‑only): turns features/issues into small, testable tasks; outputs a task list or plan.md.
+> - **codegen** (edit‑capable): implements tasks; limited to `src/` + `tests/`.
+> - **tester** (read‑only or patch‑only): writes *one* failing test or a minimal repro.
+> - **reviewer** (read‑only): leaves structured review comments; never edits.
+> - **docs** (edit‑capable): updates `README.md`/`docs/` only.
 
 > **Policy tip:** Prefer *patch output* for edit‑capable agents so changes land through your normal Git workflow.
 
@@ -316,7 +329,7 @@ claude update
 *Caption: Choose only the tools an agent truly needs (e.g., advisory vs editing access).*
 
 ### Example prompts
-Keep prompts short, testable, and repo‑specific. Check them into `agents/`:
+> Keep prompts short, testable, and repo‑specific. Check them into `agents/`:
 
 <img width="700" height="217" alt="image" src="https://github.com/user-attachments/assets/b4f92591-ff5c-4775-aec2-051f145b9616" />
 
@@ -331,126 +344,52 @@ If the scenario is unclear, ask exactly one clarifying question.
 ```
 
 ### Expected output
-Your tester agent should produce a small diff or patch plus a short rationale:
+> Your tester agent should produce a small diff or patch plus a short rationale:
 
 <img width="700" height="273" alt="image" src="https://github.com/user-attachments/assets/839151ce-02c9-4283-a53b-9dd105802ada" />
 
 *Caption: Example response from the **test‑coverage‑analyzer** agent.*
 
 **Acceptance checklist**
-- [ ] Output is a single change set.
-- [ ] Only files in allowed paths are touched.
-- [ ] Rationale explains intent and edge cases.
-- [ ] If blocked, the agent asked one clear question.
+> - [ ] Output is a single change set.
+> - [ ] Only files in allowed paths are touched.
+> - [ ] Rationale explains intent and edge cases.
+> - [ ] If blocked, the agent asked one clear question.
 
 ---
 
 ### Why This Shift Matters
 **Operational benefits**
-- **Less context switching:** you stay in one mental mode; agents do the rest.
-- **Cleaner PRs:** narrow prompts + limited tools → smaller, reviewable diffs.
-- **Fewer regressions:** tester/reviewer agents catch gaps before merge.
-- **Repeatability:** prompts + policies live in the repo and travel with branches.
+> - **Less context switching:** you stay in one mental mode; agents do the rest.
+> - **Cleaner PRs:** narrow prompts + limited tools → smaller, reviewable diffs.
+> - **Fewer regressions:** tester/reviewer agents catch gaps before merge.
+> - **Repeatability:** prompts + policies live in the repo and travel with branches.
 
 **Security & governance**
-- Limit write access by path (e.g., `src/`, `tests/`, `docs/`).
-- Favor read‑only analysis for high‑risk areas.
-- Log/commit assistant outputs as patches for auditability.
+> - Limit write access by path (e.g., `src/`, `tests/`, `docs/`).
+> - Favor read‑only analysis for high‑risk areas.
+> - Log/commit assistant outputs as patches for auditability.
 
 ---
 
 ### A Mindset Shift
 **Do**
-- Treat agents as teammates with job descriptions.
-- Start read‑only; grant write access *last*.
-- Keep prompts in version control and iterate via PR.
+> - Treat agents as teammates with job descriptions.
+> - Start read‑only; grant write access *last*.
+> - Keep prompts in version control and iterate via PR.
 
 **Don’t**
-- Ask one agent to plan, code, and test in a single turn.
-- Give blanket write permissions.
-- Accept multi‑file diffs when you asked for one test.
+> - Ask one agent to plan, code, and test in a single turn.
+> - Give blanket write permissions.
+> - Accept multi‑file diffs when you asked for one test.
 
-### Cant find Subagents to look at? You can start with these under!
-- [Configurations, Agents, Mcps, Templates](https://www.aitmpl.com/)
+### Cant find Subagents to look at?
+- Start with these!
+  - [Configurations, Agents, Mcps, Templates](https://www.aitmpl.com/)
+  - [github-awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file)
+  - [medium-claude-code-subagents-examples-with-templates-you-can-use](https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308)
 
-- [github-awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents?tab=readme-ov-file)
-  
-- [medium-claude-code-subagents-examples-with-templates-you-can-use](https://freedium.cfd/https://medium.com/@joe.njenga/17-claude-code-subagents-examples-with-templates-you-can-use-immediately-c70ef5567308)
 
----
-
-## Flag Reference
-
-### Essential
-
-| Flag         | Short | Description          | Example               |
-| ------------ | ----- | -------------------- | --------------------- |
-| `--print`    | `-p`  | Non-interactive mode | `claude -p "help"`    |
-| `--continue` | `-c`  | Resume last session  | `claude --continue`   |
-| `--resume`   | `-r`  | Resume by ID         | `claude --resume abc` |
-| `--help`     | `-h`  | Show help            | `claude --help`       |
-| `--version`  | `-v`  | Show version         | `claude --version`    |
-
-### Output & Flow with -p
-
-| Flag                     | Options                       | Example                              |
-| ------------------------ | ----------------------------- | ------------------------------------ |
-| `--output-format`        | `text`, `json`, `stream-json` | `--output-format json`               |
-| `--input-format`         | `text`, `stream-json`         | `--input-format stream-json`         |
-| `--max-turns`            | Integer                       | `--max-turns 3`                      |
-| `--system-prompt`        | String                        | `--system-prompt "You are strict"`   |
-| `--append-system-prompt` | String                        | `--append-system-prompt "Add tests"` |
-
-### Security & Permissions
-
-| Flag                              | Description                    | Example                                      |
-| --------------------------------- | ------------------------------ | -------------------------------------------- |
-| `--allowedTools <list>`           | Whitelist tools                | `--allowedTools "Read,View"`                 |
-| `--disallowedTools <list>`        | Blacklist tools                | `--disallowedTools "Bash"`                   |
-| `--permission-mode <mode>`        | Start in permission mode       | `--permission-mode plan`                     |
-| `--permission-prompt-tool <tool>` | MCP tool for permission checks | `--permission-prompt-tool mcp__auth__prompt` |
-| `--dangerously-skip-permissions`  | Skip all prompts (⚠️)          | `--dangerously-skip-permissions`             |
-
-### Extra
-
-| Flag                  | Purpose            | Example                     |
-| --------------------- | ------------------ | --------------------------- |
-| `--add-dir <paths>`   | Extra working dirs | `--add-dir ../lib ../src`   |
-| `--model <name>`      | Choose model       | `--model claude-opus-4-20250514` |
-| `--verbose`           | Verbose logs       | `--verbose`                 |
-| `--mcp-config <file>` | Load MCP servers   | `--mcp-config servers.json` |
-
----
-
-## Built-in Slash Commands (Interactive)
-
-| Slash Cmd            | Purpose                     |
-| -------------------- | --------------------------- |
-| `/help`              | List slash commands         |
-| `/agents`            | List/Create/Edit Subagents  |
-| `/add-dir`           | Add more working dirs       |
-| `/bug`               | Report bug to Anthropic     |
-| `/clear`             | Clear chat history          |
-| `/compact`           | Compact conversation        |
-| `/config`            | Config menu                 |
-| `/cost`              | Token usage                 |
-| `/doctor`            | Health check                |
-| `/exit`              | Exit REPL                   |
-| `/init`              | Generate CLAUDE.md          |
-| `/login` / `/logout` | Auth switch                 |
-| `/mcp`               | Manage MCP servers          |
-| `/memory`            | Edit memories               |
-| `/model`             | Change model                |
-| `/permissions`       | Tool permissions            |
-| `/pr_comments`       | View PR comments            |
-| `/review`            | Request code review         |
-| `/sessions`          | List sessions               |
-| `/status`            | System/account status       |
-| `/terminal-setup`    | Install Shift+Enter binding |
-| `/vim`               | Toggle vim mode             |
-| `/output-style`      | Displays available output styles with descriptions.|
-
----
 
 ## 🔌 MCP Integration
 
