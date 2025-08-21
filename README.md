@@ -25,7 +25,7 @@
 | Community Guides                           | ✅ |
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
-#### I Usually Start my Claude with <code>Claude --dangerously-skip-permissions</code> only use this if you know exactly what ur doing!
+#### New Section Added ###### For How To Use DeepSeek in Claude Code
 
 </kbd>
 
@@ -44,7 +44,7 @@
 4. [Sub Agents](#sub-agents)
 5. [Claude Commands](#claude-commands)
 6. [MCP Integration](#-mcp-integration)
-7. [Configuration]( -configuration)
+7. [Configuration](#-configuration)
 8. [Environment Variables](#environment-variables)
 9. [Security & Permissions](#security--permissions)
 10. [Claude CLI Configuration](#claude-cli-configuration)
@@ -53,7 +53,8 @@
 13. [Troubleshooting](#-troubleshooting)
 14. [Advanced Features](#-advanced-features)
 15. [Best Practices](#-best-practices)
-16. [Hooks](#-hooks-reference)
+16. [Hooks](#-hooks)
+17. [How To Use DeepSeek in Claude Code](#-how-to-use-deepseek-in-claude-code)
 
 ---
 
@@ -2299,4 +2300,24 @@ Progress messages appear in transcript mode (Ctrl-R) showing:
 * Command being executed
 * Success/failure status
 * Output or error messages
+
+## How To Use Deepseek In Claude Code
+
+1. ###### Have claude Code installed 
+```
+npm install -g @anthropic-ai/claude-code
+```
+
+2. ###### Config Environment Variables
+```bash
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=${YOUR_API_KEY}
+export ANTHROPIC_MODEL=deepseek-chat
+export ANTHROPIC_SMALL_FAST_MODEL=deepseek-chat
+```
+
+3. ###### Now all you need to do is launch `claude` 
+
+Find more information from the [Official Deepseek Docs](https://api-docs.deepseek.com/guides/anthropic_api)
+
 
