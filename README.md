@@ -159,28 +159,42 @@ claude config
 claude config set -g verbose true
 claude config set -g outputFormat text
 
-# Test installation
-claude "Hello, Claude!"
-claude /doctor
-claude update
 ```
 
-#### 3. Settings i Turn Off
+#### 3. Settings you should know about
 ```bash
-export DISABLE_TELEMETRY=1
-export DISABLE_ERROR_REPORTING=1
-export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1
+# --- Environment toggles (put in ~/.bashrc or ~/.zshrc) ---
+export DISABLE_TELEMETRY=1                  # Opt out of Statsig telemetry
+export DISABLE_ERROR_REPORTING=1            # Opt out of Sentry error logs
+export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1  # Skip non-critical model calls
+export DISABLE_COST_WARNINGS=1              # Hide cost warnings
+export DISABLE_AUTOUPDATER=1                # Stop background auto-updates
+export DISABLE_BUG_COMMAND=1                # Remove /bug command
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1  # One-switch privacy bundle
+export HTTP_PROXY=                          # (optional) http://host:port
+export HTTPS_PROXY=                         # (optional) http://host:port
+export BASH_DEFAULT_TIMEOUT_MS=60000        # (optional) default bash timeout
+export BASH_MAX_TIMEOUT_MS=300000           # (optional) max bash timeout
+export BASH_MAX_OUTPUT_LENGTH=200000        # (optional) cap bash output
+export MAX_THINKING_TOKENS=0                # (optional) cap planning tokens
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=0      # (optional) cap output tokens
+export MCP_TIMEOUT=20000                    # (optional) MCP startup timeout
+export MCP_TOOL_TIMEOUT=60000               # (optional) MCP tool exec timeout
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1 # (optional) don’t change term title
+
+# --- Safer tool defaults ---
+claude -p "…" --allowedTools "Read,Edit,Bash(git:*)"
+claude -p "…" --disallowedTools "Write,WebFetch"
 
 
-# Security defaults
-claude config set allowedTools "Edit,View"
-claude config set hasTrustDialogAccepted
-claude config set hasCompletedProjectOnboarding 
-claude config set ignorePatterns
-claude config set --global
+# --- Optional global QoL ---
+claude config set -g verbose true            # Verbose logs
+claude config set -g theme dark              # Dark theme
+claude config set -g preferredNotifChannel terminal_bell  # Bell notifications
 ```
 
 ## Health Check
+> Note: Change <you> to your own user without <> this is only used as an example...
 ```bash
 claude                         # opens Claude UI (if on PATH)
 where claude                   # shows path(s), e.g. C:\Users\<you>\AppData\Roaming\npm\claude.cmd
@@ -202,10 +216,10 @@ claude doctor
    where claude
    claude doctor
 --------------------------------------------
-# If still failing, run the shim directly:
-npx claude doctor
-# or
-"%USERPROFILE%\AppData\Roaming\npm\claude.cmd" doctor
+# If its still failing, run the shim directly:
+npx claude doctor # If this does not work try the one under or find where you have your "npm" file
+
+%USERPROFILE%\AppData\Roaming\npm\claude.cmd doctor
 --------------------------------------------
 # If none of these worked check if "npm" works in ur terminal if it does "npx claude" will also work then you know nothing is wrong with your node.js path try reinstalling claude code
 npm uninstall -g @anthropic-ai/claude-code
@@ -226,12 +240,49 @@ Remove-Item -LiteralPath "$env:USERPROFILE\.claude\local" -Recurse -Force -Error
 Remove-Item -LiteralPath "$env:USERPROFILE\.claude.json" -Force -ErrorAction SilentlyContinue
 Remove-Item -LiteralPath "$env:USERPROFILE\.claude" -Recurse -Force -ErrorAction SilentlyContinue
 
-then install and try "claude" again
+then try install claude code again if nothing works go on a vm or cloud pc temporarily..
 npm i -g @anthropic-ai\claude-code
 
 ```
 
----
+## Thinking Keywords
+
+> Give Claude extra pre-answer planning time by adding ONE of these keywords to your prompt.
+> Use exactly one of these four:
+
+
+###### Order (lowest → highest):
+```
+1. think 
+2. think hard  
+3. think harder  
+4. ultrathink
+```
+###### This makes Claude spend more time:
+```
+- planning the solution
+- breaking down steps
+- weighing alternatives/trade-offs
+- checking constraints & edge cases
+```
+
+> How to use?
+- Put the keyword anywhere in your prompt.
+- If multiple appear, the strongest one wins.
+- Keep your prompt specific about goals, constraints, and success criteria.
+
+Examples
+```
+# Small boost
+claude -p "Think. Outline a plan to refactor the auth module."
+# Medium boost
+claude -p "Think harder. Draft a migration plan from REST to gRPC."
+# Max boost
+claude -p "Ultrathink. Propose a step-by-step strategy to fix flaky payment tests and add guardrails."
+```
+
+> This is a **CLI behavior**, not a public API parameter; naming/effects may evolve.
+> Higher levels usually increase **latency** and **token usage**—pick the smallest that works.
 
 ## Claude Commands
 
@@ -731,16 +782,16 @@ env:
 
 #### Tool Permission Patterns 
 ```bash
-# Allow specific tools choose ur own can also be used like: Bash(*)
-claude --allowedTools "Edit,View"
+# Allow specific tools (read/edit files)
+claude --allowedTools "Edit,Read"
 
-# Allow tool categories  
-claude --allowedTools "Edit,View,Bash"
+# Allow tool categories incl. Bash (but still scoped below)
+claude --allowedTools "Edit,Read,Bash"
 
-# Scoped permissions (Git operations only)
+# Scoped permissions (all git commands)
 claude --allowedTools "Bash(git:*)"
 
-# Multiple scopes
+# Multiple scopes (git + npm)
 claude --allowedTools "Bash(git:*),Bash(npm:*)"
 ```
 
@@ -786,48 +837,6 @@ claude config list
 ```
 
 ---
-
-### Thinking Keywords
-
-Claude Code supports **extended thinking** — extra pre‑answer planning time for harder problems. You can nudge that
-planning budget with specific trigger words that map to progressively larger “thinking budgets”.
-
-## keywords
-
-These map in order of increasing budget: `think` < `think hard` < `think harder` < `ultrathink`.
-
-> Use **only** the four keywords above. Other phrases (e.g., “think more”, “megathink”, etc.) are **not documented** and should not be relied on.
-
-## What extended thinking does
-
-Before Claude starts producing the final answer, it spends more time:
-> - planning a solution,
-> - breaking down steps,
-> - considering alternatives and trade‑offs,
-> - checking constraints and edge cases.
-
-## How to use it
-
-You can place the keyword anywhere in your prompt (case‑insensitive). If multiple appear, assume the **strongest one wins**.
-
-```bash
-# Small boost
-claude -p "Think. Outline a plan to refactor the auth module."
-
-# Medium boost
-claude -p "Think harder. Draft a migration plan for moving from REST to gRPC."
-
-# Maximum planning budget
-claude -p "Ultrathink. Propose a step‑by‑step strategy to fix flaky payments tests and add guardrails."
-```
-
-## Notes & caveats
-
-> - This is a **Claude Code (CLI) behavior**, not a public API parameter; naming or effects may evolve over time.
-> - Higher budgets usually increase **latency** and **token usage**. Prefer the smallest keyword that gets the job done.
-> - Keep prompts crisp. The keyword asks Claude to plan; your prompt should still provide goals, constraints, and success criteria.
-
-
 
 ### Claude CLI Configuration
 
