@@ -1,4 +1,4 @@
-## Ready to use collection to choose from depending on the language your coding in
+## Learn about how to use CLAUDE.md files
 
 > #### A small collection of guides and notes about using CLAUDE for code-related tasks and prompts.
 
