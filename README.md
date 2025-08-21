@@ -44,7 +44,7 @@
 4. [Sub Agents](#sub-agents)
 5. [Claude Commands](#claude-commands)
 6. [MCP Integration](#-mcp-integration)
-7. [Configuration](#-configuration)
+7. [Configuration](#configuration)
 8. [Environment Variables](#environment-variables)
 9. [Security & Permissions](#security--permissions)
 10. [Claude CLI Configuration](#claude-cli-configuration)
@@ -53,8 +53,8 @@
 13. [Troubleshooting](#-troubleshooting)
 14. [Advanced Features](#-advanced-features)
 15. [Best Practices](#-best-practices)
-16. [Hooks](#-hooks)
-17. [How To Use DeepSeek in Claude Code](#-how-to-use-deepseek-in-claude-code)
+16. [Hooks](#hooks)
+17. [How To Use DeepSeek in Claude Code](#how-to-use-deepseek-in-claude-code)
 
 ---
 
