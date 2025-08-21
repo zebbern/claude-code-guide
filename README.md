@@ -58,7 +58,7 @@
 ---
 
 ## Quick Start
-> # if only typing "claude" does not work try "npx claude" if it worked your npm path is bugged go to [Troubleshooting](#-troubleshooting) to fix...
+> If only typing "claude" does not work try "npx claude" if it worked your npm path is bugged go to [Troubleshooting](#-troubleshooting) to fix...
 ```bash
 ## NPM (global) ⭐️ Official
 npm install -g @anthropic-ai/claude-code
@@ -120,7 +120,7 @@ Internett: Connection for API calls
 
 
 ## Initial Setup
-> API Key Configuration | Get your API key from (console.anthtopic.com](https://console.anthropic.com]
+> API Key Configuration — Get your API key from [Anthropic Console](https://console.anthropic.com)
 ```bash
 export ANTHROPIC_API_KEY="sk-your-key-here"     # Session only
 echo "OK: ${ANTHROPIC_API_KEY:0:8}***"          # Quick check (masked) "Good practise for security" do not use echo ${ANTHROPIC_API_KEY} to test....
