@@ -1,14 +1,29 @@
 # Changelog
 
+## 1.0.88
+
+- Fixed issue causing "OAuth authentication is currently not supported"
+- Status line input now includes `exceeds_200k_tokens`
+- Fixed incorrect usage tracking in /cost.
+- Introduced `ANTHROPIC_DEFAULT_SONNET_MODEL` and `ANTHROPIC_DEFAULT_OPUS_MODEL` for controlling model aliases opusplan, opus, and sonnet.
+- Bedrock: Updated default Sonnet model to Sonnet 4
+
+## 1.0.86
+
+- Added /context to help users self-serve debug context issues
+- SDK: Added UUID support for all SDK messages
+- SDK: Added `--replay-user-messages` to replay user messages back to stdout
+
 ## 1.0.85
 
 - Status line input now includes session cost info
+- Hooks: Introduced SessionEnd hook
 
 ## 1.0.84
 
 - Fix tool_use/tool_result id mismatch error when network is unstable
 - Fix Claude sometimes ignoring real-time steering when wrapping up a task
-- @-mention: Add ~/.claude/* files to suggestions for easier agent, output style, and slash command editing
+- @-mention: Add ~/.claude/\* files to suggestions for easier agent, output style, and slash command editing
 - Use built-in ripgrep by default; to opt out of this behavior, set USE_BUILTIN_RIPGREP=0
 
 ## 1.0.83
