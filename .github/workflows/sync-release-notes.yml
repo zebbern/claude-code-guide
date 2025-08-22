@@ -2,9 +2,11 @@ name: Sync Anthropic Release Notes
 
 on:
   schedule:
-    # Runs once every 24h at 00:15 UTC
-    - cron: "15 0 * * *"
+    - cron: "15 0 * * *"   # daily at 00:15 UTC
   workflow_dispatch: {}
+  push:
+    paths:
+      - ".github/workflows/sync-release-notes.yml"
 
 permissions:
   contents: write
@@ -25,6 +27,7 @@ jobs:
 
       - name: Download latest Markdown files and stage real changes
         id: sync_files
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -105,6 +108,7 @@ jobs:
           printf '%b' "$README_LIST" > /tmp/readme_list.txt
 
       - name: Update status in 'Official Claude Releases/README.md' (always)
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -121,7 +125,7 @@ jobs:
           STATUS_START="<!-- sync-status:start -->"
           STATUS_END="<!-- sync-status:end -->"
 
-          # Build the status block
+          # Build the status block file
           {
             echo "$STATUS_START"
             echo ""
@@ -152,23 +156,29 @@ The status section below is updated by a daily GitHub Action.
 EOF
           fi
 
-          # Replace existing block or append
-          if grep -q "$STATUS_START" "$README"; then
-            # Replace between markers (including them)
-            perl -0777 -pe 's/<!-- sync-status:start -->.*?<!-- sync-status:end -->/`cat \/tmp\/status_block.md`/se' -i "$README"
-          else
-            {
-              echo ""
-              echo "---"
-              echo ""
-              cat /tmp/status_block.md
-            } >> "$README"
-          fi
+          # Replace (or append) the status block using a tiny Python script to avoid quoting issues
+          python3 - <<'PY'
+import re, pathlib
+readme = pathlib.Path("Official Claude Releases/README.md")
+status = pathlib.Path("/tmp/status_block.md").read_text(encoding="utf-8")
+if readme.exists():
+    text = readme.read_text(encoding="utf-8")
+else:
+    text = "# Official Claude Releases\n\n"
+start = "<!-- sync-status:start -->"
+end = "<!-- sync-status:end -->"
+if start in text and end in text:
+    new = re.sub(r'<!-- sync-status:start -->.*?<!-- sync-status:end -->', status, text, flags=re.S)
+else:
+    new = text.rstrip() + "\n\n---\n\n" + status + "\n"
+readme.write_text(new, encoding="utf-8")
+PY
 
           # Always stage this README so there is a visible run marker
           git add "$README"
 
       - name: Commit and push
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
