@@ -2,7 +2,8 @@ name: Sync Anthropic Release Notes
 
 on:
   schedule:
-    - cron: "15 0 * * *"   # daily at 00:15 UTC
+    # Runs once every 24h at 00:15 UTC
+    - cron: "15 0 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -50,21 +51,25 @@ jobs:
             echo "Fetching $URL -> $OUT"
             curl -fsSL -H "Accept: text/markdown, text/plain;q=0.9, text/x-markdown;q=0.9, */*;q=0.1" "$URL" -o "$TMP"
 
-            # Skip if identical ignoring whitespace
-            if [[ -f "$OUT" ]] && diff --no-index -w "$OUT" "$TMP" >/dev/null 2>&1; then
-              echo "No substantive changes for $NAME"
-              rm -f "$TMP"
-              continue
+            if [[ -f "$OUT" ]]; then
+              # Skip if identical ignoring whitespace (use git diff for consistency)
+              if git --no-pager diff --no-index --ignore-all-space --quiet -- "$OUT" "$TMP"; then
+                echo "No substantive changes for $NAME"
+                rm -f "$TMP"
+                continue
+              fi
             fi
 
-            # Diffstat BEFORE overwrite
-            NUMSTAT=$(diff --no-index --numstat "${OUT:-/dev/null}" "$TMP" 2>/dev/null || true)
-            ADDED=$(echo "$NUMSTAT" | awk '{print $1}')
-            DELETED=$(echo "$NUMSTAT" | awk '{print $2}')
+            BASE="$OUT"
+            [[ -f "$OUT" ]] || BASE="/dev/null"
 
-            # Highlights: first few added headings/bullets (fallback to first lines)
+            # Real added/deleted line counts (git diff --numstat)
+            NUMSTAT=$(git --no-pager diff --no-index --numstat -- "$BASE" "$TMP" || true)
+            read -r ADDED DELETED _ <<< "${NUMSTAT:-0 0 -}"
+
+            # Highlights: first few added headings/bullets (fallback to a few added lines)
             HILITES=$(
-              diff -u --new-file "${OUT:-/dev/null}" "$TMP" \
+              git --no-pager diff --no-index -U0 -- "$BASE" "$TMP" \
                 | sed -n 's/^+[^+].*/\0/p' \
                 | sed 's/^+//' \
                 | grep -E '^(#|##|###|- |\* )' \
@@ -72,25 +77,24 @@ jobs:
             )
             if [[ -z "$HILITES" ]]; then
               HILITES=$(
-                diff -u --new-file "${OUT:-/dev/null}" "$TMP" \
+                git --no-pager diff --no-index -U0 -- "$BASE" "$TMP" \
                   | sed -n 's/^+[^+].*/\0/p' \
                   | sed 's/^+//' \
                   | head -n 3 || true
               )
             fi
 
+            # Replace file and record it as changed
             mv -f "$TMP" "$OUT"
             CHANGED_FILES+=("$OUT")
 
-            # Commit body details
+            # Build commit body + README summary
             COMMIT_BODY+=$'- '"$NAME"' (+'"${ADDED:-0}"' / -'"${DELETED:-0}"')\n'
             if [[ -n "$HILITES" ]]; then
               while IFS= read -r line; do
                 COMMIT_BODY+="    • ${line}\n"
               done <<< "$HILITES"
             fi
-
-            # README summary line
             README_LIST+="- ${NAME} (+${ADDED:-0} / -${DELETED:-0})"$'\n'
           done
 
@@ -110,17 +114,14 @@ jobs:
           FOLDER="Official Claude Releases"
           README="$FOLDER/README.md"
 
-          # Timestamps
           DATE_UTC="$(date -u +'%Y-%m-%d %H:%M %Z')"
           DATE_OSLO="$(TZ=Europe/Oslo date +'%Y-%m-%d %H:%M %Z')"
-
-          # Per-run summary (may be empty)
           README_LIST="$(cat /tmp/readme_list.txt 2>/dev/null || true)"
 
           STATUS_START="<!-- sync-status:start -->"
           STATUS_END="<!-- sync-status:end -->"
 
-          # Build the status block (includes its own markers)
+          # Build the status block
           {
             echo "$STATUS_START"
             echo
@@ -139,21 +140,19 @@ jobs:
             echo "$STATUS_END"
           } > /tmp/status_block.md
 
-          # Ensure README exists (no heredoc — safe inside YAML)
+          # Ensure README exists (no heredocs; safe in YAML)
           if [[ ! -f "$README" ]]; then
             mkdir -p "$FOLDER"
             {
               echo "# Official Claude Releases"
               echo
-              echo "This folder mirrors selected Anthropic release notes for easy tracking."
-              echo "The status section below is updated by a daily GitHub Action."
+              echo "This folder mirrors selected Anthropic release notes for easy tracking. The status section below is updated by a daily GitHub Action."
               echo
             } > "$README"
           fi
 
           # Replace existing block or append
           if grep -q "$STATUS_START" "$README"; then
-            # Replace the whole block between markers with the new block
             perl -0777 -pe 'BEGIN{undef $/; open my $fh,"<","/tmp/status_block.md"; our $blk=do{local $/;<$fh>}} s/<!-- sync-status:start -->.*?<!-- sync-status:end -->/$blk/s' -i "$README"
           else
             {
@@ -170,15 +169,17 @@ jobs:
       - name: Commit and push
         run: |
           set -euo pipefail
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          TITLE="chore: daily sync Anthropic release notes ($(date -u +%F))"
+          TITLE="Latest Anthropic release notes ($(date -u +%F))"
           BODY=$(cat /tmp/commit_body.txt 2>/dev/null || true)
 
-          # Determine if anything besides the README changed
           FOLDER="Official Claude Releases"
           README_PATH="$FOLDER/README.md"
+
+          # If anything besides the README is staged, include the detailed body
           if git diff --cached --name-only | grep -F -v -- "$README_PATH" | grep -q .; then
             git commit -m "$TITLE" -m "$BODY"
           else
