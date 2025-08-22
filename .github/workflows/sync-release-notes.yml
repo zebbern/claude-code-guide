@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: "15 0 * * *"   # daily at 00:15 UTC
   workflow_dispatch: {}
-  push:
-    paths:
-      - ".github/workflows/sync-release-notes.yml"
 
 permissions:
   contents: write
@@ -27,7 +24,6 @@ jobs:
 
       - name: Download latest Markdown files and stage real changes
         id: sync_files
-        shell: bash
         run: |
           set -euo pipefail
 
@@ -108,7 +104,6 @@ jobs:
           printf '%b' "$README_LIST" > /tmp/readme_list.txt
 
       - name: Update status in 'Official Claude Releases/README.md' (always)
-        shell: bash
         run: |
           set -euo pipefail
 
@@ -125,60 +120,54 @@ jobs:
           STATUS_START="<!-- sync-status:start -->"
           STATUS_END="<!-- sync-status:end -->"
 
-          # Build the status block file
+          # Build the status block (includes its own markers)
           {
             echo "$STATUS_START"
-            echo ""
+            echo
             echo "### 🔄 Last sync"
             echo "- UTC: \`$DATE_UTC\`"
             echo "- Europe/Oslo: \`$DATE_OSLO\`"
-            echo ""
+            echo
             if [[ -n "$README_LIST" ]]; then
               echo "### ✅ Files updated this run"
-              echo ""
-              echo "$README_LIST"
+              echo
+              printf "%b" "$README_LIST"
             else
               echo "### ℹ️ No content changes in tracked files this run"
-              echo ""
+              echo
             fi
             echo "$STATUS_END"
           } > /tmp/status_block.md
 
-          # Ensure README exists inside the folder
+          # Ensure README exists (no heredoc — safe inside YAML)
           if [[ ! -f "$README" ]]; then
             mkdir -p "$FOLDER"
-            cat > "$README" <<'EOF'
-# Official Claude Releases
-
-This folder mirrors selected Anthropic release notes for easy tracking.  
-The status section below is updated by a daily GitHub Action.
-
-EOF
+            {
+              echo "# Official Claude Releases"
+              echo
+              echo "This folder mirrors selected Anthropic release notes for easy tracking."
+              echo "The status section below is updated by a daily GitHub Action."
+              echo
+            } > "$README"
           fi
 
-          # Replace (or append) the status block using a tiny Python script to avoid quoting issues
-          python3 - <<'PY'
-import re, pathlib
-readme = pathlib.Path("Official Claude Releases/README.md")
-status = pathlib.Path("/tmp/status_block.md").read_text(encoding="utf-8")
-if readme.exists():
-    text = readme.read_text(encoding="utf-8")
-else:
-    text = "# Official Claude Releases\n\n"
-start = "<!-- sync-status:start -->"
-end = "<!-- sync-status:end -->"
-if start in text and end in text:
-    new = re.sub(r'<!-- sync-status:start -->.*?<!-- sync-status:end -->', status, text, flags=re.S)
-else:
-    new = text.rstrip() + "\n\n---\n\n" + status + "\n"
-readme.write_text(new, encoding="utf-8")
-PY
+          # Replace existing block or append
+          if grep -q "$STATUS_START" "$README"; then
+            # Replace the whole block between markers with the new block
+            perl -0777 -pe 'BEGIN{undef $/; open my $fh,"<","/tmp/status_block.md"; our $blk=do{local $/;<$fh>}} s/<!-- sync-status:start -->.*?<!-- sync-status:end -->/$blk/s' -i "$README"
+          else
+            {
+              echo
+              echo "---"
+              echo
+              cat /tmp/status_block.md
+            } >> "$README"
+          fi
 
           # Always stage this README so there is a visible run marker
           git add "$README"
 
       - name: Commit and push
-        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
