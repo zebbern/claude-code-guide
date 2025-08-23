@@ -108,7 +108,7 @@
 > [!TIP]
 > **Send <mark>claude</mark> or <mark>npx claude</mark> in terminal to start the interface**
 >
-> **Go to [Troubleshooting](#troubleshooting-guide) to fix issues...**
+> **Go to [Help & Troubleshooting](#help--troubleshooting) to fix issues...**
 ```C
 # Node.js 18+⭐️              
 /*Universal Method       */ npm install -g @anthropic-ai/claude-code
