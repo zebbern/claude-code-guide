@@ -1761,6 +1761,7 @@ jobs:
 ---
 
 <h1 id="help--troubleshooting">Help & Troubleshooting</h1>
+
 > [!TIP]
 > **Q:`claude` not found, but `npx claude` works?**
 > > **A: Your `PATH` is missing the npm global bin. See the `PATH` issue section for [`Windows`](#windowspath) or [`Linux`](#linuxpath)**
