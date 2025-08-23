@@ -1949,6 +1949,7 @@ claude config set allowedTools '["Edit","View"]'
 <table><td>
 
 <h3 id="mcp-model-context-protocol-issues">MCP (Model Context Protocol) Issues</h3>
+
 > **Debug MCP servers**
 ```bash
 claude --mcp-debug
