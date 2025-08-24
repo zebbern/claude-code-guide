@@ -103,6 +103,9 @@
 
 <h1 id="getting-started">Getting Started</h1>
 
+**Enable sound alerts when claude completes the task:**
+> 
+> <kbd>claude config set --global preferredNotifChannel terminal_bell</kbd>
 <h2 id="quick-start">Quick Start</h2>
 
 > [!TIP]
