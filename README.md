@@ -321,14 +321,16 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 
 <h2 id="configuration-files">Configuration Files</h2>
 
-> Claude Code uses a hierarchical configuration system:
-```bash
-Command-line flags          # Highest priority | (1)
-Environment variables       #                  | (2)
-Project configuration       #  settings.json   | (3)
-Global configuration        # ~/.claude.json   | (4)
-Built-in defaults           # Lowest priority  | (5)
-```
+**(Memory type) Claude Code offers four memory locations in a hierarchical structure, each serving a different purpose:**
+
+| Memory Type                | Location                                                                                                                                                | Purpose                                             | Use Case Examples                                                    | Shared With                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------- |
+| **Enterprise policy**      | macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`<br />Linux: `/etc/claude-code/CLAUDE.md`<br />Windows: `C:\ProgramData\ClaudeCode\CLAUDE.md` | Organization-wide instructions managed by IT/DevOps | Company coding standards, security policies, compliance requirements | All users in organization       |
+| **Project memory**         | `./CLAUDE.md`                                                                                                                                           | Team-shared instructions for the project            | Project architecture, coding standards, common workflows             | Team members via source control |
+| **User memory**            | `~/.claude/CLAUDE.md`                                                                                                                                   | Personal preferences for all projects               | Code styling preferences, personal tooling shortcuts                 | Just you (all projects)         |
+| **Project memory (local)** | `./CLAUDE.local.md`                                                                                                                                     | Personal project-specific preferences               | *(Deprecated, see below)* Your sandbox URLs, preferred test data     | Just you (current project)      |
+
+>All memory files are automatically loaded into Claude Code's context when launched. Files higher in the hierarchy take precedence and are loaded first, providing a foundation that more specific memories build upon.
 
 ---
 
