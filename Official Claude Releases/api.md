@@ -2,6 +2,11 @@
 
 > Follow along with updates across Anthropic's API and Developer Console.
 
+#### August 26, 2025
+
+* We've increased rate limits on the [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) for Claude Sonnet 4 on the Anthropic API. For more information, see [Long context rate limits](/en/api/rate-limits#long-context-rate-limits).
+* The 1m token context window is now available on Google Cloud's Vertex AI. For more information, see [Claude on Vertex AI](/en/api/claude-on-vertex-ai).
+
 #### August 19, 2025
 
 * Request IDs are now included directly in error response bodies alongside the existing `request-id` header. Learn more in our [error documentation](/en/api/errors#error-shapes).
