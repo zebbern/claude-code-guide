@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's API and Developer Console.
 
+#### August 27, 2025
+
+* We launched a beta version of the [PHP SDK](https://github.com/anthropics/anthropic-sdk-php).
+
 #### August 26, 2025
 
 * We've increased rate limits on the [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) for Claude Sonnet 4 on the Anthropic API. For more information, see [Long context rate limits](/en/api/rate-limits#long-context-rate-limits).
