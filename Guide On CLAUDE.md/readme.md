@@ -8,7 +8,7 @@
 * CLAUDE.md by Sabrina | Sabrina's personal guide and tips.
 
 # Take a look at the collection of ready to use CLAUDE.md files
-* CLAUDE.md Collection | curated set of CLAUDE guides.
+* CLAUDE.md Collection | curated set of CLAUDE / Subagents files
 ```
 
 
