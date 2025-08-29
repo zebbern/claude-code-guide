@@ -2,6 +2,14 @@
 
 > Follow along with updates across Anthropic's Claude applications.
 
+#### August 28, 2025
+
+* Updated Consumer Terms and Privacy Policy:
+  * Consumer users (Free, Pro, and Max plans, and when using Claude Code with those accounts) can now choose whether to share their chats and coding sessions to help improve Claude.
+  * Existing users have until September 28, 2025 to make their selection, while new users will choose during signup.
+  * Preferences can be changed at any time in [https://claude.ai/settings/data-privacy-controls](https://claude.ai/settings/data-privacy-controls).
+  * These updates do not apply to Team, Enterprise, API, or 3rd-party platform users.
+
 #### August 5, 2025
 
 * We've added [Claude Opus 4.1](https://www.anthropic.com/news/claude-opus-4-1) to [claude.ai](https://www.claude.ai), an incremental update to Claude Opus 4. Claude Opus 4.1 brings enhanced performance and remains our most capable model for complex reasoning, analysis, and creative tasks.
