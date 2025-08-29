@@ -34,70 +34,46 @@
 
 <h3 id="content">Content</h3>
 
-> - **[Getting Started](#getting-started)**
->   - **[Quick Start](#quick-start)**
->   - **[System Requirements](#system-requirements)**
->   - **[Initial Setup](#initial-setup)**
-> - **[Configuration & Environment](#configuration--environment)**
->   - **[Environment Variables](#environment-variables)**
->   - **[Global Config Options](#global-config-options)**
->   - **[Configuration Files](#configuration-files)**
-> - **[Commands & Usage](#commands--usage)**
->   - **[Claude Commands](#claude-commands)**
->   - **[Command Line Flags](#command-line-flags)**
->   - **[Cheat Sheet](#cheat-sheet)**
-> - **[Interface & Input](#interface--input)**
->   - **[Keyboard Shortcuts](#keyboard-shortcuts)**
->     - **[Multiline Input](#multiline-input)**
->     - **[Quick Commands](#quick-commands)**
->   - **[Vim Mode](#vim-mode)**
->     - **[Vim Mode Switching](#vim-mode-switching)**
->     - **[Vim Navigation](#vim-navigation)**
->     - **[Vim Editing](#vim-editing)**
->   - **[Command History](#command-history)**
-> - **[Advanced Features](#advanced-features)**
->   - **[Thinking Keywords](#thinking-keywords)**
->   - **[Sub Agents](#sub-agents)**
->     - **[Each Sub-Agent Has Its Own Context](#each-sub-agent-has-its-own-context)**
->     - **[Configure Agents](#configure-agents)**
->     - **[Create Your Core Agents](#create-your-core-agents)**
->   - **[MCP Integration](#mcp-integration)**
->     - **[Understanding MCP](#understanding-mcp-model-context-protocol)**
->     - **[MCP Setup & Configuration](#mcp-setup--configuration)**
->     - **[Popular MCP Servers](#popular-mcp-servers)**
->   - **[Hooks System](#hooks-system)**
->     - **[Configuration](#hooks-configuration)**
->     - **[Hook Events](#hook-events)**
->     - **[Hook Input](#hook-input)**
->     - **[Hook Output](#hook-output)**
->     - **[Working with MCP Tools](#working-with-mcp-tools)**
->     - **[Security Considerations](#security-considerations)**
->     - **[Debugging](#hooks-debugging)**
-> - **[Security & Permissions](#security--permissions)**
->   - **[Security Best Practices](#security-best-practices-main)**
->   - **[Dangerous Mode](#dangerous-mode)**
-> - **[Automation & Integration](#automation--integration)**
->   - **[Automation & Scripting](#automation--scripting-with-claude-code)**
->   - **[Auto PR Review](#auto-pr-review-inline-comments)**
->   - **[Security Review on Every PR](#security-review-on-every-pr)**
->   - **[Issue Triage](#issue-triage-suggest-labels--severity)**
-> - **[Help & Troubleshooting](#help--troubleshooting)**
->   - **[Debug Quick Commands](#debug-quick-commands)**
->   - **[Installation Issues](#installation--nodejs-issues)**
->   - **[Authentication Issues](#authentication-issues)**
->   - **[Permission Issues](#permission--allowed-tools-issues)**
->   - **[MCP Issues](#mcp-model-context-protocol-issues)**
->   - **[Best Practices](#best-practices)**
->     - **[Effective Prompting](#effective-prompting)**
->     - **[Performance Tips](#performance-tips)**
->     - **[Monitoring & Alerting](#monitoring--alerting)**
->     - **[Collaboration Best Practices](#collaboration-best-practices)**
->   - **[Common Pitfalls to Avoid](#common-pitfalls-to-avoid)**
->     - **[Security Pitfalls](#security-pitfalls)**
->     - **[Performance Pitfalls](#performance-pitfalls)**
->     - **[Workflow Pitfalls](#workflow-pitfalls)**
-> - **[Third-Party Integrations](#third-party-integrations)**
->   - **[DeepSeek Integration](#deepseek-integration)**
+_Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Shortcuts](#keyboard-shortcuts) · [MCP](#mcp-integration) · [Troubleshoot](#help--troubleshooting)
+
+- **[Getting Started](#getting-started)**
+  - [Quick Start](#quick-start)
+  - [Initial Setup](#initial-setup)
+
+- **[Configuration & Environment](#configuration--environment)**
+  - [Environment Variables](#environment-variables)
+  - [Configuration Files](#configuration-files)
+
+- **[Commands & Usage](#commands--usage)**
+  - [Claude Commands](#claude-commands)
+  - [Cheat Sheet](#cheat-sheet)
+
+- **[Interface & Input](#interface--input)**
+  - [Keyboard Shortcuts](#keyboard-shortcuts)
+  - [Vim Mode](#vim-mode)
+
+- **[Advanced Features](#advanced-features)**
+  - [Sub Agents](#sub-agents)
+  - [MCP Integration](#mcp-integration)
+  - [Hooks System](#hooks-system)
+
+- **[Security & Permissions](#security--permissions)**
+  - [Dangerous Mode](#dangerous-mode)
+  - [Security Best Practices](#security-best-practices-main)
+
+- **[Automation & Integration](#automation--integration)**
+  - [Automation & Scripting](#automation--scripting-with-claude-code)
+  - [Auto PR Review](#auto-pr-review-inline-comments)
+  - [Issue Triage](#issue-triage-suggest-labels--severity)
+
+- **[Help & Troubleshooting](#help--troubleshooting)**
+  - [Installation Issues](#installation--nodejs-issues)
+  - [MCP Issues](#mcp-model-context-protocol-issues)
+  - [Best Practices](#best-practices)
+
+- **[Third-Party Integrations](#third-party-integrations)**
+  - [DeepSeek Integration](#deepseek-integration)
+
 
 ---
 
