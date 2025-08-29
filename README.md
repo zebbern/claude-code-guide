@@ -24,6 +24,9 @@
 | Troubleshooting                            | ✅ |
 | How to use Claude code the most optimal way| ✅ |
 
+### How To Use Claude Code Via Discord [Here!](https://github.com/zebbern/claude-code-discord)
+
+
 </kbd>
 
 #### [Click For Daily Updated & Organized Claude Changelogs & News](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases)
