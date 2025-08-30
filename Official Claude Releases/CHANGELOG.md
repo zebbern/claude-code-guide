@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.97
+
+- Settings: /doctor now validates permission rule syntax and suggests corrections
+
 ## 1.0.94
 
 - Vertex: add support for global endpoints for supported models
