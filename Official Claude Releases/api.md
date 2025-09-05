@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's API and Developer Console.
 
+#### September 3, 2025
+
+* We've launched support for citable documents in client-side tool results. Learn more in our [tool use documentation](en/docs/agents-and-tools/tool-use/implement-tool-use.mdx).
+
 #### September 2, 2025
 
 * We've launched v2 of the [Code Execution Tool](/en/docs/agents-and-tools/tool-use/code-execution-tool) in public beta, replacing the original Python-only tool with Bash command execution and direct file manipulation capabilities, including writing code in other languages.
