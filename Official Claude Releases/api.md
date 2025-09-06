@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's API and Developer Console.
 
+#### September 5, 2025
+
+* We've launched [rate limit charts](/en/api/rate-limits#monitoring-your-rate-limits-in-the-console) in the Console [Usage](https://console.anthropic.com/settings/usage) page, allowing you to monitor your API rate limit usage and caching rates over time.
+
 #### September 3, 2025
 
 * We've launched support for citable documents in client-side tool results. Learn more in our [tool use documentation](en/docs/agents-and-tools/tool-use/implement-tool-use.mdx).
