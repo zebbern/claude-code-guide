@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.110
+
+- /model now validates provided model names
+- /terminal-setup command now supports WezTerm
+- MCP: OAuth tokens now proactively refresh before expiration
+- Fixed reliability issues with background Bash processes
+
+## 1.0.109
+
+- SDK: Added partial message streaming support via `--include-partial-messages` CLI flag
+
 ## 1.0.106
 
 - Windows: Fixed path permission matching to consistently use POSIX format (e.g., `Read(//c/Users/...)`)
