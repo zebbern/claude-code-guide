@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.0.110
+## 1.0.111
 
 - /model now validates provided model names
+- Fixed Bash tool crashes caused by malformed shell syntax parsing
+
+## 1.0.110
+
 - /terminal-setup command now supports WezTerm
 - MCP: OAuth tokens now proactively refresh before expiration
 - Fixed reliability issues with background Bash processes
