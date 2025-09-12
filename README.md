@@ -345,7 +345,8 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 
 | Flag / Command                             | Description                                                                                                                                              | Example                                                     |
 | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------- |
-| `-d, --debug`                              | Enable debug mode (shows detailed debug output).                                                                                                        | `claude -d -p "query"`                                      |
+| `-d, --debug`                              | Enable debug mode (shows detailed debug output).  | `claude -d -p "query"`                   |
+| `--include-partial-messages`                | partial message streaming support via CLI flag  |
 | `--mcp-debug`                               | [DEPRECATED] MCP debug mode (shows MCP server errors). Use `--debug` instead.                                                                             | `claude --mcp-debug`                                        |
 | `--verbose`                                 | Override verbose mode setting from config (shows expanded logging / turn-by-turn output).                                                                | `claude --verbose`                                          |
 | `-p, --print`                               | Print response and exit (useful for piping output).                                                                                                     | `claude -p "query"`                                         |
