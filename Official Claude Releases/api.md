@@ -48,7 +48,7 @@
 
 #### August 11, 2025
 
-* Some customers might encounter 429 (`rate_limit_error`) [errors](/en/api/errors) following a sharp increase in API usage. Previously, 529 (`overloaded_error`) errors would occur in similar scenarios.
+* Some customers might encounter 429 (`rate_limit_error`) [errors](/en/api/errors) following a sharp increase in API usage due to acceleration limits on the API. Previously, 529 (`overloaded_error`) errors would occur in similar scenarios.
 
 #### August 8, 2025
 
