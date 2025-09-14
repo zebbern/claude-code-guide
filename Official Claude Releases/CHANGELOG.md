@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.113
+
+- Deprecated piped input in interactive mode
+- Move Ctrl+R keybinding for toggling transcript to Ctrl+O
+
 ## 1.0.112
 
 - Transcript mode (Ctrl+R): Added the model used to generate each assistant message
