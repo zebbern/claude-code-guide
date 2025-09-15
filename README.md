@@ -1,6 +1,6 @@
 <div align="center">
   
-<h2 id="claude-code-community-guide">Claude Code Community Guide</h2>
+<h2 id="claude-code-community-guide">Claude Code Guide</h2>
 
 *For updates and contributions, visit the [official Claude Code documentation](https://claude.ai/code)*
 
