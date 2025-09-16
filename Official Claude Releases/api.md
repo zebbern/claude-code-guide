@@ -7,6 +7,10 @@
 * We've launched the web fetch tool in beta, allowing Claude to retrieve full content from specified web pages and PDF documents. Learn more in our [web fetch tool documentation](/en/docs/agents-and-tools/tool-use/web-fetch-tool).
 * We've launched the [Claude Code Analytics API](/en/api/claude-code-analytics-api), enabling organizations to programmatically access daily aggregated usage metrics for Claude Code, including productivity metrics, tool usage statistics, and cost data.
 
+#### September 8, 2025
+
+* We launched a beta version of the [C# SDK](https://github.com/anthropics/anthropic-sdk-csharp).
+
 #### September 5, 2025
 
 * We've launched [rate limit charts](/en/api/rate-limits#monitoring-your-rate-limits-in-the-console) in the Console [Usage](https://console.anthropic.com/settings/usage) page, allowing you to monitor your API rate limit usage and caching rates over time.
