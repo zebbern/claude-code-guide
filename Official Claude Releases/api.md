@@ -1,6 +1,18 @@
-# API
+# Claude Developer Platform
 
-> Follow along with updates across Anthropic's API and Developer Console.
+> Follow along with updates to the Claude API and the Claude Console.
+
+#### September 16, 2025
+
+* We've unified our developer offerings under the Claude brand. You should see updated naming and URLs across our platform and documentation, but **our developer interfaces will remain the same**. Here are some notable changes:
+  * Anthropic Console ([console.anthropic.com](https://console.anthropic.com)) → Claude Console ([platform.claude.com](https://platform.claude.com)). The console will be available at both URLs until December 16, 2025. After that date, [console.anthropic.com](https://console.anthropic.com) will automatically redirect to [platform.claude.com](https://platform.claude.com).
+  * Anthropic Docs ([docs.claude.com](https://docs.claude.com)) → Claude Docs ([docs.claude.com](https://docs.claude.com))
+  * Anthropic Help Center ([support.claude.com](https://support.claude.com)) → Claude Help Center ([support.claude.com](https://support.claude.com))
+  * API endpoints, headers, environment variables, and SDKs remain the same. Your existing integrations will continue working without any changes.
+
+<Warning>
+  **SSO customers**: You must update your identity provider's redirect URIs to use the new console domain (e.g., `https://platform.claude.com/sso-callback`) before December 16, 2025 to avoid service interruption.
+</Warning>
 
 #### September 10, 2025
 
@@ -29,7 +41,7 @@
 
 #### August 26, 2025
 
-* We've increased rate limits on the [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) for Claude Sonnet 4 on the Anthropic API. For more information, see [Long context rate limits](/en/api/rate-limits#long-context-rate-limits).
+* We've increased rate limits on the [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) for Claude Sonnet 4 on the Claude API. For more information, see [Long context rate limits](/en/api/rate-limits#long-context-rate-limits).
 * The 1m token context window is now available on Google Cloud's Vertex AI. For more information, see [Claude on Vertex AI](/en/api/claude-on-vertex-ai).
 
 #### August 19, 2025
@@ -48,7 +60,7 @@
 
 #### August 12, 2025
 
-* We've launched beta support for a [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) in Claude Sonnet 4 on the Anthropic API and Amazon Bedrock.
+* We've launched beta support for a [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) in Claude Sonnet 4 on the Claude API and Amazon Bedrock.
 
 #### August 11, 2025
 
@@ -56,7 +68,7 @@
 
 #### August 8, 2025
 
-* Search result content blocks are now generally available on the Anthropic API and Google Cloud's Vertex AI. This feature enables natural citations for RAG applications with proper source attribution. The beta header `search-results-2025-06-09` is no longer required. Learn more in our [search results documentation](/en/docs/build-with-claude/search-results).
+* Search result content blocks are now generally available on the Claude API and Google Cloud's Vertex AI. This feature enables natural citations for RAG applications with proper source attribution. The beta header `search-results-2025-06-09` is no longer required. Learn more in our [search results documentation](/en/docs/build-with-claude/search-results).
 
 #### August 5, 2025
 
@@ -70,7 +82,7 @@
 
 #### July 24, 2025
 
-* We've increased [rate limits](/en/api/rate-limits) for Claude Opus 4 on the Anthropic API to give you more capacity to build and scale with Claude. For customers with [usage tier 1-4 rate limits](/en/api/rate-limits#rate-limits), these changes apply immediately to your account - no action needed.
+* We've increased [rate limits](/en/api/rate-limits) for Claude Opus 4 on the Claude API to give you more capacity to build and scale with Claude. For customers with [usage tier 1-4 rate limits](/en/api/rate-limits#rate-limits), these changes apply immediately to your account - no action needed.
 
 #### July 21, 2025
 
@@ -78,7 +90,7 @@
 
 #### July 17, 2025
 
-* We've increased [rate limits](/en/api/rate-limits) for Claude Sonnet 4 on the Anthropic API to give you more capacity to build and scale with Claude. For customers with [usage tier 1-4 rate limits](/en/api/rate-limits#rate-limits), these changes apply immediately to your account - no action needed.
+* We've increased [rate limits](/en/api/rate-limits) for Claude Sonnet 4 on the Claude API to give you more capacity to build and scale with Claude. For customers with [usage tier 1-4 rate limits](/en/api/rate-limits#rate-limits), these changes apply immediately to your account - no action needed.
 
 #### July 3, 2025
 
@@ -180,7 +192,7 @@
 
 #### December 17th, 2024
 
-The following features are now generally available in the Anthropic API:
+The following features are now generally available in the Claude API:
 
 * [Models API](/en/api/models-list): Query available models, validate model IDs, and resolve [model aliases](/en/docs/about-claude/models#model-names) to their canonical model IDs.
 * [Message Batches API](/en/docs/build-with-claude/batch-processing): Process large batches of messages asynchronously at 50% of the standard API cost.
@@ -217,7 +229,7 @@ We also released new official SDKs:
 
 #### November 4th, 2024
 
-* [Claude Haiku 3.5](https://www.anthropic.com/claude/haiku) is now available on the Anthropic API as a text-only model.
+* [Claude Haiku 3.5](https://www.anthropic.com/claude/haiku) is now available on the Claude API as a text-only model.
 
 #### November 1st, 2024
 
@@ -227,13 +239,13 @@ We also released new official SDKs:
 #### October 22nd, 2024
 
 * We've added Anthropic-defined computer use tools to our API for use with the new Claude Sonnet 3.5. Read more in our [documentation](/en/docs/agents-and-tools/tool-use/computer-use-tool).
-* Claude Sonnet 3.5, our most intelligent model yet, just got an upgrade and is now available on the Anthropic API. Read more [here](https://www.anthropic.com/claude/sonnet).
+* Claude Sonnet 3.5, our most intelligent model yet, just got an upgrade and is now available on the Claude API. Read more [here](https://www.anthropic.com/claude/sonnet).
 
 #### October 8th, 2024
 
-* The Message Batches API is now available in beta. Process large batches of queries asynchronously in the Anthropic API for 50% less cost. Read more in our [documentation](/en/docs/build-with-claude/batch-processing).
+* The Message Batches API is now available in beta. Process large batches of queries asynchronously in the Claude API for 50% less cost. Read more in our [documentation](/en/docs/build-with-claude/batch-processing).
 * We've loosened restrictions on the ordering of `user`/`assistant` turns in our Messages API. Consecutive `user`/`assistant` messages will be combined into a single message instead of erroring, and we no longer require the first input message to be a `user` message.
-* We've deprecated the Build and Scale plans in favor of a standard feature suite (formerly referred to as Build), along with additional features that are available through sales. Read more [here](https://www.anthropic.com/api).
+* We've deprecated the Build and Scale plans in favor of a standard feature suite (formerly referred to as Build), along with additional features that are available through sales. Read more [here](https://claude.com/platform/api).
 
 #### October 3rd, 2024
 
@@ -257,7 +269,7 @@ We also released new official SDKs:
 
 #### August 14th, 2024
 
-* [Prompt caching](/en/docs/build-with-claude/prompt-caching) is now available as a beta feature in the Anthropic API. Cache and re-use prompts to reduce latency by up to 80% and costs by up to 90%.
+* [Prompt caching](/en/docs/build-with-claude/prompt-caching) is now available as a beta feature in the Claude API. Cache and re-use prompts to reduce latency by up to 80% and costs by up to 90%.
 
 #### July 15th, 2024
 
@@ -275,11 +287,11 @@ We also released new official SDKs:
 
 #### June 20th, 2024
 
-* [Claude Sonnet 3.5](http://anthropic.com/news/claude-3-5-sonnet), our most intelligent model yet, is now generally available across the Anthropic API, Amazon Bedrock, and Google Vertex AI.
+* [Claude Sonnet 3.5](http://anthropic.com/news/claude-3-5-sonnet), our most intelligent model yet, is now generally available across the Claude API, Amazon Bedrock, and Google Vertex AI.
 
 #### May 30th, 2024
 
-* [Tool use](/en/docs/agents-and-tools/tool-use/overview) is now generally available across the Anthropic API, Amazon Bedrock, and Google Vertex AI.
+* [Tool use](/en/docs/agents-and-tools/tool-use/overview) is now generally available across the Claude API, Amazon Bedrock, and Google Vertex AI.
 
 #### May 10th, 2024
 
