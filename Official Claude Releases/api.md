@@ -2,6 +2,10 @@
 
 > Follow along with updates to the Claude API and the Claude Console.
 
+#### September 17, 2025
+
+* We've launched tool helpers in beta for the Python and TypeScript SDKs, simplifying tool creation and execution with automatic input validation and a tool runner for automated tool handling in conversations. For details, see the [`anthropic-sdk-python`](https://github.com/anthropics/anthropic-sdk-python/blob/main/helpers.md) and [`anthropic-sdk-typescript`](https://github.com/anthropics/anthropic-sdk-typescript/blob/main/helpers.md) repos. To learn more about tool use, see our [tool use documentation](/en/docs/agents-and-tools/tool-use/overview).
+
 #### September 16, 2025
 
 * We've unified our developer offerings under the Claude brand. You should see updated naming and URLs across our platform and documentation, but **our developer interfaces will remain the same**. Here are some notable changes:
