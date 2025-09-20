@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.120
+
+- Fix input lag during typing, especially noticeable with large prompts
+
+## 1.0.119
+
+- Fix Windows issue where process visually freezes on entering interactive mode
+- Support dynamic headers for MCP servers via headersHelper configuration
+- Fix thinking mode not working in headless sessions
+- Fix slash commands now properly update allowed tools instead of replacing them
+
+## 1.0.117
+
+- Add Ctrl-R history search to recall previous commands like bash/zsh
+- Fix input lag while typing, especially on Windows
+- Add sed command to auto-allowed commands in acceptEdits mode
+- Fix Windows PATH comparison to be case-insensitive for drive letters
+- Add permissions management hint to /add-dir output
+
 ## 1.0.115
 
 - Improve thinking mode display with enhanced visual effects
@@ -102,7 +121,7 @@
 
 ## 1.0.81
 
-- Released output styles, including new built-in educational output styles "Explanatory" and "Learning". Docs: https://docs.anthropic.com/en/docs/claude-code/output-styles
+- Released output styles, including new built-in educational output styles "Explanatory" and "Learning". Docs: https://docs.claude.com/en/docs/claude-code/output-styles
 - Agents: Fix custom agent loading when agent files are unparsable
 
 ## 1.0.80
@@ -307,7 +326,7 @@
 
 ## 1.0.38
 
-- Released hooks. Special thanks to community input in https://github.com/anthropics/claude-code/issues/712. Docs: https://docs.anthropic.com/en/docs/claude-code/hooks
+- Released hooks. Special thanks to community input in https://github.com/anthropics/claude-code/issues/712. Docs: https://docs.claude.com/en/docs/claude-code/hooks
 
 ## 1.0.37
 
