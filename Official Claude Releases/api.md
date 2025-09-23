@@ -4,7 +4,7 @@
 
 #### September 17, 2025
 
-* We've launched tool helpers in beta for the Python and TypeScript SDKs, simplifying tool creation and execution with automatic input validation and a tool runner for automated tool handling in conversations. For details, see the [`anthropic-sdk-python`](https://github.com/anthropics/anthropic-sdk-python/blob/main/helpers.md) and [`anthropic-sdk-typescript`](https://github.com/anthropics/anthropic-sdk-typescript/blob/main/helpers.md) repos. To learn more about tool use, see our [tool use documentation](/en/docs/agents-and-tools/tool-use/overview).
+* We've launched tool helpers in beta for the Python and TypeScript SDKs, simplifying tool creation and execution with type-safe input validation and a tool runner for automated tool handling in conversations. For details, see the documentation for [the Python SDK](https://github.com/anthropics/anthropic-sdk-python/blob/main/tools.md) and [the TypeScript SDK](https://github.com/anthropics/anthropic-sdk-typescript/blob/main/helpers.md#tool-helpers).
 
 #### September 16, 2025
 
