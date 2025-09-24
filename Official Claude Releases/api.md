@@ -14,10 +14,6 @@
   * Anthropic Help Center ([support.claude.com](https://support.claude.com)) → Claude Help Center ([support.claude.com](https://support.claude.com))
   * API endpoints, headers, environment variables, and SDKs remain the same. Your existing integrations will continue working without any changes.
 
-<Warning>
-  **SSO customers**: You must update your identity provider's redirect URIs to use the new console domain (e.g., `https://platform.claude.com/sso-callback`) before December 16, 2025 to avoid service interruption.
-</Warning>
-
 #### September 10, 2025
 
 * We've launched the web fetch tool in beta, allowing Claude to retrieve full content from specified web pages and PDF documents. Learn more in our [web fetch tool documentation](/en/docs/agents-and-tools/tool-use/web-fetch-tool).
