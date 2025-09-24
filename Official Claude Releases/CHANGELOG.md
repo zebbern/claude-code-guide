@@ -1,8 +1,22 @@
 # Changelog
 
+## 1.0.123
+
+- Bash permission rules now support output redirections when matching (e.g., `Bash(python:*)` matches `python script.py > output.txt`)
+- Fixed thinking mode triggering on negation phrases like "don't think"
+- Fixed rendering performance degradation during token streaming
+- Added SlashCommand tool, which enables Claude to invoke your slash commands. https://docs.claude.com/en/docs/claude-code/slash-commands#SlashCommand-tool
+- Enhanced BashTool environment snapshot logging
+- Fixed a bug where resuming a conversation in headless mode would sometimes enable thinking unnecessarily
+- Migrated --debug logging to a file, to enable easy tailing & filtering
+
 ## 1.0.120
 
 - Fix input lag during typing, especially noticeable with large prompts
+- Improved VSCode extension command registry and sessions dialog user experience
+- Enhanced sessions dialog responsiveness and visual feedback
+- Fixed IDE compatibility issue by removing worktree support check
+- Fixed security vulnerability where Bash tool permission checks could be bypassed using prefix matching
 
 ## 1.0.119
 
