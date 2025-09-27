@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.126
+
+- Enable /context command for Bedrock and Vertex
+- Add mTLS support for HTTP-based OpenTelemetry exporters
+
 ## 1.0.124
 
 - Set `CLAUDE_BASH_NO_LOGIN` environment variable to 1 or true to to skip login shell for BashTool
