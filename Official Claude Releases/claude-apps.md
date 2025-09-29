@@ -6,7 +6,7 @@
 
 * Updated Consumer Terms and Privacy Policy:
   * Consumer users (Free, Pro, and Max plans, and when using Claude Code with those accounts) can now choose whether to share their chats and coding sessions to help improve Claude.
-  * Existing users have until September 28, 2025 to make their selection, while new users will choose during signup.
+  * Existing users have until October 8, 2025 to make their selection, while new users will choose during signup.
   * Preferences can be changed at any time in [https://claude.ai/settings/data-privacy-controls](https://claude.ai/settings/data-privacy-controls).
   * These updates do not apply to Team, Enterprise, API, or 3rd-party platform users.
 
