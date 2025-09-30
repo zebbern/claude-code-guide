@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's Claude applications.
 
+#### September 29, 2025
+
+* We've added [Claude Sonnet 4.5](http://www.anthropic.com/news/claude-sonnet-4-5) to [claude.ai](https://www.claude.ai). Claude Sonnet 4.5 is our best model for complex agents and coding, with the highest intelligence across most tasks.
+
 #### August 28, 2025
 
 * Updated Consumer Terms and Privacy Policy:
