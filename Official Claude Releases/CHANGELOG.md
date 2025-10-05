@@ -1,9 +1,19 @@
 # Changelog
 
-## 2.0.2
+## 2.0.8
 
-- Updated Bedrock default Sonnet model to `global.anthropic.claude-sonnet-4-5-20250929-v1:0`
-- Various bug fixes and presentation improvements
+- Update Bedrock default Sonnet model to `global.anthropic.claude-sonnet-4-5-20250929-v1:0`
+- IDE: Add drag-and-drop support for files and folders in chat
+- /context: Fix counting for thinking blocks
+- Improve message rendering for users with light themes on dark terminals
+- Remove deprecated .claude.json allowedTools, ignorePatterns, env, and todoFeatureEnabled config options (instead, configure these in your settings.json)
+
+## 2.0.5
+
+- IDE: Fix IME unintended message submission with Enter and Tab
+- IDE: Add "Open in Terminal" link in login screen
+- Fix unhandled OAuth expiration 401 API errors
+- SDK: Added SDKUserMessageReplay.isReplay to prevent duplicate messages
 
 ## 2.0.1
 
