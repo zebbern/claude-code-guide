@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.9
+
+- Fix regression where bash backgrounding stopped working
+
 ## 2.0.8
 
 - Update Bedrock default Sonnet model to `global.anthropic.claude-sonnet-4-5-20250929-v1:0`
