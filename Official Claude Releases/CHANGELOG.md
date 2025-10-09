@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.11
+
+- Reduced system prompt size by 1.4k tokens
+- IDE: Fixed keyboard shortcuts and focus issues for smoother interaction
+- Fixed Opus fallback rate limit errors appearing incorrectly
+- Fixed /add-dir command selecting wrong default tab
+
+## 2.0.10
+
+- Rewrote terminal renderer for buttery smooth UI
+- Enable/disable MCP servers by @mentioning, or in /mcp
+- Added tab completion for shell commands in bash mode
+- PreToolUse hooks can now modify tool inputs
+- Press Ctrl-G to edit your prompt in your system's configured text editor
+- Fixes for bash permission checks with environment variables in the command
+
 ## 2.0.9
 
 - Fix regression where bash backgrounding stopped working
