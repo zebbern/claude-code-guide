@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.14
+
+- Fix @-mentioning MCP servers to toggle them on/off
+- Improve permission checks for bash with inline env vars
+- Fix ultrathink + thinking toggle
+- Reduce unnecessary logins
+- Document --system-prompt
+- Several improvements to rendering
+- Plugins UI polish
+
 ## 2.0.13
 
 - Fixed `/plugin` not working on native build
