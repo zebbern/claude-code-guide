@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.15
+
+- Fixed bug with resuming where previously created files needed to be read again before writing
+- Fixed bug with `-p` mode where @-mentioned files needed to be read again before writing
+
 ## 2.0.14
 
 - Fix @-mentioning MCP servers to toggle them on/off
