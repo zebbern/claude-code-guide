@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's Claude applications.
 
+#### October 15, 2025
+
+* We've added [Claude Haiku 4.5](https://www.anthropic.com/news/claude-haiku-4-5) to [claude.ai](https://www.claude.ai). Claude Haiku 4.5 is our fastest and most intelligent Haiku model with near-frontier performance, ideal for real-time applications, high-volume processing, and cost-sensitive deployments requiring strong reasoning.
+
 #### September 29, 2025
 
 * We've added [Claude Sonnet 4.5](http://www.anthropic.com/news/claude-sonnet-4-5) to [claude.ai](https://www.claude.ai). Claude Sonnet 4.5 is our best model for complex agents and coding, with the highest intelligence across most tasks.
