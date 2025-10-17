@@ -2,6 +2,10 @@
 
 > Follow along with updates across Anthropic's Claude applications.
 
+#### October 16, 2025
+
+* **Agent Skills** are now available on [claude.ai](https://www.claude.ai). Skills extend Claude's capabilities with specialized expertise for common tasks. Use pre-built Anthropic-managed Skills in conversations with extended thinking enabled to create and edit documents.
+
 #### October 15, 2025
 
 * We've added [Claude Haiku 4.5](https://www.anthropic.com/news/claude-haiku-4-5) to [claude.ai](https://www.claude.ai). Claude Haiku 4.5 is our fastest and most intelligent Haiku model with near-frontier performance, ideal for real-time applications, high-volume processing, and cost-sensitive deployments requiring strong reasoning.
