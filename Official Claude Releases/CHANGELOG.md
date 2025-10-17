@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.20
+
+- Added support for Claude Skills
+
 ## 2.0.19
 
 - Auto-background long-running bash commands instead of killing them. Customize with BASH_DEFAULT_TIMEOUT_MS
