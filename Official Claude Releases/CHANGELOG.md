@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.22
+
+- Fixed content layout shift when scrolling through slash commands
+- IDE: Add toggle to enable/disable thinking.
+- Fix bug causing duplicate permission prompts with parallel tool calls
+- Add support for enterprise managed MCP allowlist and denylist
+
+## 2.0.21
+
+- Support MCP `structuredContent` field in tool responses
+- Added an interactive question tool
+- Claude will now ask you questions more often in plan mode
+- Added Haiku 4.5 as a model option for Pro users
+- Fixed an issue where queued commands don't have access to previous messages' output
+
 ## 2.0.20
 
 - Added support for Claude Skills
