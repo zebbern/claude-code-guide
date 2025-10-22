@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.25
+
+- Removed legacy SDK entrypoint. Please migrate to @anthropic-ai/claude-agent-sdk for future SDK updates: https://docs.claude.com/en/docs/claude-code/sdk/migration-guide
+
 ## 2.0.24
 
 - Fixed a bug where project-level skills were not loading when --setting-sources 'project' was specified
