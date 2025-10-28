@@ -28,10 +28,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          # Use default token for better security
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download and process release notes
         id: sync_files
