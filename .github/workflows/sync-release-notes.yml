@@ -32,7 +32,7 @@ jobs:
           mkdir -p "$FOLDER"
 
           FILES=(
-            "https://raw.githubusercontent.com/anthropics/claude-code/refs/heads/main/CHANGELOG.md|CHANGELOG.md"
+            "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md|CHANGELOG.md"
             "https://docs.anthropic.com/en/release-notes/api.md|api.md"
             "https://docs.anthropic.com/en/release-notes/claude-apps.md|claude-apps.md"
             "https://docs.anthropic.com/en/release-notes/system-prompts.md|system-prompts.md"
@@ -170,7 +170,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          git config user.name "github-actions[bot]"
+          git config user.name "claude-logs-update[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           TITLE="Latest Anthropic release notes ($(date -u +%F))"
