@@ -32,12 +32,12 @@ jobs:
           mkdir -p "$FOLDER"
 
           FILES=(
-            "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md|CHANGELOG.md"
-            "https://docs.anthropic.com/en/release-notes/api.md|api.md"
-            "https://docs.anthropic.com/en/release-notes/claude-apps.md|claude-apps.md"
-            "https://docs.anthropic.com/en/release-notes/system-prompts.md|system-prompts.md"
-            "https://docs.anthropic.com/en/release-notes/claude-code.md|claude-code.md"
-          )
+  "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md?raw=true|CHANGELOG.md"
+  "https://docs.anthropic.com/claude/docs/releases/api|api.md"
+  "https://docs.anthropic.com/claude/docs/releases/claude-apps|claude-apps.md"
+  "https://docs.anthropic.com/claude/docs/releases/system-prompts|system-prompts.md"
+  "https://docs.anthropic.com/claude/docs/releases/claude-code|claude-code.md"
+)
 
           CHANGED_FILES=()
           COMMIT_BODY=""
