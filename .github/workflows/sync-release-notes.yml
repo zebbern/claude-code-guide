@@ -4,7 +4,13 @@ on:
   schedule:
     # Runs once every 24h at 00:15 UTC
     - cron: "15 0 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update all files'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -16,145 +22,295 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          # Use default token for better security
+          persist-credentials: false
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download latest Markdown files and stage real changes
+      - name: Download and process release notes
         id: sync_files
+        env:
+          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
         run: |
           set -euo pipefail
-
-          FOLDER="Official Claude Releases"
+          
+          # Configuration
+          readonly FOLDER="Official Claude Releases"
+          readonly MAX_RETRIES=3
+          readonly RETRY_DELAY=5
+          
+          # Color output for better readability in logs
+          readonly RED='\033[0;31m'
+          readonly GREEN='\033[0;32m'
+          readonly YELLOW='\033[1;33m'
+          readonly NC='\033[0m' # No Color
+          
+          # Ensure folder exists
           mkdir -p "$FOLDER"
-
-          FILES=(
-  "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md?raw=true|CHANGELOG.md"
-  "https://docs.anthropic.com/claude/docs/releases/api|api.md"
-  "https://docs.anthropic.com/claude/docs/releases/claude-apps|claude-apps.md"
-  "https://docs.anthropic.com/claude/docs/releases/system-prompts|system-prompts.md"
-  "https://docs.anthropic.com/claude/docs/releases/claude-code|claude-code.md"
-)
-
-          CHANGED_FILES=()
+          
+          # Source URLs mapped to destination filenames
+          declare -A FILES=(
+            ["https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"]="CHANGELOG.md"
+            ["https://docs.anthropic.com/claude/docs/releases/api"]="api.md"
+            ["https://docs.anthropic.com/claude/docs/releases/claude-apps"]="claude-apps.md"
+            ["https://docs.anthropic.com/claude/docs/releases/system-prompts"]="system-prompts.md"
+            ["https://docs.anthropic.com/claude/docs/releases/claude-code"]="claude-code.md"
+          )
+          
+          # Function to download with retries
+          download_with_retry() {
+            local url="$1"
+            local output="$2"
+            local attempt=1
+            
+            while [[ $attempt -le $MAX_RETRIES ]]; do
+              if curl -fsSL \
+                -H "Accept: text/markdown, text/plain;q=0.9, text/x-markdown;q=0.9, */*;q=0.1" \
+                -H "User-Agent: GitHub-Actions-Release-Notes-Sync/1.0" \
+                --connect-timeout 10 \
+                --max-time 30 \
+                "$url" -o "$output"; then
+                return 0
+              fi
+              
+              echo -e "${YELLOW}Attempt $attempt/$MAX_RETRIES failed for $url${NC}" >&2
+              
+              if [[ $attempt -lt $MAX_RETRIES ]]; then
+                sleep $RETRY_DELAY
+              fi
+              
+              ((attempt++))
+            done
+            
+            echo -e "${RED}Failed to download $url after $MAX_RETRIES attempts${NC}" >&2
+            return 1
+          }
+          
+          # Validate downloaded content
+          validate_content() {
+            local file="$1"
+            local min_size=10
+            
+            # Check file exists and has content
+            if [[ ! -f "$file" ]] || [[ ! -s "$file" ]]; then
+              echo -e "${RED}File $file is empty or doesn't exist${NC}" >&2
+              return 1
+            fi
+            
+            # Check minimum size
+            local size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+            if [[ $size -lt $min_size ]]; then
+              echo -e "${RED}File $file is too small ($size bytes)${NC}" >&2
+              return 1
+            fi
+            
+            return 0
+          }
+          
+          # Arrays to track changes
+          declare -a CHANGED_FILES=()
           COMMIT_BODY=""
           README_LIST=""
-
-          for entry in "${FILES[@]}"; do
-            IFS="|" read -r URL NAME <<< "$entry"
-            OUT="$FOLDER/$NAME"
-            TMP="$OUT.tmp"
-
-            echo "Fetching $URL -> $OUT"
-            curl -fsSL -H "Accept: text/markdown, text/plain;q=0.9, text/x-markdown;q=0.9, */*;q=0.1" "$URL" -o "$TMP"
-
-            if [[ -f "$OUT" ]]; then
-              # Skip if identical ignoring whitespace (use git diff for consistency)
-              if git --no-pager diff --no-index --ignore-all-space --quiet -- "$OUT" "$TMP"; then
-                echo "No substantive changes for $NAME"
-                rm -f "$TMP"
-                continue
-              fi
+          TOTAL_ADDED=0
+          TOTAL_DELETED=0
+          
+          # Process each file
+          for url in "${!FILES[@]}"; do
+            name="${FILES[$url]}"
+            out="$FOLDER/$name"
+            tmp="$out.tmp"
+            
+            echo -e "${GREEN}Processing: $name${NC}"
+            
+            # Download file
+            if ! download_with_retry "$url" "$tmp"; then
+              echo -e "${RED}Skipping $name due to download failure${NC}"
+              rm -f "$tmp"
+              continue
             fi
-
-            BASE="$OUT"
-            [[ -f "$OUT" ]] || BASE="/dev/null"
-
-            # Real added/deleted line counts (git diff --numstat)
-            NUMSTAT=$(git --no-pager diff --no-index --numstat -- "$BASE" "$TMP" || true)
-            read -r ADDED DELETED _ <<< "${NUMSTAT:-0 0 -}"
-
-            # Highlights: first few added headings/bullets (fallback to a few added lines)
-            HILITES=$(
-              git --no-pager diff --no-index -U0 -- "$BASE" "$TMP" \
-                | sed -n 's/^+[^+].*/\0/p' \
-                | sed 's/^+//' \
-                | grep -E '^(#|##|###|- |\* )' \
-                | head -n 6 || true
+            
+            # Validate downloaded content
+            if ! validate_content "$tmp"; then
+              echo -e "${RED}Skipping $name due to validation failure${NC}"
+              rm -f "$tmp"
+              continue
+            fi
+            
+            # Check if file needs updating
+            needs_update=false
+            
+            if [[ "$FORCE_UPDATE" == "true" ]]; then
+              needs_update=true
+              echo "Force update enabled"
+            elif [[ ! -f "$out" ]]; then
+              needs_update=true
+              echo "New file detected"
+            elif ! git --no-pager diff --no-index --ignore-all-space --quiet -- "$out" "$tmp" 2>/dev/null; then
+              needs_update=true
+              echo "Changes detected"
+            fi
+            
+            if [[ "$needs_update" == "false" ]]; then
+              echo "No changes for $name"
+              rm -f "$tmp"
+              continue
+            fi
+            
+            # Calculate statistics
+            base_file="$out"
+            [[ -f "$out" ]] || base_file="/dev/null"
+            
+            numstat=$(git --no-pager diff --no-index --numstat -- "$base_file" "$tmp" 2>/dev/null || echo "0 0 -")
+            read -r added deleted _ <<< "$numstat"
+            
+            # Extract highlights from changes
+            highlights=$(
+              git --no-pager diff --no-index -U0 -- "$base_file" "$tmp" 2>/dev/null \
+                | sed -n 's/^+[^+]//p' \
+                | grep -E '^(#{1,3} |- |\* |[0-9]+\. )' \
+                | head -n 5 || true
             )
-            if [[ -z "$HILITES" ]]; then
-              HILITES=$(
-                git --no-pager diff --no-index -U0 -- "$BASE" "$TMP" \
-                  | sed -n 's/^+[^+].*/\0/p' \
-                  | sed 's/^+//' \
+            
+            # Fallback to first few lines if no structured content
+            if [[ -z "$highlights" ]]; then
+              highlights=$(
+                git --no-pager diff --no-index -U0 -- "$base_file" "$tmp" 2>/dev/null \
+                  | sed -n 's/^+[^+]//p' \
+                  | grep -v '^$' \
                   | head -n 3 || true
               )
             fi
-
-            # Replace file and record it as changed
-            mv -f "$TMP" "$OUT"
-            CHANGED_FILES+=("$OUT")
-
-            # Build commit body + README summary
-            COMMIT_BODY+=$'- '"$NAME"' (+'"${ADDED:-0}"' / -'"${DELETED:-0}"')\n'
-            if [[ -n "$HILITES" ]]; then
+            
+            # Update file and track changes
+            mv -f "$tmp" "$out"
+            CHANGED_FILES+=("$out")
+            
+            # Build commit message body
+            COMMIT_BODY+="- **${name}** (+${added:-0} / -${deleted:-0})"$'\n'
+            if [[ -n "$highlights" ]]; then
               while IFS= read -r line; do
-                COMMIT_BODY+="    • ${line}\n"
-              done <<< "$HILITES"
+                # Truncate long lines
+                line="${line:0:100}"
+                COMMIT_BODY+="  • ${line}"$'\n'
+              done <<< "$highlights"
             fi
-            README_LIST+="- ${NAME} (+${ADDED:-0} / -${DELETED:-0})"$'\n'
+            
+            # Build README summary
+            README_LIST+="- **${name}**: +${added:-0} / -${deleted:-0}"$'\n'
+            
+            # Track totals
+            ((TOTAL_ADDED += added)) || true
+            ((TOTAL_DELETED += deleted)) || true
+            
+            echo -e "${GREEN}✓ Updated $name (+$added / -$deleted)${NC}"
           done
-
-          # Stage only actually changed files
+          
+          # Stage changed files
           if [[ ${#CHANGED_FILES[@]} -gt 0 ]]; then
             git add "${CHANGED_FILES[@]}"
+            echo "files_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "files_changed=false" >> "$GITHUB_OUTPUT"
           fi
+          
+          # Save data for next steps
+          {
+            printf '%b' "$COMMIT_BODY"
+          } > /tmp/commit_body.txt
+          
+          {
+            printf '%b' "$README_LIST"
+          } > /tmp/readme_list.txt
+          
+          echo "total_added=$TOTAL_ADDED" >> "$GITHUB_OUTPUT"
+          echo "total_deleted=$TOTAL_DELETED" >> "$GITHUB_OUTPUT"
+          echo "changed_count=${#CHANGED_FILES[@]}" >> "$GITHUB_OUTPUT"
 
-          # Persist data for later steps
-          printf '%b' "$COMMIT_BODY" > /tmp/commit_body.txt
-          printf '%b' "$README_LIST" > /tmp/readme_list.txt
-
-      - name: Update status in 'Official Claude Releases/README.md' (always)
+      - name: Update status README
         run: |
           set -euo pipefail
-
-          FOLDER="Official Claude Releases"
-          README="$FOLDER/README.md"
-
-          DATE_UTC="$(date -u +'%Y-%m-%d %H:%M %Z')"
-          DATE_OSLO="$(TZ=Europe/Oslo date +'%Y-%m-%d %H:%M %Z')"
-          README_LIST="$(cat /tmp/readme_list.txt 2>/dev/null || true)"
-
-          STATUS_START="<!-- sync-status:start -->"
-          STATUS_END="<!-- sync-status:end -->"
-
-          # Build the status block
+          
+          readonly FOLDER="Official Claude Releases"
+          readonly README="$FOLDER/README.md"
+          readonly STATUS_START="<!-- sync-status:start -->"
+          readonly STATUS_END="<!-- sync-status:end -->"
+          
+          # Get timestamps
+          date_utc=$(date -u +'%Y-%m-%d %H:%M:%S %Z')
+          date_oslo=$(TZ=Europe/Oslo date +'%Y-%m-%d %H:%M:%S %Z')
+          readme_list=$(cat /tmp/readme_list.txt 2>/dev/null || true)
+          
+          # Build status block
           {
             echo "$STATUS_START"
             echo
-            echo "### 🔄 Last sync"
-            echo "- UTC: \`$DATE_UTC\`"
-            echo "- Europe/Oslo: \`$DATE_OSLO\`"
+            echo "### 🔄 Last Sync"
             echo
-            if [[ -n "$README_LIST" ]]; then
-              echo "### ✅ Files updated this run"
+            echo "- **UTC**: \`$date_utc\`"
+            echo "- **Europe/Oslo**: \`$date_oslo\`"
+            echo "- **Workflow Run**: [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo
+            
+            if [[ -n "$readme_list" ]]; then
+              echo "### ✅ Files Updated This Run"
               echo
-              printf "%b" "$README_LIST"
+              printf '%b' "$readme_list"
+              echo
+              echo "**Total changes**: +${{ steps.sync_files.outputs.total_added }} / -${{ steps.sync_files.outputs.total_deleted }} lines"
             else
-              echo "### ℹ️ No content changes in tracked files this run"
+              echo "### ℹ️ No Changes Detected"
               echo
+              echo "All tracked files are up to date."
             fi
+            echo
             echo "$STATUS_END"
           } > /tmp/status_block.md
-
-          # Ensure README exists (no heredocs; safe in YAML)
+          
+          # Create README if it doesn't exist
           if [[ ! -f "$README" ]]; then
             mkdir -p "$FOLDER"
             {
               echo "# Official Claude Releases"
               echo
-              echo "This folder mirrors selected Anthropic release notes for easy tracking. The status section below is updated by a daily GitHub Action."
+              echo "This folder automatically syncs selected Anthropic release notes for easy tracking."
+              echo
+              echo "## 📋 Tracked Files"
+              echo
+              echo "- **CHANGELOG.md**: Claude Code changelog"
+              echo "- **api.md**: Claude API release notes"
+              echo "- **claude-apps.md**: Claude Apps (Web/Mobile/Desktop) release notes"
+              echo "- **system-prompts.md**: System prompt updates"
+              echo "- **claude-code.md**: Claude Code release notes from docs"
+              echo
+              echo "## 🤖 Automation"
+              echo
+              echo "- Runs daily at 00:15 UTC via GitHub Actions"
+              echo "- Can be manually triggered with optional force update"
+              echo "- Only commits when actual content changes are detected"
               echo
             } > "$README"
           fi
-
-          # Replace existing block or append
+          
+          # Update or append status block
           if grep -q "$STATUS_START" "$README"; then
-            perl -0777 -pe 'BEGIN{undef $/; open my $fh,"<","/tmp/status_block.md"; our $blk=do{local $/;<$fh>}} s/<!-- sync-status:start -->.*?<!-- sync-status:end -->/$blk/s' -i "$README"
+            # Replace existing status block
+            perl -0777 -i -pe '
+              BEGIN { 
+                undef $/; 
+                open my $fh, "<", "/tmp/status_block.md" or die; 
+                our $block = <$fh>; 
+                close $fh;
+              }
+              s/<!-- sync-status:start -->.*?<!-- sync-status:end -->/$block/s
+            ' "$README"
           else
+            # Append new status block
             {
               echo
               echo "---"
@@ -162,28 +318,68 @@ jobs:
               cat /tmp/status_block.md
             } >> "$README"
           fi
-
-          # Always stage this README so there is a visible run marker
+          
+          # Always stage README
           git add "$README"
 
-      - name: Commit and push
+      - name: Commit and push changes
+        if: always()
         run: |
           set -euo pipefail
-
-          git config user.name "claude-logs-update[bot]"
+          
+          # Configure git
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          TITLE="Latest Anthropic release notes ($(date -u +%F))"
-          BODY=$(cat /tmp/commit_body.txt 2>/dev/null || true)
-
-          FOLDER="Official Claude Releases"
-          README_PATH="$FOLDER/README.md"
-
-          # If anything besides the README is staged, include the detailed body
-          if git diff --cached --name-only | grep -F -v -- "$README_PATH" | grep -q .; then
-            git commit -m "$TITLE" -m "$BODY"
+          
+          # Check if there are changes to commit
+          if ! git diff --cached --quiet; then
+            date_str=$(date -u +%Y-%m-%d)
+            
+            if [[ "${{ steps.sync_files.outputs.files_changed }}" == "true" ]]; then
+              # Content changes detected
+              title="🔄 Sync release notes ($date_str)"
+              body=$(cat /tmp/commit_body.txt 2>/dev/null || echo "Updated release notes")
+              
+              git commit -m "$title" -m "$body"
+              echo "✅ Committed content changes"
+            else
+              # Only README status update
+              title="📊 Update sync status ($date_str)"
+              body="No release note content changes. Updated status in README."
+              
+              git commit -m "$title" -m "$body"
+              echo "✅ Committed status update"
+            fi
+            
+            # Push changes
+            git push
+            echo "✅ Pushed changes to repository"
           else
-            git commit -m "$TITLE" -m "No release-note content changes; updated status in '$README_PATH'."
+            echo "ℹ️ No changes to commit"
           fi
 
-          git push
+      - name: Create summary
+        if: always()
+        run: |
+          {
+            echo "## 📊 Sync Summary"
+            echo
+            
+            if [[ "${{ steps.sync_files.outputs.files_changed }}" == "true" ]]; then
+              echo "### ✅ Success"
+              echo
+              echo "**Files updated**: ${{ steps.sync_files.outputs.changed_count }}"
+              echo "**Lines added**: +${{ steps.sync_files.outputs.total_added }}"
+              echo "**Lines deleted**: -${{ steps.sync_files.outputs.total_deleted }}"
+              echo
+              echo "### 📝 Changes"
+              echo
+              echo '```'
+              cat /tmp/commit_body.txt 2>/dev/null || echo "No details available"
+              echo '```'
+            else
+              echo "### ℹ️ No Changes"
+              echo
+              echo "All tracked files are up to date. Status README was updated."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
