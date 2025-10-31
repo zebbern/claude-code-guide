@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.30
+
+- Added helpful hint to run `security unlock-keychain` when encountering API key errors on macOS with locked keychain
+- Added `allowUnsandboxedCommands` sandbox setting to disable the dangerouslyDisableSandbox escape hatch at policy level
+- Added `disallowedTools` field to custom agent definitions for explicit tool blocking
+- Added prompt-based stop hooks
+- VSCode: Added respectGitIgnore configuration to include .gitignored files in file searches (defaults to true)
+- Enabled SSE MCP servers on native build
+- Deprecated output styles. Review options in `/output-style` and use CLAUDE.md or plugins instead
+- Removed support for custom ripgrep configuration, resolving an issue where Search returns no results and config discovery fails
+- Fixed Explore agent creating unwanted .md investigation files during codebase exploration
+- Fixed a bug where `/context` would sometimes fail with "max_tokens must be greater than thinking.budget_tokens" error message
+- Fixed `--mcp-config` flag to correctly override file-based MCP configurations
+- Fixed bug that saved session permissions to local settings
+- Fixed MCP tools not being available to sub-agents
+- Fixed hooks and plugins not executing when using --dangerously-skip-permissions flag
+- Fixed delay when navigating through typeahead suggestions with arrow keys
+- VSCode: Restored selection indicator in input footer showing current file or code selection status
+
 ## 2.0.28
 
 - Plan mode: introduced new Plan subagent
