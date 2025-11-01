@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.31
+
+- Windows: native installation uses shift+tab as shortcut for mode switching, instead of alt+m
+- Vertex: add support for Web Search on supported models
+- VSCode: Adding the respectGitIgnore configuration to include .gitignored files in file searches (defaults to true)
+- Fixed a bug with subagents and MCP servers related to "Tool names must be unique" error
+- Fixed issue causing `/compact` to fail with `prompt_too_long` by making it respect existing compact boundaries
+- Fixed plugin uninstall not removing plugins
+
 ## 2.0.30
 
 - Added helpful hint to run `security unlock-keychain` when encountering API key errors on macOS with locked keychain
@@ -8,7 +17,7 @@
 - Added prompt-based stop hooks
 - VSCode: Added respectGitIgnore configuration to include .gitignored files in file searches (defaults to true)
 - Enabled SSE MCP servers on native build
-- Deprecated output styles. Review options in `/output-style` and use CLAUDE.md or plugins instead
+- Deprecated output styles. Review options in `/output-style` and use --system-prompt, --append-system-prompt, CLAUDE.md, or plugins instead
 - Removed support for custom ripgrep configuration, resolving an issue where Search returns no results and config discovery fails
 - Fixed Explore agent creating unwanted .md investigation files during codebase exploration
 - Fixed a bug where `/context` would sometimes fail with "max_tokens must be greater than thinking.budget_tokens" error message
