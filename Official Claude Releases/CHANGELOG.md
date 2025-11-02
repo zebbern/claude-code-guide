@@ -17,7 +17,7 @@
 - Added prompt-based stop hooks
 - VSCode: Added respectGitIgnore configuration to include .gitignored files in file searches (defaults to true)
 - Enabled SSE MCP servers on native build
-- Deprecated output styles. Review options in `/output-style` and use --system-prompt, --append-system-prompt, CLAUDE.md, or plugins instead
+- Deprecated output styles. Review options in `/output-style` and use --system-prompt-file, --system-prompt, --append-system-prompt, CLAUDE.md, or plugins instead
 - Removed support for custom ripgrep configuration, resolving an issue where Search returns no results and config discovery fails
 - Fixed Explore agent creating unwanted .md investigation files during codebase exploration
 - Fixed a bug where `/context` would sometimes fail with "max_tokens must be greater than thinking.budget_tokens" error message
