@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.35
+
+- Improve fuzzy search results when searching commands
+- Improved VS Code extension to respect `chat.fontSize` and `chat.fontFamily` settings throughout the entire UI, and apply font changes immediately without requiring reload
+- Added `CLAUDE_CODE_EXIT_AFTER_STOP_DELAY` environment variable to automatically exit SDK mode after a specified idle duration, useful for automated workflows and scripts
+- Migrated `ignorePatterns` from project config to deny permissions in the localSettings.
+- Fixed messages returning null `stop_reason` and `stop_sequence` values
+- Fixed menu navigation getting stuck on items with empty string or other falsy values (e.g., in the `/hooks` menu)
+
 ## 2.0.34
 
 - VSCode Extension: Added setting to configure the initial permission mode for new conversations
