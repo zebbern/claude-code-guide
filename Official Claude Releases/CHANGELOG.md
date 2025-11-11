@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.37
+
+- Fixed how idleness is computed for notifications
+- Hooks: Added matcher values for Notification hook events
+- Output Styles: Added `keep-coding-instructions` option to frontmatter
+
 ## 2.0.36
 
 - Fixed: DISABLE_AUTOUPDATER environment variable now properly disables package manager update notifications
