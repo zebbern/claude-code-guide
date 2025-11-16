@@ -4,7 +4,7 @@
 
 ![AI Coding Agents](https://img.shields.io/badge/AI-Coding%20Agents-brightgreen)
 [![Status](https://img.shields.io/badge/Status-Active-success)]()
-[![Last Updated](https://img.shields.io/badge/Updated-2025--11--12-blue)]()
+[![Last Updated](https://img.shields.io/badge/Updated-2025--11--16-blue)]()
 [![GitHub stars](https://img.shields.io/github/stars/mamba-mental/ai-coding-agents-guide)]()
 
 **The ultimate guide to AI coding assistants, agents, and tools**
@@ -321,9 +321,10 @@ Answer these questions:
 
 ### Shared Resources
 
+- **[MCP Project Workflows](/shared/mcp-project-workflows/)** - **NEW!** 13 project types × 6 MCP servers with cost estimates
 - **[MCP Servers Guide](/shared/mcp-servers/)** - Complete MCP server documentation
 - **[Feature Comparison](/comparisons/feature-matrix.md)** - Detailed side-by-side comparison
-- **[Troubleshooting](/shared/troubleshooting/)** - Common issues and solutions
+- **[Official Resources](/OFFICIAL_RESOURCES.md)** - Verified GitHub repos and official links
 
 ---
 
@@ -340,10 +341,39 @@ Answer these questions:
 - ✅ Gemini CLI (experimental)
 - ✅ OpenCode
 
+### 🚀 NEW: MCP Project Workflows
+
+**Don't know which MCP servers to use?** Our project-type-based configurations have you covered!
+
+**[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+
+Choose from 13 project types:
+- **Greenfield** - $0-500/mo - Spec Kit + Task Master + Zen
+- **Brownfield** - $30-280/mo - OpenSpec + Shrimp + Zen
+- **Legacy Modernization** - $180-450/mo - Full Stack (5 servers)
+- **Bug Fixes** - $30-200/mo - Zen + Shrimp
+- And 9 more with copy-paste templates!
+
+**Each template includes:**
+- ✅ Exact JSON configuration
+- ✅ Installation commands
+- ✅ Cost estimates
+- ✅ Setup time
+- ✅ Primary benefits
+
+**[📋 Copy-Paste Templates →](/shared/mcp-project-workflows/templates.md)**
+
+---
+
 ### Popular MCP Servers
 
 | Server | Purpose | Works in Web | Works Locally |
 |--------|---------|--------------|---------------|
+| **Spec Kit** | Constitutional development, PRD parsing | ✅ | ✅ |
+| **OpenSpec** | Change tracking, codebase analysis | ✅ | ✅ |
+| **Task Master** | Epic sharding, task orchestration | ✅ | ✅ |
+| **Shrimp** | Code review, legacy analysis | ❌ | ✅ |
+| **Zen** | Multi-model validation (Claude+GPT+Gemini) | ✅ | ✅ |
 | **filesystem** | Local file access | ❌ | ✅ |
 | **github** | GitHub integration | ✅ | ✅ |
 | **brave-search** | Web search | ✅ | ✅ |
@@ -489,6 +519,6 @@ If this guide helped you, please consider starring the repository!
 
 Made with ❤️ by the AI coding community
 
-*Last updated: 2025-11-12*
+*Last updated: 2025-11-16*
 
 </div>
