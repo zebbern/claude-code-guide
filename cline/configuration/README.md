@@ -11,6 +11,17 @@ Complete configuration guide for Cline VS Code extension.
 
 ---
 
+## 🚀 MCP Project Workflows
+
+**Configuring MCP for Cline?** Use our project-type-based setups:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+> **[📋 Ready-to-Use Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Configure `.vscode/settings.json` with MCP servers optimized for your project type.
+
+---
+
 ## Initial Setup
 
 ### 1. Install Extension

@@ -11,6 +11,17 @@ Complete setup guide for Roo-Code VS Code extension with multi-mode configuratio
 
 ---
 
+## 🚀 MCP Project Workflows
+
+**Setting up MCP for Roo-Code?** Get optimized configurations:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+> **[📋 Ready-to-Use Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Roo-Code's multi-mode system works great with MCP servers. Configure different servers for different modes!
+
+---
+
 ## Installation
 
 ### Via VS Code Marketplace

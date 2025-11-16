@@ -10,6 +10,17 @@ Complete setup guide for OpenCode terminal AI coding agent.
 
 ---
 
+## 🚀 Quick Start: MCP Project Workflows
+
+**Need MCP configuration for your project?**
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+> **[📋 Ready-to-Use Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Get optimized MCP setups for 13 project types with cost estimates and setup times.
+
+---
+
 ## Installation
 
 See [OpenCode Main Guide](/opencode/#installation) for detailed installation instructions.
