@@ -2,6 +2,15 @@
 
 Complete configuration guide for AI coding extensions in Visual Studio Code.
 
+> **Extension Official Resources:**
+> - **Claude for VS Code**: [Marketplace](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) | [Docs](https://docs.anthropic.com/en/docs/claude-code/ide-integrations)
+> - **Cline**: [GitHub](https://github.com/cline/cline) | [Docs](https://docs.cline.bot/)
+> - **Roo-Code**: [GitHub](https://github.com/RooCodeInc/Roo-Code) | [Docs](https://docs.roocode.com/)
+> - **Continue.dev**: [GitHub](https://github.com/continuedev/continue) | [Docs](https://docs.continue.dev/)
+> - **GitHub Copilot**: [Docs](https://docs.github.com/copilot)
+> - **Codeium**: [Docs](https://codeium.com/docs)
+> - **Tabnine**: [Docs](https://www.tabnine.com/docs)
+
 ---
 
 ## Claude for VS Code Configuration

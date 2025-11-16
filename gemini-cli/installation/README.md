@@ -2,12 +2,19 @@
 
 Complete installation instructions for Google's Gemini CLI.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/google-gemini/gemini-cli
+> 🌐 Website: https://google-gemini.github.io/gemini-cli/
+> 📚 Documentation: https://google-gemini.github.io/gemini-cli/
+> 🎓 Codelabs: https://codelabs.developers.google.com/gemini-cli-hands-on
+> ⚖️ License: Apache 2.0 (Open Source)
+
 ---
 
 ## Prerequisites
 
 - **Node.js 18+** (required)
-- **Google Account** (personal for free tier, or Google Cloud for API)
+- **Google Account** (personal for free tier with 60 req/min, 1000 req/day)
 
 ---
 

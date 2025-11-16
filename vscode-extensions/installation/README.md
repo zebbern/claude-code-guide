@@ -2,6 +2,16 @@
 
 Complete installation guide for AI coding extensions in Visual Studio Code.
 
+> **Extension Official Resources:**
+> - **Claude for VS Code**: [Marketplace](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) | [Docs](https://docs.anthropic.com/en/docs/claude-code/ide-integrations)
+> - **Cline**: [GitHub](https://github.com/cline/cline) | [Website](https://cline.bot/)
+> - **Roo-Code**: [GitHub](https://github.com/RooCodeInc/Roo-Code) | [Website](https://roocode.com/)
+> - **Continue.dev**: [GitHub](https://github.com/continuedev/continue) | [Docs](https://docs.continue.dev/)
+> - **GitHub Copilot**: [Website](https://github.com/features/copilot) | [Docs](https://docs.github.com/copilot)
+> - **Codeium**: [Website](https://codeium.com/) | [Marketplace](https://marketplace.visualstudio.com/items?itemName=Codeium.codeium)
+> - **Tabnine**: [Website](https://www.tabnine.com/) | [Marketplace](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode)
+> - **CodeWhisperer**: [AWS Website](https://aws.amazon.com/codewhisperer/)
+
 ---
 
 ## Overview

@@ -2,6 +2,13 @@
 
 Complete setup guide for Roo-Code VS Code extension with multi-mode configuration.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/RooCodeInc/Roo-Code
+> 🌐 Website: https://roocode.com/
+> 📚 Documentation: https://docs.roocode.com/
+> 🛒 VS Code Marketplace: https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline
+> ⚖️ License: Apache 2.0 (Open Source)
+
 ---
 
 ## Installation

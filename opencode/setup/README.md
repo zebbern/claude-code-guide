@@ -2,6 +2,12 @@
 
 Complete setup guide for OpenCode terminal AI coding agent.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/sst/opencode
+> 🌐 Website: https://opencode.ai/
+> 📚 Documentation: https://opencode.ai/docs/
+> ⚖️ License: MIT (Open Source)
+
 ---
 
 ## Installation

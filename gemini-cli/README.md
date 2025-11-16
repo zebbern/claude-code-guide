@@ -9,7 +9,7 @@
 
 *Google's open-source AI agent for your terminal*
 
-[GitHub](https://github.com/google-gemini/gemini-cli) · [Documentation](https://docs.cloud.google.com/gemini/docs/codeassist/gemini-cli) · [Blog Announcement](https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/)
+[GitHub](https://github.com/google-gemini/gemini-cli) · [Website](https://google-gemini.github.io/gemini-cli/) · [Documentation](https://google-gemini.github.io/gemini-cli/) · [Codelabs](https://codelabs.developers.google.com/gemini-cli-hands-on) · [Blog Post](https://blog.google/technology/developers/introducing-gemini-cli-github-actions/)
 
 </div>
 

@@ -7,6 +7,15 @@
 
 *Comprehensive guide to AI coding assistants for Visual Studio Code*
 
+**Official Extension Links:**
+- **Claude Code**: [Marketplace](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) | [Docs](https://docs.anthropic.com/en/docs/claude-code/ide-integrations)
+- **Cline**: [GitHub](https://github.com/cline/cline) | [Website](https://cline.bot/)
+- **Roo-Code**: [GitHub](https://github.com/RooCodeInc/Roo-Code) | [Website](https://roocode.com/)
+- **Continue.dev**: [GitHub](https://github.com/continuedev/continue) | [Docs](https://docs.continue.dev/)
+- **GitHub Copilot**: [Website](https://github.com/features/copilot)
+- **Codeium**: [Website](https://codeium.com/)
+- **Tabnine**: [Website](https://www.tabnine.com/)
+
 </div>
 
 ---

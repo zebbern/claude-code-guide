@@ -8,7 +8,7 @@
 
 *OpenAI's official command-line coding agent with GPT-5-Codex*
 
-[GitHub](https://github.com/openai/codex) · [Documentation](https://developers.openai.com/codex/) · [Help Center](https://help.openai.com/codex)
+[GitHub](https://github.com/openai/codex) · [Website](https://openai.com/codex/) · [Documentation](https://developers.openai.com/codex/) · [Help Center](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan)
 
 </div>
 

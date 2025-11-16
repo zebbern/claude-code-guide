@@ -2,6 +2,11 @@
 
 Complete reference for Codex CLI commands and usage.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/openai/codex
+> 🌐 Website: https://openai.com/codex/
+> 📚 Documentation: https://developers.openai.com/codex/
+
 ---
 
 ## Basic Commands
