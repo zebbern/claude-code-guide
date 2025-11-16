@@ -4,6 +4,23 @@ Complete guide to setting up Model Context Protocol servers with Claude Code.
 
 ---
 
+## 🚀 Quick Start: Project-Type-Based Setup
+
+**New to MCP?** Choose your project type for optimized server configurations:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+>
+> Get pre-configured MCP setups for:
+> - **Greenfield** (new projects) - Spec Kit + Zen
+> - **Brownfield** (existing codebases) - OpenSpec + Shrimp + Zen
+> - **Legacy Modernization** - Spec Kit + Task Master + Shrimp + Zen + BMAD
+> - **Bug Fixes** - Zen + Shrimp
+> - **13 total project types** with cost estimates and setup times
+>
+> **[📋 Copy-Paste Templates →](/shared/mcp-project-workflows/templates.md)**
+
+---
+
 ## What is MCP?
 
 Model Context Protocol enables Claude Code to interact with external tools, data sources, and services through a standardized interface.
@@ -13,6 +30,9 @@ Model Context Protocol enables Claude Code to interact with external tools, data
 - Integrate with GitHub, Slack, etc.
 - Extend Claude's capabilities
 - Reusable across MCP-compatible tools
+
+**New Recommended Workflow:**
+Instead of configuring servers one-by-one, choose a project-type-based configuration from the [MCP Project Workflows Guide](/shared/mcp-project-workflows/) that matches your development needs.
 
 ---
 

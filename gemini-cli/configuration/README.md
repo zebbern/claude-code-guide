@@ -10,6 +10,27 @@ Complete configuration reference for Gemini CLI.
 
 ---
 
+## 🚀 Quick Start: Project-Type-Based MCP Setup
+
+**Setting up MCP servers?** Use our optimized configurations:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+>
+> Get FREE or low-cost MCP setups optimized for Gemini CLI's free tier:
+> - **Greenfield Minimal** - **$0/month** - Spec Kit + Zen (Gemini only)
+> - **Prototype** - **$20-60/month** - Shrimp + Zen
+> - **Bug Fixes** - **$30-80/month** - Zen + Shrimp
+> - **13 project types** with Gemini-optimized configs
+>
+> **[📋 Copy-Paste Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Gemini CLI Benefits:
+> ✅ **Free tier**: 60 req/min, 1000 req/day
+> ✅ **1M token context** window
+> ✅ Perfect for Zen multi-model validation
+
+---
+
 ## Configuration File
 
 ### Location

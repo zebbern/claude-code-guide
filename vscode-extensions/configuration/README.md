@@ -13,6 +13,20 @@ Complete configuration guide for AI coding extensions in Visual Studio Code.
 
 ---
 
+## 🚀 MCP Project Workflows for VS Code
+
+**Configuring MCP servers in VS Code?** Get optimized setups:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+> **[📋 Ready-to-Use Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Configure MCP servers in `.vscode/settings.json` based on your project type:
+> - 13 project type configurations
+> - Cost estimates and setup times
+> - Workspace-specific configurations
+
+---
+
 ## Claude for VS Code Configuration
 
 ### Initial Setup

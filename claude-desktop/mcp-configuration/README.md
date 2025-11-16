@@ -4,6 +4,29 @@ Complete guide to setting up Model Context Protocol servers in Claude Desktop.
 
 ---
 
+## 🚀 Quick Start: Project-Type-Based Setup
+
+**Need MCP servers for your project?** Get optimized configurations:
+
+> **[📚 MCP Project Workflows Guide →](/shared/mcp-project-workflows/)**
+>
+> Pre-configured MCP setups for 13 project types:
+> - **Greenfield** - $0-500/month - Spec Kit + Zen
+> - **Brownfield** - $30-280/month - OpenSpec + Shrimp + Zen
+> - **Maintenance** - $50-220/month - Zen + Shrimp
+> - **Legacy Modernization** - $180-450/month - Full Stack
+> - And 9 more...
+>
+> **[📋 Copy-Paste Templates →](/shared/mcp-project-workflows/templates.md)**
+>
+> Each template includes:
+> ✅ Exact configuration JSON
+> ✅ Installation commands
+> ✅ Cost estimates
+> ✅ Setup time
+
+---
+
 ## Two Ways to Add MCP Servers
 
 ### Method 1: Desktop Extensions (Recommended - 2025)
