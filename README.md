@@ -5,10 +5,13 @@
 ![AI Coding Agents](https://img.shields.io/badge/AI-Coding%20Agents-brightgreen)
 [![Status](https://img.shields.io/badge/Status-Active-success)]()
 [![Last Updated](https://img.shields.io/badge/Updated-2025--11--12-blue)]()
+[![GitHub stars](https://img.shields.io/github/stars/mamba-mental/ai-coding-agents-guide)]()
 
 **The ultimate guide to AI coding assistants, agents, and tools**
 
 *Compare, configure, and master all major AI coding platforms*
+
+> 📦 **Repository Renamed:** This project was expanded from `claude-code-guide` to cover all major AI coding agents
 
 [Quick Start](#quick-start) · [Tool Comparison](#tool-comparison) · [MCP Servers](#mcp-servers) · [Guides](#comprehensive-guides)
 
@@ -431,10 +434,14 @@ This is a community-maintained guide. Contributions are welcome!
 
 ### How to Contribute
 
-1. **Report Issues**: Found outdated info? [Open an issue](https://github.com/zebbern/claude-code-guide/issues)
+1. **Report Issues**: Found outdated info? [Open an issue](https://github.com/mamba-mental/ai-coding-agents-guide/issues)
 2. **Add Content**: New tool or feature? Submit a PR
 3. **Share Workflows**: Add your tips to relevant guides
 4. **Update Prices**: Pricing changed? Let us know
+
+### Original Source
+
+This guide was originally forked from [zebbern/claude-code-guide](https://github.com/zebbern/claude-code-guide) and expanded to cover all major AI coding agents.
 
 ### Contribution Guidelines
 
