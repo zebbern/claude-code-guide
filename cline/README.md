@@ -8,7 +8,7 @@
 
 *Autonomous coding agent right in your IDE*
 
-[GitHub](https://github.com/cline/cline) · [Website](https://cline.bot/) · [Wiki](https://github.com/cline/cline/wiki)
+[GitHub](https://github.com/cline/cline) · [Website](https://cline.bot/) · [Documentation](https://docs.cline.bot/) · [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
 
 </div>
 

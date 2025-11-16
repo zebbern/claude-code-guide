@@ -2,6 +2,12 @@
 
 Complete installation instructions for OpenAI Codex CLI.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/openai/codex
+> 🌐 Website: https://openai.com/codex/
+> 📚 Documentation: https://developers.openai.com/codex/
+> 💡 Help Center: https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan
+
 ---
 
 ## Prerequisites

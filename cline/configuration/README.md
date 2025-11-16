@@ -2,6 +2,13 @@
 
 Complete configuration guide for Cline VS Code extension.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/cline/cline
+> 🌐 Website: https://cline.bot/
+> 📚 Documentation: https://docs.cline.bot/
+> 🛒 VS Code Marketplace: https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev
+> ⚖️ License: Apache 2.0 (Open Source)
+
 ---
 
 ## Initial Setup

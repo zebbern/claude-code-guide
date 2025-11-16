@@ -9,7 +9,7 @@
 
 *A whole dev team of AI agents in your code editor*
 
-[GitHub](https://github.com/RooCodeInc/Roo-Code) · [Documentation](https://docs.roocode.com/) · [Features](https://docs.roocode.com/features/)
+[GitHub](https://github.com/RooCodeInc/Roo-Code) · [Website](https://roocode.com/) · [Documentation](https://docs.roocode.com/) · [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline)
 
 </div>
 

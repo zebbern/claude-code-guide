@@ -2,6 +2,12 @@
 
 Complete configuration reference for Gemini CLI.
 
+> **Official Resources:**
+> 📦 GitHub: https://github.com/google-gemini/gemini-cli
+> 🌐 Website: https://google-gemini.github.io/gemini-cli/
+> 📚 Documentation: https://google-gemini.github.io/gemini-cli/
+> ⚖️ License: Apache 2.0 (Open Source)
+
 ---
 
 ## Configuration File
