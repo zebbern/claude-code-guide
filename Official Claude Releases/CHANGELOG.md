@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.45
+
+- Add support for Azure AI Foundry! See https://code.claude.com/docs/en/azure-ai-foundry
+- Added `PermissionRequest` hook to automatically approve or deny tool permission requests with custom logic
+- Send background tasks to Claude Code on the web by starting a message with `&`
+
 ## 2.0.43
 
 - Added `permissionMode` field for custom agents
