@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.47
+
+- Improved error messages and validation for `claude --teleport`
+- Improved error handling in `/usage`
+- Fixed race condition with history entry not getting logged at exit
+- Fixed Vertex AI configuration not being applied from `settings.json`
+
+## 2.0.46
+
+- Fixed image files being reported with incorrect media type when format cannot be detected from metadata
+
 ## 2.0.45
 
 - Add support for Azure AI Foundry! See https://code.claude.com/docs/en/azure-ai-foundry
