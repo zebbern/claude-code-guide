@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.52
+
+- Fixed duplicate message display when starting Claude with a command line argument
+- Fixed `/usage` command progress bars to fill up as usage increases (instead of showing remaining percentage)
+- Fixed image pasting not working on Linux systems running Wayland (now falls back to wl-paste when xclip is unavailable)
+- Permit some uses of `$!` in bash commands
+
+## 2.0.51
+
+- Added Opus 4.5! https://www.anthropic.com/news/claude-opus-4-5
+- Introducing Claude Code for Desktop: https://claude.com/download
+- To give you room to try out our new model, we've updated usage limits for Claude Code users. See the Claude Opus 4.5 blog for full details
+- Pro users can now purchase extra usage for access to Opus 4.5 in Claude Code
+- Plan Mode now builds more precise plans and executes more thoroughly
+- Usage limit notifications now easier to understand
+- Switched `/usage` back to "% used"
+- Fixed handling of thinking errors
+- Fixed performance regression
+
 ## 2.0.50
 
 - Fixed bug preventing calling MCP tools that have nested references in their input schemas
