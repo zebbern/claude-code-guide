@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.55
+
+- Fixed proxy DNS resolution being forced on by default. Now opt-in via `CLAUDE_CODE_PROXY_RESOLVES_HOSTS=true` environment variable
+- Fixed keyboard navigation becoming unresponsive when holding down arrow keys in memory location selector
+- Improved AskUserQuestion tool to auto-submit single-select questions on the last question, eliminating the extra review screen for simple question flows
+- Improved fuzzy matching for `@` file suggestions with faster, more accurate results
+
+## 2.0.54
+
+- Hooks: Enable PermissionRequest hooks to process 'always allow' suggestions and apply permission updates
+- Fix issue with excessive iTerm notifications
+
 ## 2.0.52
 
 - Fixed duplicate message display when starting Claude with a command line argument
