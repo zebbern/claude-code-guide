@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.69
+
+- Minor bugfixes
+
 ## 2.0.68
 
 - Fixed IME (Input Method Editor) support for languages like Chinese, Japanese, and Korean by correctly positioning the composition window at the cursor
