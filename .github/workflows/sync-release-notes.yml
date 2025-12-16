@@ -53,12 +53,9 @@ jobs:
           mkdir -p "$FOLDER"
           
           # Source URLs mapped to destination filenames
+          # Only raw markdown URLs are supported (HTML pages cannot be fetched as markdown)
           declare -A FILES=(
             ["https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"]="CHANGELOG.md"
-            ["https://docs.anthropic.com/claude/docs/releases/api"]="api.md"
-            ["https://docs.anthropic.com/claude/docs/releases/claude-apps"]="claude-apps.md"
-            ["https://docs.anthropic.com/claude/docs/releases/system-prompts"]="system-prompts.md"
-            ["https://docs.anthropic.com/claude/docs/releases/claude-code"]="claude-code.md"
           )
           
           # Function to download with retries
@@ -281,10 +278,6 @@ jobs:
               echo "## 📋 Tracked Files"
               echo
               echo "- **CHANGELOG.md**: Claude Code changelog"
-              echo "- **api.md**: Claude API release notes"
-              echo "- **claude-apps.md**: Claude Apps (Web/Mobile/Desktop) release notes"
-              echo "- **system-prompts.md**: System prompt updates"
-              echo "- **claude-code.md**: Claude Code release notes from docs"
               echo
               echo "## 🤖 Automation"
               echo
