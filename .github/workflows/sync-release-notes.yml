@@ -55,10 +55,10 @@ jobs:
           # Source URLs mapped to destination filenames
           declare -A FILES=(
             ["https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md"]="CHANGELOG.md"
-            ["https://docs.anthropic.com/claude/docs/releases/api"]="api.md"
-            ["https://docs.anthropic.com/claude/docs/releases/claude-apps"]="claude-apps.md"
-            ["https://docs.anthropic.com/claude/docs/releases/system-prompts"]="system-prompts.md"
-            ["https://docs.anthropic.com/claude/docs/releases/claude-code"]="claude-code.md"
+            ["https://docs.anthropic.com/en/release-notes/api"]="api.md"
+            ["https://docs.anthropic.com/en/release-notes/claude-apps"]="claude-apps.md"
+            ["https://docs.anthropic.com/en/release-notes/system-prompts"]="system-prompts.md"
+            ["https://code.claude.com/docs/en/overview.md"]="claude-code.md"
           )
           
           # Function to download with retries
