@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.0.74
+
+- Added LSP (Language Server Protocol) tool for code intelligence features like go-to-definition, find references, and hover documentation
+- Added `/terminal-setup` support for Kitty, Alacritty, Zed, and Warp terminals
+- Added ctrl+t shortcut in `/theme` to toggle syntax highlighting on/off
+- Added syntax highlighting info to theme picker
+- Added guidance for macOS users when Alt shortcuts fail due to terminal configuration
+- Fixed skill `allowed-tools` not being applied to tools invoked by the skill
+- Fixed Opus 4.5 tip incorrectly showing when user was already using Opus
+- Fixed a potential crash when syntax highlighting isn't initialized correctly
+- Fixed visual bug in `/plugins discover` where list selection indicator showed while search box was focused
+- Fixed macOS keyboard shortcuts to display 'opt' instead of 'alt'
+- Improved `/context` command visualization with grouped skills and agents by source, slash commands, and sorted token count
+- [Windows] Fixed issue with improper rendering
+- [VSCode] Added gift tag pictogram for year-end promotion message
+
+## 2.0.73
+
+- Added clickable `[Image #N]` links that open attached images in the default viewer
+- Added alt-y yank-pop to cycle through kill ring history after ctrl-y yank
+- Added search filtering to the plugin discover screen (type to filter by name, description, or marketplace)
+- Added support for custom session IDs when forking sessions with `--session-id` combined with `--resume` or `--continue` and `--fork-session`
+- Fixed slow input history cycling and race condition that could overwrite text after message submission
+- Improved `/theme` command to open theme picker directly
+- Improved theme picker UI
+- Improved search UX across resume session, permissions, and plugins screens with a unified SearchBox component
+- [VSCode] Added tab icon badges showing pending permissions (blue) and unread completions (orange)
+
 ## 2.0.72
 
 - Added Claude in Chrome (Beta) feature that works with the Chrome extension (https://claude.ai/chrome) to let you control your browser directly from Claude Code
@@ -28,7 +56,6 @@
 - Added Enter key to accept and submit prompt suggestions immediately (tab still accepts for editing)
 - Added wildcard syntax `mcp__server__*` for MCP tool permissions to allow or deny all tools from a server
 - Added auto-update toggle for plugin marketplaces, allowing per-marketplace control over automatic updates
-- Added `plan_mode_required` spawn parameter for teammates to require plan approval before implementing changes
 - Added `current_usage` field to status line input, enabling accurate context window percentage calculations
 - Fixed input being cleared when processing queued commands while the user was typing
 - Fixed prompt suggestions replacing typed input when pressing Tab
