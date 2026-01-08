@@ -29,9 +29,9 @@
 
 </kbd>
 
-#### [Daily Updated Claude Changelogs](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases)
+#### Daily Updated [Claude Changelogs](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases)
 
-#### [Custom made Agent SKILL.md files by zebbern](https://github.com/zebbern/claude-code-guide/tree/main/skills)
+#### Custom made Agent [SKILL.md files by zebbern](https://github.com/zebbern/claude-code-guide/tree/main/skills)
 
 </div>
 
