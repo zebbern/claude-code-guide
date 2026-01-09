@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.1.2
+
+- Added source path metadata to images dragged onto the terminal, helping Claude understand where images originated
+- Added clickable hyperlinks for file paths in tool output in terminals that support OSC 8 (like iTerm)
+- Added support for Windows Package Manager (winget) installations with automatic detection and update instructions
+- Added Shift+Tab keyboard shortcut in plan mode to quickly select "auto-accept edits" option
+- Added `FORCE_AUTOUPDATE_PLUGINS` environment variable to allow plugin autoupdate even when the main auto-updater is disabled
+- Added `agent_type` to SessionStart hook input, populated if `--agent` is specified
+- Fixed a command injection vulnerability in bash command processing where malformed input could execute arbitrary commands
+- Fixed a memory leak where tree-sitter parse trees were not being freed, causing WASM memory to grow unbounded over long sessions
+- Fixed binary files (images, PDFs, etc.) being accidentally included in memory when using `@include` directives in CLAUDE.md files
+- Fixed updates incorrectly claiming another installation is in progress
+- Fixed crash when socket files exist in watched directories (defense-in-depth for EOPNOTSUPP errors)
+- Fixed remote session URL and teleport being broken when using `/tasks` command
+- Fixed MCP tool names being exposed in analytics events by sanitizing user-specific server configurations
+- Improved Option-as-Meta hint on macOS to show terminal-specific instructions for native CSIu terminals like iTerm2, Kitty, and WezTerm
+- Improved error message when pasting images over SSH to suggest using `scp` instead of the unhelpful clipboard shortcut hint
+- Improved permission explainer to not flag routine dev workflows (git fetch/rebase, npm install, tests, PRs) as medium risk
+- Changed large bash command outputs to be saved to disk instead of truncated, allowing Claude to read the full content
+- Changed large tool outputs to be persisted to disk instead of truncated, providing full output access via file references
+- Changed `/plugins` installed tab to unify plugins and MCPs with scope-based grouping
+- Deprecated Windows managed settings path `C:\ProgramData\ClaudeCode\managed-settings.json` - administrators should migrate to `C:\Program Files\ClaudeCode\managed-settings.json`
+- [SDK] Changed minimum zod peer dependency to ^4.0.0
+- [VSCode] Fixed usage display not updating after manual compact
+
 ## 2.1.0
 
 - Added automatic skill hot-reload - skills created or modified in `~/.claude/skills` or `.claude/skills` are now immediately available without restarting the session
