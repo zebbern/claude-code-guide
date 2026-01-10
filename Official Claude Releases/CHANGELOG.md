@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.1.3
+
+- Merged slash commands and skills, simplifying the mental model with no change in behavior
+- Added release channel (`stable` or `latest`) toggle to `/config`
+- Added detection and warnings for unreachable permission rules, with warnings in `/doctor` and after saving rules that include the source of each rule and actionable fix guidance
+- Fixed plan files persisting across `/clear` commands, now ensuring a fresh plan file is used after clearing a conversation
+- Fixed false skill duplicate detection on filesystems with large inodes (e.g., ExFAT) by using 64-bit precision for inode values
+- Fixed mismatch between background task count in status bar and items shown in tasks dialog
+- Fixed sub-agents using the wrong model during conversation compaction
+- Fixed web search in sub-agents using incorrect model
+- Fixed trust dialog acceptance when running from the home directory not enabling trust-requiring features like hooks during the session
+- Improved terminal rendering stability by preventing uncontrolled writes from corrupting cursor state
+- Improved slash command suggestion readability by truncating long descriptions to 2 lines
+- Changed tool hook execution timeout from 60 seconds to 10 minutes
+- [VSCode] Added clickable destination selector for permission requests, allowing you to choose where settings are saved (this project, all projects, shared with team, or session only)
+
 ## 2.1.2
 
 - Added source path metadata to images dragged onto the terminal, helping Claude understand where images originated
