@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5
+
+- Added `CLAUDE_CODE_TMPDIR` environment variable to override the temp directory used for internal temp files, useful for environments with custom temp directory requirements
+
 ## 2.1.4
 
 - Added `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` environment variable to disable all background task functionality including auto-backgrounding and the Ctrl+B shortcut
