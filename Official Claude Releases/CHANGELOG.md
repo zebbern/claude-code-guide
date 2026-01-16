@@ -2,6 +2,7 @@
 
 ## 2.1.7
 
+- Added customizable keyboard shortcuts via `~/.claude/keybindings.json`. Run `/keybindings` to get started. Learn more at https://code.claude.com/docs/en/keybindings
 - Added `showTurnDuration` setting to hide turn duration messages (e.g., "Cooked for 1m 6s")
 - Added ability to provide feedback when accepting permission prompts
 - Added inline display of agent's final response in task notifications, making it easier to see results without reading the full transcript file
