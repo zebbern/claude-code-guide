@@ -1,6 +1,9 @@
 ---
 name: SSH Penetration Testing
 description: This skill should be used when the user asks to "pentest SSH services", "enumerate SSH configurations", "brute force SSH credentials", "exploit SSH vulnerabilities", "perform SSH tunneling", or "audit SSH security". It provides comprehensive SSH penetration testing methodologies and techniques.
+metadata:
+  author: zebbern
+  version: "1.1"
 ---
 
 # SSH Penetration Testing
