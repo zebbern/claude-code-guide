@@ -335,7 +335,7 @@ jobs:
               echo "✅ Committed content changes"
             else
               # Only README status update
-              title="📊 Update sync status ($date_str)"
+              title="Update sync status ($date_str)"
               body="No release note content changes. Updated status in README."
               
               git commit -m "$title" -m "$body"
@@ -353,7 +353,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 📊 Sync Summary"
+            echo "## Sync Summary"
             echo
             
             if [[ "${{ steps.sync_files.outputs.files_changed }}" == "true" ]]; then
