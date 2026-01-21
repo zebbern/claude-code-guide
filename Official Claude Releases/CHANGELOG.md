@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.1.14
+
+- Added history-based autocomplete in bash mode (`!`) - type a partial command and press Tab to complete from your bash command history
+- Added search to installed plugins list - type to filter by name or description
+- Added support for pinning plugins to specific git commit SHAs, allowing marketplace entries to install exact versions
+- Fixed a regression where the context window blocking limit was calculated too aggressively, blocking users at ~65% context usage instead of the intended ~98%
+- Fixed memory issues that could cause crashes when running parallel subagents
+- Fixed memory leak in long-running sessions where stream resources were not cleaned up after shell commands completed
+- Fixed `@` symbol incorrectly triggering file autocomplete suggestions in bash mode
+- Fixed `@`-mention menu folder click behavior to navigate into directories instead of selecting them
+- Fixed `/feedback` command generating invalid GitHub issue URLs when description is very long
+- Fixed `/context` command to show the same token count and percentage as the status line in verbose mode
+- Fixed an issue where `/config`, `/context`, `/model`, and `/todos` command overlays could close unexpectedly
+- Fixed slash command autocomplete selecting wrong command when typing similar commands (e.g., `/context` vs `/compact`)
+- Fixed inconsistent back navigation in plugin marketplace when only one marketplace is configured
+- Fixed iTerm2 progress bar not clearing properly on exit, preventing lingering indicators and bell sounds
+- Improved backspace to delete pasted text as a single token instead of one character at a time
+- [VSCode] Added `/usage` command to display current plan usage
+
 ## 2.1.12
 
 - Fixed message rendering bug
