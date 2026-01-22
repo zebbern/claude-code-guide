@@ -328,7 +328,7 @@ jobs:
             
             if [[ "${{ steps.sync_files.outputs.files_changed }}" == "true" ]]; then
               # Content changes detected
-              title="🔄 Sync release notes ($date_str)"
+              title="Sync release notes ($date_str)"
               body=$(cat /tmp/commit_body.txt 2>/dev/null || echo "Updated release notes")
               
               git commit -m "$title" -m "$body"
