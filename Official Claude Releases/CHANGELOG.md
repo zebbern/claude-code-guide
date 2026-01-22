@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.15
+
+- Added deprecation notification for npm installations - run `claude install` or see https://docs.anthropic.com/en/docs/claude-code/getting-started for more options
+- Improved UI rendering performance with React Compiler
+- Fixed the "Context left until auto-compact" warning not disappearing after running `/compact`
+- Fixed MCP stdio server timeout not killing child process, which could cause UI freezes
+
 ## 2.1.14
 
 - Added history-based autocomplete in bash mode (`!`) - type a partial command and press Tab to complete from your bash command history
