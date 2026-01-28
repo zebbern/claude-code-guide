@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.1.20
+
+- Added arrow key history navigation in vim normal mode when cursor cannot move further
+- Added external editor shortcut (Ctrl+G) to the help menu for better discoverability
+- Added PR review status indicator to the prompt footer, showing the current branch's PR state (approved, changes requested, pending, or draft) as a colored dot with a clickable link
+- Added support for loading `CLAUDE.md` files from additional directories specified via `--add-dir` flag (requires setting `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`)
+- Added ability to delete tasks via the `TaskUpdate` tool
+- Fixed session compaction issues that could cause resume to load full history instead of the compact summary
+- Fixed agents sometimes ignoring user messages sent while actively working on a task
+- Fixed wide character (emoji, CJK) rendering artifacts where trailing columns were not cleared when replaced by narrower characters
+- Fixed JSON parsing errors when MCP tool responses contain special Unicode characters
+- Fixed up/down arrow keys in multi-line and wrapped text input to prioritize cursor movement over history navigation
+- Fixed draft prompt being lost when pressing UP arrow to navigate command history
+- Fixed ghost text flickering when typing slash commands mid-input
+- Fixed marketplace source removal not properly deleting settings
+- Fixed duplicate output in some commands like `/context`
+- Fixed task list sometimes showing outside the main conversation view
+- Fixed syntax highlighting for diffs occurring within multiline constructs like Python docstrings
+- Fixed crashes when cancelling tool use
+- Improved `/sandbox` command UI to show dependency status with installation instructions when dependencies are missing
+- Improved thinking status text with a subtle shimmer animation
+- Improved task list to dynamically adjust visible items based on terminal height
+- Improved fork conversation hint to show how to resume the original session
+- Changed collapsed read/search groups to show present tense ("Reading", "Searching for") while in progress, and past tense ("Read", "Searched for") when complete
+- Changed `ToolSearch` results to appear as a brief notification instead of inline in the conversation
+- Changed the `/commit-push-pr` skill to automatically post PR URLs to Slack channels when configured via MCP tools
+- Changed the `/copy` command to be available to all users
+- Changed background agents to prompt for tool permissions before launching
+- Changed permission rules like `Bash(*)` to be accepted and treated as equivalent to `Bash`
+- Changed config backups to be timestamped and rotated (keeping 5 most recent) to prevent data loss
+
 ## 2.1.19
 
 - Added env var `CLAUDE_CODE_ENABLE_TASKS`, set to `false` to keep the old system temporarily
