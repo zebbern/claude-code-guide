@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.1.22
+
+- Fixed structured outputs for non-interactive (-p) mode
+
+## 2.1.21
+
+- Added support for full-width (zenkaku) number input from Japanese IME in option selection prompts
+- Fixed shell completion cache files being truncated on exit
+- Fixed API errors when resuming sessions that were interrupted during tool execution
+- Fixed auto-compact triggering too early on models with large output token limits
+- Fixed task IDs potentially being reused after deletion
+- Fixed file search not working in VS Code extension on Windows
+- Improved read/search progress indicators to show "Reading…" while in progress and "Read" when complete
+- Improved Claude to prefer file operation tools (Read, Edit, Write) over bash equivalents (cat, sed, awk)
+- [VSCode] Added automatic Python virtual environment activation, ensuring `python` and `pip` commands use the correct interpreter (configurable via `claudeCode.usePythonEnvironment` setting)
+- [VSCode] Fixed message action buttons having incorrect background colors
+
 ## 2.1.20
 
 - Added arrow key history navigation in vim normal mode when cursor cannot move further
