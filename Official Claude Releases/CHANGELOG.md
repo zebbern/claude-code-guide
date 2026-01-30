@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.1.25
+
+- Fixed beta header validation error for gateway users on Bedrock and Vertex, ensuring `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` avoids the error
+
+## 2.1.23
+
+- Added customizable spinner verbs setting (`spinnerVerbs`)
+- Fixed mTLS and proxy connectivity for users behind corporate proxies or using client certificates
+- Fixed per-user temp directory isolation to prevent permission conflicts on shared systems
+- Fixed a race condition that could cause 400 errors when prompt caching scope was enabled
+- Fixed pending async hooks not being cancelled when headless streaming sessions ended
+- Fixed tab completion not updating the input field when accepting a suggestion
+- Fixed ripgrep search timeouts silently returning empty results instead of reporting errors
+- Improved terminal rendering performance with optimized screen data layout
+- Changed Bash commands to show timeout duration alongside elapsed time
+- Changed merged pull requests to show a purple status indicator in the prompt footer
+- [IDE] Fixed model options displaying incorrect region strings for Bedrock users in headless mode
+
 ## 2.1.22
 
 - Fixed structured outputs for non-interactive (-p) mode
@@ -391,7 +409,7 @@
 - Added loading indicator when resuming conversations for better feedback
 - Fixed `/context` command not respecting custom system prompts in non-interactive mode
 - Fixed order of consecutive Ctrl+K lines when pasting with Ctrl+Y
-- Improved @ mention file suggestion speed (~3x faster in git repositories)
+- Improved @ mention file suggestion speed (~3× faster in git repositories)
 - Improved file suggestion performance in repos with `.ignore` or `.rgignore` files
 - Improved settings validation errors to be more prominent
 - Changed thinking toggle from Tab to Alt+T to avoid accidental triggers
