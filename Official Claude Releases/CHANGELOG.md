@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.1.30
+
+- Added `pages` parameter to the Read tool for PDFs, allowing specific page ranges to be read (e.g., `pages: "1-5"`). Large PDFs (>10 pages) now return a lightweight reference when `@` mentioned instead of being inlined into context.
+- Added pre-configured OAuth client credentials for MCP servers that don't support Dynamic Client Registration (e.g., Slack). Use `--client-id` and `--client-secret` with `claude mcp add`.
+- Added `/debug` for Claude to help troubleshoot the current session
+- Added support for additional `git log` and `git show` flags in read-only mode (e.g., `--topo-order`, `--cherry-pick`, `--format`, `--raw`)
+- Added token count, tool uses, and duration metrics to Task tool results
+- Added reduced motion mode to the config
+- Fixed phantom "(no content)" text blocks appearing in API conversation history, reducing token waste and potential model confusion
+- Fixed prompt cache not correctly invalidating when tool descriptions or input schemas changed, only when tool names changed
+- Fixed 400 errors that could occur after running `/login` when the conversation contained thinking blocks
+- Fixed a hang when resuming sessions with corrupted transcript files containing `parentUuid` cycles
+- Fixed rate limit message showing incorrect "/upgrade" suggestion for Max 20x users when extra-usage is unavailable
+- Fixed permission dialogs stealing focus while actively typing
+- Fixed subagents not being able to access SDK-provided MCP tools because they were not synced to the shared application state
+- Fixed a regression where Windows users with a `.bashrc` file could not run bash commands
+- Improved memory usage for `--resume` (68% reduction for users with many sessions) by replacing the session index with lightweight stat-based loading and progressive enrichment
+- Improved `TaskStop` tool to display the stopped command/task description in the result line instead of a generic "Task stopped" message
+- Changed `/model` to execute immediately instead of being queued
+- [VSCode] Added multiline input support to the "Other" text input in question dialogs (use Shift+Enter for new lines)
+- [VSCode] Fixed duplicate sessions appearing in the session list when starting a new conversation
+
 ## 2.1.29
 
 - Fixed startup performance issues when resuming sessions that have `saved_hook_context`
