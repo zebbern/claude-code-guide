@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.31
+
+- Added session resume hint on exit, showing how to continue your conversation later
+- Added support for full-width (zenkaku) space input from Japanese IME in checkbox selection
+- Fixed PDF too large errors permanently locking up sessions, requiring users to start a new conversation
+- Fixed bash commands incorrectly reporting failure with "Read-only file system" errors when sandbox mode was enabled
+- Fixed a crash that made sessions unusable after entering plan mode when project config in `~/.claude.json` was missing default fields
+- Fixed `temperatureOverride` being silently ignored in the streaming API path, causing all streaming requests to use the default temperature (1) regardless of the configured override
+- Fixed LSP shutdown/exit compatibility with strict language servers that reject null params
+- Improved system prompts to more clearly guide the model toward using dedicated tools (Read, Edit, Glob, Grep) instead of bash equivalents (`cat`, `sed`, `grep`, `find`), reducing unnecessary bash command usage
+- Improved PDF and request size error messages to show actual limits (100 pages, 20MB)
+- Reduced layout jitter in the terminal when the spinner appears and disappears during streaming
+- Removed misleading Anthropic API pricing from model selector for third-party provider (Bedrock, Vertex, Foundry) users
+
 ## 2.1.30
 
 - Added `pages` parameter to the Read tool for PDFs, allowing specific page ranges to be read (e.g., `pages: "1-5"`). Large PDFs (>10 pages) now return a lightweight reference when `@` mentioned instead of being inlined into context.
