@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.32
+
+- Claude Opus 4.6 is now available!
+- Added research preview agent teams feature for multi-agent collaboration (token-intensive feature, requires setting CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+- Claude now automatically records and recalls memories as it works
+- Added "Summarize from here" to the message selector, allowing partial conversation summarization.
+- Skills defined in `.claude/skills/` within additional directories (`--add-dir`) are now loaded automatically.
+- Fixed `@` file completion showing incorrect relative paths when running from a subdirectory
+- Updated --resume to re-use --agent value specified in previous conversation by default.
+- Fixed: Bash tool no longer throws "Bad substitution" errors when heredocs contain JavaScript template literals like `${index + 1}`, which previously interrupted tool execution
+- Skill character budget now scales with context window (2% of context), so users with larger context windows can see more skill descriptions without truncation
+- Fixed Thai/Lao spacing vowels (สระ า, ำ) not rendering correctly in the input field
+- VSCode: Fixed slash commands incorrectly being executed when pressing Enter with preceding text in the input field
+- VSCode: Added spinner when loading past conversations list
+
 ## 2.1.31
 
 - Added session resume hint on exit, showing how to continue your conversation later
