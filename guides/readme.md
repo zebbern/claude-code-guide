@@ -1,4 +1,4 @@
-# Guide On CLAUDE.md Collection
+# CLAUDE.md Guides Collection
 
 > **A collection of CLAUDE.md agent guides, workflow shortcuts, and specialized sub-agents for AI-assisted development.**
 
@@ -27,13 +27,14 @@ This repository contains curated guides and ready-to-use CLAUDE.md agent configu
 ## Directory Structure
 
 ```
-Guide On CLAUDE.md/
+guides/
 ├── readme.md                 (this file)
 ├── CLAUDE.md by Sabrina/     (workflow shortcuts & best practices guide)
 │   ├── CLAUDE.md
 │   └── readme.md
 ├── CLAUDE.md by zebbern/     (parallel task implementation system)
-│   └── CLAUDE.md
+│   ├── CLAUDE.md             (AI-facing instructions)
+│   └── README.md             (human documentation)
 └── CLAUDE.md Collection/     (curated agent library)
     ├── optimizers/           (4 agents)
     │   ├── code-archaeologist.md
@@ -69,12 +70,19 @@ Guide On CLAUDE.md/
     │   └── rails-backend-expert.md
     ├── Python/               (1 agent)
     │   └── python-developer.md
-    ├── testing/              (coming soon)
-    ├── typescript/           (coming soon)
-    └── security/             (coming soon)
+    ├── testing/              (3 agents)
+    │   ├── qa-engineer.md
+    │   ├── e2e-tester.md
+    │   └── test-architect.md
+    ├── typescript/           (2 agents)
+    │   ├── typescript-expert.md
+    │   └── node-backend-expert.md
+    └── security/             (2 agents)
+        ├── security-auditor.md
+        └── auth-specialist.md
 ```
 
-**Total Agents Available:** 25 specialized agents across 9 categories
+**Total Agents Available:** 32 specialized agents across 12 categories
 
 ---
 
@@ -226,13 +234,24 @@ zebbern's guide introduces the **7-Parallel-Task Feature Implementation System**
 |-------|---------|
 | `python-developer` | Python best practices, typing, tooling |
 
-### Coming Soon
+### Testing (3 agents)
+| Agent | Purpose |
+|-------|---------|
+| `qa-engineer` | Quality assurance, test planning, bug tracking |
+| `e2e-tester` | End-to-end testing, Playwright, Cypress |
+| `test-architect` | Test architecture, strategy, coverage optimization |
 
-| Category | Planned Agents |
-|----------|----------------|
-| **testing/** | QA engineer, E2E testing specialist, test architecture |
-| **typescript/** | TypeScript expert, Node.js developer |
-| **security/** | Security auditor, authentication specialist |
+### TypeScript (2 agents)
+| Agent | Purpose |
+|-------|---------|
+| `typescript-expert` | TypeScript best practices, advanced types, tooling |
+| `node-backend-expert` | Node.js backend development, Express, Fastify |
+
+### Security (2 agents)
+| Agent | Purpose |
+|-------|---------|
+| `security-auditor` | Security audits, vulnerability assessment, OWASP |
+| `auth-specialist` | Authentication, authorization, OAuth, JWT |
 
 ---
 
@@ -343,7 +362,7 @@ See the [LICENSE](../LICENSE) file in the root directory.
 
 <div align="center">
 
-**[Back to Top](#guide-on-claudemd-collection)**
+**[Back to Top](#claudemd-guides-collection)**
 
 Made with love for the Claude Code community
 
