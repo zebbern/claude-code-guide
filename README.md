@@ -27,7 +27,7 @@ _For updates and contributions, visit the [official Claude Code documentation](h
 
 </kbd>
 
-#### Daily Updated [Claude Changelogs](https://github.com/zebbern/claude-code-guide/tree/main/Official%20Claude%20Releases)
+#### Daily Updated [Claude Changelogs](https://github.com/zebbern/claude-code-guide/blob/main/CHANGELOG.md)
 
 #### Agent Security [SKILL.md files](https://github.com/zebbern/claude-code-guide/tree/main/skills) `\|/` How to create [agent-skills-guide](https://github.com/zebbern/agent-skills-guide)
 
@@ -220,7 +220,7 @@ export ANTHROPIC_CUSTOM_HEADERS="X-Trace-Id: 12345"   # Extra request headers (f
 
 export ANTHROPIC_MODEL="claude-sonnet-4-20250514"                # Custom model name to use
 export ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-4-20250514" # Default Sonnet model alias
-export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-opus-4-20250514"     # Default Opus model alias
+export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-opus-4-6-20260130"   # Default Opus model alias (Opus 4.6 now available)
 export ANTHROPIC_SMALL_FAST_MODEL="haiku-model"                  # Haiku-class model for background tasks (placeholder)
 export ANTHROPIC_SMALL_FAST_MODEL_AWS_REGION="REGION"            # Override AWS region for the small/fast model on Bedrock (placeholder)
 
@@ -242,6 +242,10 @@ export CLAUDE_CODE_SKIP_VERTEX_AUTH=0                 # (0 or 1) skip Google aut
 
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=0     # (0 or 1) disable nonessential traffic (equivalent to DISABLE_* below)
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=0           # (0 or 1) disable automatic terminal title updates
+
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1         # (0 or 1) enable agent teams research preview
+export CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 # (0 or 1) load CLAUDE.md from --add-dir paths
+export CLAUDE_CODE_ENABLE_TASKS=false                 # Set to "false" to disable new task system
 
 export DISABLE_AUTOUPDATER=0                          # (0 or 1) disable automatic updates (overrides autoUpdates setting)
 export DISABLE_BUG_COMMAND=0                          # (0 or 1) disable the /bug command
@@ -266,6 +270,7 @@ export VERTEX_REGION_CLAUDE_3_7_SONNET="REGION"       # Region override for Clau
 export VERTEX_REGION_CLAUDE_4_0_OPUS="REGION"         # Region override for Claude 4.0 Opus on Vertex AI
 export VERTEX_REGION_CLAUDE_4_0_SONNET="REGION"       # Region override for Claude 4.0 Sonnet on Vertex AI
 export VERTEX_REGION_CLAUDE_4_1_OPUS="REGION"         # Region override for Claude 4.1 Opus on Vertex AI
+export VERTEX_REGION_CLAUDE_4_6_OPUS="REGION"         # Region override for Claude 4.6 Opus on Vertex AI
 ```
 
 <h2 id="global-config-options">Global Config Options</h2>
@@ -338,12 +343,16 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | `/compact [instructions]` | Compact conversation with optional focus instructions                  |
 | `/config`                 | Open the Settings interface (Config tab)                               |
 | `/context`                | Visualize current context usage as a colored grid                      |
+| `/copy`                   | Copy conversation content to clipboard                                 |
 | `/cost`                   | Show token usage statistics and billing information                    |
+| `/debug`                  | Troubleshoot current session and diagnose issues                       |
 | `/doctor`                 | Checks the health of your Claude Code installation                     |
 | `/exit`                   | Exit the REPL                                                          |
 | `/export [filename]`      | Export the current conversation to a file or clipboard                 |
 | `/help`                   | Get usage help                                                         |
 | `/init`                   | Initialize project with CLAUDE.md guide                                |
+| `/insights`               | Generate an interactive HTML report analyzing your coding habits       |
+| `/keybindings`            | Configure custom keyboard shortcuts                                    |
 | `/login`                  | Switch Anthropic accounts                                              |
 | `/logout`                 | Sign out from your Anthropic account                                   |
 | `/mcp`                    | Manage MCP server connections and OAuth authentication                 |
@@ -356,6 +365,7 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | `/resume [session]`       | Resume a conversation by ID or name, or open session picker            |
 | `/review`                 | Request code review                                                    |
 | `/rewind`                 | Rewind the conversation and/or code to a previous point                |
+| `/sandbox`                | View sandbox dependency status with installation instructions          |
 | `/stats`                  | Visualize daily usage, session history, streaks, and model preferences |
 | `/status`                 | Open Settings interface (Status tab) showing version, model, account   |
 | `/statusline`             | Set up Claude Code's status line UI                                    |
@@ -584,6 +594,9 @@ claude --fork-session -r abc123 # Fork instead of reusing original
 | `@`          | File path mention                | Trigger file path autocomplete        |
 | `#` at start | Memory shortcut add to CLAUDE.md | Prompts for file selection            |
 
+> [!Tip]
+> **PDF Page Ranges:** Use the `pages` parameter with the Read tool for PDFs (e.g., `pages: "1-5"`). Large PDFs (>10 pages) return a lightweight reference when @-mentioned instead of being inlined.
+
 <h2 id="vim-mode">Vim Mode</h2>
 
 > [!Note]
@@ -688,6 +701,37 @@ claude -p "Think harder. Draft a migration plan from REST to gRPC."
 
 claude -p "Ultrathink. Propose a step-by-step strategy to fix flaky payment tests and add guardrails."
 ```
+
+<h2 id="fast-mode">Fast Mode</h2>
+
+> [!Note]
+> **Fast Mode provides accelerated response times for Opus 4.6, optimized for rapid iteration and quick tasks.**
+
+**How to enable Fast Mode:**
+
+```bash
+# Enable fast mode in the REPL (requires extra-usage first)
+/extra-usage
+/fast
+
+# Or toggle during conversation
+# The status bar will show when Fast Mode is active
+```
+
+**Key features:**
+
+- **Faster responses** - Reduced latency for quick tasks
+- **Available for Opus 4.6** - New in version 2.1.36
+- **Requires extra-usage** - Must enable `/extra-usage` first
+
+**When to use Fast Mode:**
+
+- Quick code reviews and edits
+- Rapid prototyping
+- Simple questions and commands
+- Iterative debugging
+
+> Fast Mode trades some depth for speed. Use normal mode for complex analysis and planning tasks.
 
 <h2 id="plan-mode">Plan Mode</h2>
 
@@ -941,6 +985,7 @@ You are a code reviewer. Analyze the code and provide feedback.
 | `permissionMode`  | No       | `default`, `acceptEdits`, `dontAsk`, `bypassPermissions`, or `plan` |
 | `skills`          | No       | Skills to preload into the subagent's context                       |
 | `hooks`           | No       | Lifecycle hooks scoped to this subagent                             |
+| `memory`          | No       | Persistent memory scope: `user`, `project`, or `local`              |
 
 <h3 id="why-this-shift-matters">Why This Shift Matters</h3>
 
@@ -970,6 +1015,47 @@ You are a code reviewer. Analyze the code and provide feedback.
 > - Ask one agent to plan, code, and test in a single turn.
 > - Give blanket write permissions.
 > - Accept multi‑file diffs when you asked for one test.
+
+---
+
+<h2 id="agent-teams">Agent Teams (Research Preview)</h2>
+
+> [!Note]
+> **Agent Teams is an experimental feature enabling multiple Claude instances to work in parallel on a shared codebase autonomously.**
+
+**Enable Agent Teams:**
+
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+```
+
+**Key Concepts:**
+
+- Multiple Claude instances run in parallel on the same codebase
+- Each agent can specialize in different tasks (debugging, documentation, testing, etc.)
+- Agents communicate through git-based synchronization
+- Enables autonomous, long-running development workflows
+
+**Case Study: C Compiler Built by Agent Teams**
+
+Anthropic's research team demonstrated agent teams by tasking 16 parallel Claude instances to build a C compiler from scratch. Key results:
+
+| Metric | Value |
+|:-------|:------|
+| **Claude Sessions** | ~2,000 |
+| **API Cost** | ~$20,000 |
+| **Lines of Code** | 100,000 |
+| **Capability** | Compiled Linux 6.9 on x86, ARM, RISC-V |
+| **Test Pass Rate** | 99% on GCC torture test suite |
+
+**Lessons for Agent Teams:**
+
+1. **Write high-quality tests** - The task verifier must be nearly perfect
+2. **Design for parallelism** - Agents should be able to work independently without blocking each other
+3. **Specialize agents** - Dedicate agents to specific roles (code quality, documentation, performance)
+4. **Maintain context files** - Keep READMEs and progress files updated for agent orientation
+
+> Read the full case study: [Building a C Compiler with Parallel Claudes](https://www.anthropic.com/engineering/building-c-compiler)
 
 ---
 
@@ -1103,6 +1189,45 @@ Research $ARGUMENTS thoroughly:
 
 ---
 
+<h2 id="insights">Claude Code Insights</h2>
+
+> [!Note]
+> **The `/insights` command generates an interactive HTML report analyzing your coding habits from the past 30 days.**
+
+**Run Insights:**
+
+```bash
+# In Claude Code terminal
+/insights
+
+# Open the generated report
+start ~/.claude/usage-data/report.html     # Windows
+open ~/.claude/usage-data/report.html      # Mac
+xdg-open ~/.claude/usage-data/report.html  # Linux
+```
+
+**How It Works:**
+
+1. **Session Collection** - Pulls session logs from `~/.claude/projects/`, filters agent sub-sessions and short sessions
+2. **Metadata Extraction** - Extracts duration, token usage, tools used, languages detected, git activity
+3. **Facet Extraction** - Uses Haiku model to analyze transcripts and identify goals, satisfaction signals, friction points
+4. **Report Generation** - Creates interactive HTML report with personalized suggestions
+
+**Report Sections:**
+
+| Section | Description |
+|:--------|:------------|
+| **What's Working** | Your strengths and successful patterns |
+| **What's Hindering** | Where Claude struggled or where you caused friction |
+| **Friction Analysis** | Breakdown of problem areas with specific examples |
+| **Stats Dashboard** | Tool usage, language breakdown, coding time distribution |
+| **Quick Wins** | Copy-paste suggestions for CLAUDE.md improvements |
+| **Features to Try** | Personalized recommendations (skills, hooks, headless mode) |
+
+> Everything runs locally using the Anthropic API. Session data stays on your machine.
+
+---
+
 <h2 id="mcp-integration">MCP Integration</h2>
 
 <h3 id="understanding-mcp-model-context-protocol">Understanding MCP (Model Context Protocol)</h3>
@@ -1169,6 +1294,15 @@ claude mcp add my-filesystem -- npx -y @modelcontextprotocol/server-filesystem ~
 # Example with environment variables
 claude mcp add api-server -e API_KEY=your-key-here -- /path/to/server
 ```
+
+**OAuth for MCP Servers:**
+
+```bash
+# Add MCP server with pre-configured OAuth credentials
+claude mcp add <name> --client-id <id> --client-secret <secret> -- <cmd>
+```
+
+> Some MCP servers (e.g., Slack) don't support Dynamic Client Registration and require pre-configured OAuth credentials.
 
 </td></table>
 
@@ -1738,6 +1872,14 @@ the stoppage occurred due to a user interrupt.
 #### SubagentStop
 
 Runs when a Claude Code subagent (Task tool call) has finished responding.
+
+#### TeammateIdle
+
+Triggered when an agent teammate becomes idle (multi-agent workflows).
+
+#### TaskCompleted
+
+Triggered when a background task completes (multi-agent workflows).
 
 #### PreCompact
 
