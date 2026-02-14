@@ -1,6 +1,14 @@
 # Changelog
 
-## 2.1.39
+## 2.1.42
+
+- Improved startup performance by deferring Zod schema construction
+- Improved prompt cache hit rates by moving date out of system prompt
+- Added one-time Opus 4.6 effort callout for eligible users
+- Fixed /resume showing interrupt messages as session titles
+- Fixed image dimension limit errors to suggest /compact
+
+## 2.1.41
 
 - Added guard against launching Claude Code inside another Claude Code session
 - Fixed Agent Teams using wrong model identifier for Bedrock, Vertex, and Foundry customers
@@ -10,11 +18,23 @@
 - Fixed plugin browse showing misleading "Space to Toggle" hint for already-installed plugins
 - Fixed hook blocking errors (exit code 2) not showing stderr to the user
 - Added `speed` attribute to OTel events and trace spans for fast mode visibility
-- Fixed /resume showing interrupt messages as session titles
-- Fixed Opus 4.6 launch announcement showing for Bedrock/Vertex/Foundry users
-- Improved error message for many-image dimension limit errors with /compact suggestion
-- Fixed structured-outputs beta header being sent unconditionally on Vertex/Bedrock
-- Fixed spurious warnings for non-agent markdown files in `.claude/agents/` directory
+- Added `claude auth login`, `claude auth status`, and `claude auth logout` CLI subcommands
+- Added Windows ARM64 (win32-arm64) native binary support
+- Improved `/rename` to auto-generate session name from conversation context when called without arguments
+- Improved narrow terminal layout for prompt footer
+- Fixed file resolution failing for @-mentions with anchor fragments (e.g., `@README.md#installation`)
+- Fixed FileReadTool blocking the process on FIFOs, `/dev/stdin`, and large files
+- Fixed background task notifications not being delivered in streaming Agent SDK mode
+- Fixed cursor jumping to end on each keystroke in classifier rule input
+- Fixed markdown link display text being dropped for raw URL
+- Fixed auto-compact failure error notifications being shown to users
+- Fixed permission wait time being included in subagent elapsed time display
+- Fixed proactive ticks firing while in plan mode
+- Fixed clear stale permission rules when settings change on disk
+- Fixed hook blocking errors showing stderr content in UI
+
+## 2.1.39
+
 - Improved terminal rendering performance
 - Fixed fatal errors being swallowed instead of displayed
 - Fixed process hanging after session close
