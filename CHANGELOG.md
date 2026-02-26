@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.58
+
+- Expand Remote Control to more users
+
+## 2.1.56
+
+- VS Code: Fixed another cause of "command 'claude-vscode.editor.openLast' not found" crashes
+
+## 2.1.55
+
+- Fixed BashTool failing on Windows with EINVAL error
+
 ## 2.1.53
 
 - Fixed a UI flicker where user input would briefly disappear after submission before the message rendered
