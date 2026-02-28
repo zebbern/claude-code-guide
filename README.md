@@ -1,5 +1,5 @@
 <div align="center">
-  
+
 <h2 id="claude-code-community-guide">Claude Code Guide</h2>
 
 _For updates and contributions, visit the [official Claude Code documentation](https://code.claude.com/docs/en/overview)_
@@ -271,6 +271,28 @@ export VERTEX_REGION_CLAUDE_4_0_OPUS="REGION"         # Region override for Clau
 export VERTEX_REGION_CLAUDE_4_0_SONNET="REGION"       # Region override for Claude 4.0 Sonnet on Vertex AI
 export VERTEX_REGION_CLAUDE_4_1_OPUS="REGION"         # Region override for Claude 4.1 Opus on Vertex AI
 export VERTEX_REGION_CLAUDE_4_6_OPUS="REGION"         # Region override for Claude 4.6 Opus on Vertex AI
+export VERTEX_REGION_CLAUDE_4_6_SONNET="REGION"       # Region override for Claude 4.6 Sonnet on Vertex AI
+
+# ── New in v2.1.32–2.1.63 ──────────────────────────────────────────────────────
+export CLAUDE_CODE_SIMPLE=1                            # Minimal mode: disables MCP tools, attachments, hooks, CLAUDE.md, and skills
+export CLAUDE_CODE_DISABLE_1M_CONTEXT=1                # Disable 1 M-token context window (use default shorter context)
+export CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1          # Disable background tasks entirely
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1        # Opt out of experimental beta features
+export CLAUDE_CODE_AUTO_CONNECT_IDE=false              # Disable automatic IDE connection on startup
+export CLAUDE_CODE_TMPDIR="/custom/tmp"                # Override the temp directory Claude Code uses
+export CLAUDE_CODE_SHELL="/bin/zsh"                    # Override shell detection (force a specific shell)
+export CLAUDE_CODE_SHELL_PREFIX="command-wrapper"      # Prefix/wrap every shell command Claude runs
+export CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS=50000   # Override max output tokens for the Read tool
+export CLAUDE_CODE_PROXY_RESOLVES_HOSTS=true           # Let the HTTP/HTTPS proxy handle DNS resolution
+export CLAUDE_CODE_EXIT_AFTER_STOP_DELAY=30000         # Auto-exit SDK mode after idle for N ms
+export CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS=30000         # Timeout (ms) for plugin git operations
+export CLAUDE_CODE_ACCOUNT_UUID="uuid"                 # Override account UUID (SDK / automation flows)
+export CLAUDE_CODE_USER_EMAIL="user@example.com"       # Override user email (SDK / automation flows)
+export CLAUDE_CODE_ORGANIZATION_UUID="uuid"            # Override organization UUID (SDK / automation flows)
+export ENABLE_CLAUDEAI_MCP_SERVERS=false               # Opt out from claude.ai-synced MCP servers
+export FORCE_AUTOUPDATE_PLUGINS=1                      # Allow plugin auto-update even when main updater is disabled
+export IS_DEMO=1                                       # Demo mode — hides email/org from the UI
+export NO_PROXY="localhost,127.0.0.1"                  # Bypass proxy for specified hosts (comma-separated)
 ```
 
 <h2 id="global-config-options">Global Config Options</h2>
@@ -325,8 +347,21 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | **Project memory**         | `./CLAUDE.md`                                                                                                                                           | Team-shared instructions for the project            | Project architecture, coding standards, common workflows             | Team members via source control |
 | **User memory**            | `~/.claude/CLAUDE.md`                                                                                                                                   | Personal preferences for all projects               | Code styling preferences, personal tooling shortcuts                 | Just you (all projects)         |
 | **Project memory (local)** | `./CLAUDE.local.md`                                                                                                                                     | Personal project-specific preferences               | _(Deprecated, see below)_ Your sandbox URLs, preferred test data     | Just you (current project)      |
+| **Project rules**          | `.claude/rules/*.md`                                                                                                                                    | Modular project rules (loaded alongside CLAUDE.md)  | Linting rules, API conventions, per-directory standards              | Team members via source control |
 
 > All memory files are automatically loaded into Claude Code's context when launched. Files higher in the hierarchy take precedence and are loaded first, providing a foundation that more specific memories build upon.
+
+#### `.claude/rules/` Directory (v2.0.64+)
+
+The `.claude/rules/` directory lets you break project instructions into separate Markdown files instead of one large `CLAUDE.md`. Every `*.md` file inside is automatically loaded into context alongside `CLAUDE.md`. This is useful for:
+
+- **Modular organization**: Separate concerns (e.g., `api-conventions.md`, `testing-rules.md`)
+- **Per-directory overrides**: Nested `rules/` directories can apply scoped rules
+- **Team collaboration**: Different team members can own different rule files via PR review
+
+#### Auto-Memory (v2.1.32+)
+
+Claude now automatically saves useful context to memory during your sessions. Managed memories include things like project conventions, tooling preferences, and architectural decisions that Claude observed while working with you. Use `/memory` to view and manage auto-saved memories.
 
 ---
 
@@ -349,6 +384,9 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | `/doctor`                 | Checks the health of your Claude Code installation                     |
 | `/exit`                   | Exit the REPL                                                          |
 | `/export [filename]`      | Export the current conversation to a file or clipboard                 |
+| `/extra-usage`            | Enable extra usage mode (required before `/fast`)                      |
+| `/fast`                   | Toggle fast mode for accelerated Opus 4.6 responses                    |
+| `/fork`                   | Fork the current conversation into a new session                       |
 | `/help`                   | Get usage help                                                         |
 | `/init`                   | Initialize project with CLAUDE.md guide                                |
 | `/insights`               | Generate an interactive HTML report analyzing your coding habits       |
@@ -360,13 +398,17 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | `/model`                  | Select or change the AI model                                          |
 | `/permissions`            | View or update tool permissions                                        |
 | `/plan`                   | Enter plan mode directly from the prompt                               |
+| `/plugins`                | Manage plugins (install, enable, disable, marketplace)                 |
 | `/pr_comments`            | View pull request comments                                             |
 | `/rename <name>`          | Rename the current session for easier identification                   |
 | `/resume [session]`       | Resume a conversation by ID or name, or open session picker            |
 | `/review`                 | Request code review                                                    |
+| `/rules`                  | View and manage `.claude/rules/` directory (modular project rules)     |
 | `/rewind`                 | Rewind the conversation and/or code to a previous point                |
 | `/sandbox`                | View sandbox dependency status with installation instructions          |
 | `/stats`                  | Visualize daily usage, session history, streaks, and model preferences |
+| `/settings`               | Open Settings interface (alias for `/config`)                          |
+| `/simplify`               | Simplify selected code or conversation (bundled skill)                 |
 | `/status`                 | Open Settings interface (Status tab) showing version, model, account   |
 | `/statusline`             | Set up Claude Code's status line UI                                    |
 | `/tasks`                  | List and manage background tasks                                       |
@@ -376,6 +418,7 @@ export HTTPS_PROXY="https://proxy.company:8443"   # HTTPS proxy (if needed)
 | `/todos`                  | List current TODO items                                                |
 | `/usage`                  | Show plan usage limits and rate limit status (subscription plans)      |
 | `/vim`                    | Enter vim mode for alternating insert and command modes                |
+| `/batch`                  | Run batch operations on multiple files (bundled skill)                 |
 
 <h2 id="command-line-flags">Command Line Flags</h2>
 
@@ -453,6 +496,17 @@ claude doctor # Diagnose install/version & setup
 claude install # Start native binary installer (beta)
 claude migrate-installer # Migrate from global npm to local installer
 
+# Authentication (v2.1.41+)
+
+claude auth login # Log in to your Anthropic account
+claude auth status # Check authentication status
+claude auth logout # Log out
+
+# Agent management (v2.1.50+)
+
+claude agents # List all configured agents (project, user, plugin)
+claude remote-control # Start remote-control mode for external tooling
+
 # Config: interactive wizard + direct ops
 
 claude config # Interactive config wizard
@@ -526,9 +580,11 @@ claude --agents '{"name":{...}}' # Define subagents via JSON
 claude -c # Continue most recent conversation
 claude -r "session-name" # Resume by name or ID
 claude --fork-session -r abc123 # Fork instead of reusing original
+claude -w "implement feature" # Start in an isolated git worktree
 /rename auth-refactor # Name current session
 /resume # Open session picker
 /export output.md # Export conversation to file
+/fork # Fork the current conversation
 
 # Quick verification / notes
 
@@ -557,6 +613,7 @@ claude --fork-session -r abc123 # Fork instead of reusing original
 | `Ctrl+R`                     | Reverse search command history     | Search through previous commands         |
 | `Ctrl+V` or `Cmd+V` (iTerm2) | Paste image from clipboard         | Pastes an image or path to an image file |
 | `Ctrl+B`                     | Background running tasks           | Backgrounds bash commands and agents     |
+| `Ctrl+F` (press twice)       | Kill all background agents         | Two-press confirmation to stop agents    |
 | `Up/Down arrows`             | Navigate command history           | Recall previous inputs                   |
 | `Left/Right arrows`          | Cycle through dialog tabs          | Navigate between tabs in dialogs         |
 | `Esc` + `Esc`                | Rewind the code/conversation       | Restore to a previous point              |
@@ -913,6 +970,12 @@ claude --agents '{
   "debugger": {
     "description": "Debugging specialist for errors and test failures.",
     "prompt": "You are an expert debugger. Analyze errors, identify root causes, and provide fixes."
+  },
+  "background-impl": {
+    "description": "Implements features in an isolated worktree in the background.",
+    "prompt": "Implement the requested feature. Commit when done.",
+    "isolation": "worktree",
+    "background": true
   }
 }'
 ```
@@ -986,6 +1049,8 @@ You are a code reviewer. Analyze the code and provide feedback.
 | `skills`          | No       | Skills to preload into the subagent's context                       |
 | `hooks`           | No       | Lifecycle hooks scoped to this subagent                             |
 | `memory`          | No       | Persistent memory scope: `user`, `project`, or `local`              |
+| `isolation`       | No       | Set to `worktree` to run the agent in an isolated git worktree      |
+| `background`      | No       | Set to `true` to run the agent as a background task                 |
 
 <h3 id="why-this-shift-matters">Why This Shift Matters</h3>
 
@@ -1040,13 +1105,13 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 Anthropic's research team demonstrated agent teams by tasking 16 parallel Claude instances to build a C compiler from scratch. Key results:
 
-| Metric | Value |
-|:-------|:------|
-| **Claude Sessions** | ~2,000 |
-| **API Cost** | ~$20,000 |
-| **Lines of Code** | 100,000 |
-| **Capability** | Compiled Linux 6.9 on x86, ARM, RISC-V |
-| **Test Pass Rate** | 99% on GCC torture test suite |
+| Metric              | Value                                  |
+| :------------------ | :------------------------------------- |
+| **Claude Sessions** | ~2,000                                 |
+| **API Cost**        | ~$20,000                               |
+| **Lines of Code**   | 100,000                                |
+| **Capability**      | Compiled Linux 6.9 on x86, ARM, RISC-V |
+| **Test Pass Rate**  | 99% on GCC torture test suite          |
 
 **Lessons for Agent Teams:**
 
@@ -1189,6 +1254,220 @@ Research $ARGUMENTS thoroughly:
 
 ---
 
+<h2 id="plugin-system">Plugin System</h2>
+
+> [!Note]
+> **Plugins extend Claude Code with custom commands, skills, agents, hooks, and MCP servers. Plugins can be loaded from local directories, Git repos, or the npm registry.**
+
+**Key commands:**
+
+```bash
+# Install a plugin from a Git repository
+/plugins install https://github.com/org/claude-plugin-example
+
+# Install from npm registry
+/plugins install @org/claude-code-plugin
+
+# List installed plugins
+/plugins list
+
+# Enable / disable a plugin
+/plugins enable <plugin-name>
+/plugins disable <plugin-name>
+
+# Validate a plugin's structure
+/plugins validate ./my-plugin
+
+# Browse the plugin marketplace (community plugins)
+/plugins marketplace
+```
+
+**Plugin structure:**
+
+```
+my-plugin/
+├── plugin.json          # Plugin manifest (name, version, description)
+├── agents/              # Custom agents (*.md frontmatter files)
+├── skills/              # Custom skills (SKILL.md files)
+├── hooks/               # Hook scripts
+├── commands/            # Custom slash commands
+└── mcp-servers/         # MCP server configurations
+```
+
+**Plugin scopes:**
+
+| Location              | Scope        | Notes                     |
+| :-------------------- | :----------- | :------------------------ |
+| `--plugin-dir ./path` | Session only | CLI flag, not persisted   |
+| `.claude/plugins/`    | Project      | Committed with the repo   |
+| `~/.claude/plugins/`  | User-global  | Available in all projects |
+
+**Plugin manifest (`plugin.json`):**
+
+```json
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "description": "A Claude Code plugin",
+  "agents": ["agents/"],
+  "skills": ["skills/"],
+  "hooks": "hooks/hooks.json",
+  "mcpServers": "mcp-servers/servers.json"
+}
+```
+
+> Plugins auto-update by default. Set `FORCE_AUTOUPDATE_PLUGINS=1` to force updates even when the main updater is disabled, or override with `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` for slow repos.
+
+---
+
+<h2 id="worktree-isolation">Worktree Isolation (v2.1.49+)</h2>
+
+> [!Note]
+> **The `--worktree` (`-w`) flag starts Claude in an isolated git worktree, allowing it to make changes in a separate branch without affecting your working directory.**
+
+**Usage:**
+
+```bash
+# Start Claude in an isolated worktree
+claude -w "implement the new feature"
+
+# Claude will:
+# 1. Create a temporary git worktree from your current branch
+# 2. Run in that isolated worktree
+# 3. Commit changes and optionally create a PR
+# 4. Clean up the worktree when done
+```
+
+**Agent-level worktree isolation:**
+
+```markdown
+---
+name: background-coder
+description: Implements features in isolation
+isolation: worktree
+background: true
+---
+
+Implement the requested feature in this isolated worktree.
+```
+
+> Worktree isolation is especially powerful combined with `background: true` for agents, enabling parallel development workflows where multiple agents work on separate features simultaneously.
+
+---
+
+<h2 id="native-installer">Native Installer (v2.1.15+)</h2>
+
+> [!Note]
+> **Claude Code now offers a native binary installer as an alternative to the npm global install. The native installer provides faster startup, auto-updates, and doesn't require Node.js on your PATH.**
+
+```bash
+# Start the native installer (interactive)
+claude install
+
+# Migrate from npm global install to native installer
+claude migrate-installer
+
+# Windows ARM64 is supported natively since v2.1.41
+```
+
+> The npm installation method (`npm install -g @anthropic-ai/claude-code`) continues to work. A deprecation notice for npm-based installs was introduced in v2.1.15, but both methods are supported.
+
+---
+
+<h2 id="claude-auth">Authentication CLI (v2.1.41+)</h2>
+
+> [!Note]
+> **Manage authentication directly from the CLI without entering the REPL.**
+
+```bash
+# Log in to your Anthropic account
+claude auth login
+
+# Check current authentication status
+claude auth status
+
+# Log out
+claude auth logout
+```
+
+---
+
+<h2 id="claude-agents-cli">Agent Management CLI (v2.1.50+)</h2>
+
+> [!Note]
+> **List and inspect all configured agents from the command line.**
+
+```bash
+# List all agents (project, user, plugin, CLI-defined)
+claude agents
+```
+
+---
+
+<h2 id="remote-control">Remote Control (v2.1.51+)</h2>
+
+> [!Note]
+> **The `claude remote-control` subcommand allows external tools and build systems to drive Claude Code programmatically.**
+
+```bash
+# Start Claude in remote-control mode
+claude remote-control
+```
+
+This is useful for IDE extensions, CI/CD pipelines, or custom orchestration tools that want to interact with Claude Code via its SDK interface.
+
+---
+
+<h2 id="managed-settings">Managed Settings (v2.1.51+)</h2>
+
+> [!Note]
+> **Enterprise administrators can push managed settings via macOS plist or Windows Registry, providing organization-wide configuration control.**
+
+**macOS (plist):**
+
+Settings can be deployed via MDM profiles to `/Library/Managed Preferences/com.anthropic.claude-code.plist`.
+
+**Windows (Registry):**
+
+Settings can be deployed via Group Policy to `HKLM\SOFTWARE\Policies\Anthropic\ClaudeCode`.
+
+> Managed settings take precedence over user/project settings and cannot be overridden by individual users.
+
+---
+
+<h2 id="model-updates">Model Updates</h2>
+
+### Claude Sonnet 4.6 (February 17, 2026)
+
+> [!Note]
+> **Claude Sonnet 4.6 delivers frontier-level performance at Sonnet pricing ($3/$15 per million tokens) with a 1M-token context window.**
+
+**Key highlights:**
+
+- **Approaches Opus-level performance** on coding, reasoning, and agent planning tasks
+- **1M token context window** (previously only available on Max plan for Sonnet 4.5)
+- **Improved coding benchmarks**: significant gains on SWE-bench, agentic coding, and multi-file refactoring
+- **Better long-context reasoning**: improved accuracy across needle-in-a-haystack and long-document tasks
+- **Enhanced computer use**: more reliable browser automation and GUI interaction
+- **Same pricing as Sonnet 4.5**: $3 input / $15 output per million tokens
+
+**Use in Claude Code:**
+
+```bash
+# Set as default model
+claude --model sonnet
+
+# Or pin the specific version
+claude --model claude-sonnet-4-6-20260217
+
+# Configure in settings
+claude config set model "claude-sonnet-4-6-20260217"
+```
+
+> Sonnet 4.5 with 1M context has been removed from the Max plan in favor of Sonnet 4.6. Claude Opus 4.6 (released in v2.1.32) remains available for the most demanding tasks.
+
+---
+
 <h2 id="insights">Claude Code Insights</h2>
 
 > [!Note]
@@ -1215,14 +1494,14 @@ xdg-open ~/.claude/usage-data/report.html  # Linux
 
 **Report Sections:**
 
-| Section | Description |
-|:--------|:------------|
-| **What's Working** | Your strengths and successful patterns |
-| **What's Hindering** | Where Claude struggled or where you caused friction |
-| **Friction Analysis** | Breakdown of problem areas with specific examples |
-| **Stats Dashboard** | Tool usage, language breakdown, coding time distribution |
-| **Quick Wins** | Copy-paste suggestions for CLAUDE.md improvements |
-| **Features to Try** | Personalized recommendations (skills, hooks, headless mode) |
+| Section               | Description                                                 |
+| :-------------------- | :---------------------------------------------------------- |
+| **What's Working**    | Your strengths and successful patterns                      |
+| **What's Hindering**  | Where Claude struggled or where you caused friction         |
+| **Friction Analysis** | Breakdown of problem areas with specific examples           |
+| **Stats Dashboard**   | Tool usage, language breakdown, coding time distribution    |
+| **Quick Wins**        | Copy-paste suggestions for CLAUDE.md improvements           |
+| **Features to Try**   | Personalized recommendations (skills, hooks, headless mode) |
 
 > Everything runs locally using the Anthropic API. Session data stays on your machine.
 
@@ -1280,8 +1559,8 @@ claude mcp list
 ## Additional Methods:
 
 <table><td>
-  
-### 1. Command Line Addition 
+
+### 1. Command Line Addition
 > **Claude Code provides simple command line tools to add MCP servers:**
 
 ```bash
@@ -1769,6 +2048,31 @@ Hooks are organized by matchers, where each matcher can have multiple hooks:
 }
 ```
 
+#### HTTP Hooks (v2.1.63+)
+
+In addition to shell commands, hooks can POST JSON to a URL and receive a JSON response:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://hooks.example.com/validate",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+HTTP hooks send the same JSON payload that `command` hooks receive via stdin, as a POST body. The response JSON follows the same output schema. This is useful for centralized policy enforcement or remote hook execution without local scripts.
+
 - **matcher**: Pattern to match tool names, case-sensitive (only applicable for
   `PreToolUse` and `PostToolUse`)
   - Simple strings match exactly: `Write` matches only the Write tool
@@ -1776,7 +2080,7 @@ Hooks are organized by matchers, where each matcher can have multiple hooks:
   - Use `*` to match all tools. You can also use empty string (`""`) or leave
     `matcher` blank.
 - **hooks**: Array of commands to execute when the pattern matches
-  - `type`: Currently only `"command"` is supported
+  - `type`: `"command"` (shell command) or `"http"` (POST JSON to a URL, v2.1.63+)
   - `command`: The bash command to execute (can use `$CLAUDE_PROJECT_DIR`
     environment variable)
   - `timeout`: (Optional) How long a command should run, in seconds, before
@@ -1880,6 +2184,26 @@ Triggered when an agent teammate becomes idle (multi-agent workflows).
 #### TaskCompleted
 
 Triggered when a background task completes (multi-agent workflows).
+
+#### ConfigChange
+
+Fires when Claude Code configuration files change (e.g., settings, CLAUDE.md, `.mcp.json`). Useful for reloading external state or triggering side effects on config edits.
+
+#### WorktreeCreate
+
+Fires when Claude creates a new git worktree (via `--worktree` / `-w` flag or `isolation: worktree` in agent definitions). Useful for setting up worktree-specific resources.
+
+#### WorktreeRemove
+
+Fires when a git worktree is cleaned up after use. Useful for tearing down worktree-specific resources.
+
+#### Setup
+
+Triggered via `--init`, `--init-only`, or `--maintenance` CLI flags. Useful for one-time project setup tasks, plugin installation, or maintenance scripts.
+
+#### PermissionRequest
+
+Fires when Claude shows a permission prompt to the user. Useful for logging or automating permission decisions.
 
 #### PreCompact
 
@@ -1995,9 +2319,12 @@ from running indefinitely.
   "session_id": "abc123",
   "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "hook_event_name": "Stop",
-  "stop_hook_active": true
+  "stop_hook_active": true,
+  "last_assistant_message": "I've completed all the requested changes."
 }
 ```
+
+> The `last_assistant_message` field (v2.1.47+) contains the final text Claude produced before stopping. Useful for validating completeness or logging outcomes.
 
 #### PreCompact Input
 
@@ -2758,7 +3085,7 @@ jobs:
 > > **A: No reboot required, but you <mark>must</mark> open a <mark>new</mark> terminal window.**
 
 <table><td>
-  
+
 <h2 id="debug-quick-commands">Debug Quick Commands</h2>
 
 _Check the output of `claude doctor` for log locations and environment checks._
@@ -3060,7 +3387,7 @@ echo "=== API key set? ==="; [ -n "$ANTHROPIC_API_KEY" ] && echo Yes || echo No
 
 ## Best Practices
 
-> Curated guidance for safe, fast, and correct use of the Claude Code CLI and interactive REPL. All commands and flags here match the current Anthropic docs as of **Aug 23, 2025**.
+> Curated guidance for safe, fast, and correct use of the Claude Code CLI and interactive REPL. All commands and flags here match the current Anthropic docs as of **Feb 28, 2026**.
 
 <h2 id="effective-prompting">Effective Prompting</h2>
 
@@ -3171,13 +3498,14 @@ Tip: `claude "query"` starts the interactive REPL pre-seeded with your prompt; `
 
 5. **Pick the right model**
    - CLI aliases: `--model sonnet` or `--model opus` (latest of that family).
-   - For reproducibility in settings, pin a full model ID (e.g., `"claude-3-5-sonnet-20241022"`).
+   - As of Feb 2026, **Sonnet 4.6** is the default Sonnet — frontier performance at Sonnet pricing with a 1M-token context window.
+   - For reproducibility in settings, pin a full model ID (e.g., `"claude-sonnet-4-6-20260217"`).
 
 ---
 
 <h2 id="monitoring--alerting">Monitoring & Alerting</h2>
 
-**1) Health checks**  
+**1) Health checks**
 Use the built‑in **doctor** command to verify installation and environment.
 
 ```bash
@@ -3195,7 +3523,7 @@ claude -p "Analyze errors, regressions, and suspect patterns; output JSON." \
 --output-format json > /tmp/daily-analysis.json
 ```
 
-**3) Telemetry (optional)**  
+**3) Telemetry (optional)**
 Claude Code emits OpenTelemetry metrics/events. Set exporters in settings/env (e.g., OTLP) and ship to your observability stack (Datadog, Honeycomb, Prometheus/Grafana, etc.).
 
 ---
