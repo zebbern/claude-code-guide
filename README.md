@@ -29,7 +29,7 @@ _For updates and contributions, visit the [official Claude Code documentation](h
 
 #### Daily Updated [Claude Changelogs](https://github.com/zebbern/claude-code-guide/blob/main/CHANGELOG.md)
 
-#### Agent Security [SKILL.md files](https://github.com/zebbern/claude-code-guide/tree/main/skills) `\|/` How to create [agent-skills-guide](https://github.com/zebbern/agent-skills-guide)
+#### Security Focused Agent [SKILL.md files](https://github.com/zebbern/claude-code-guide/tree/main/skills) `\|/` How to create [agent-skills-authoring](https://github.com/zebbern/agent-skills-authoring)
 
 </div>
 
