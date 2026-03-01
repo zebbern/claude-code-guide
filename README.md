@@ -14,22 +14,19 @@ _For updates and contributions, visit the [official Claude Code documentation](h
 
 <kbd>
 
-| Section                                           | Status |
-| ------------------------------------------------- | ------ |
-| Guides on how to install on Windows, Linux, MacOS | ✅     |
-| Tips and Tricks                                   | ✅     |
-| MCP Overview with what to use                     | ✅     |
-| Community Guides                                  | ✅     |
-| Troubleshooting                                   | ✅     |
-| How to use Claude code the most optimal way       | ✅     |
+| Section                                           | Status | Other Resources |
+| ------------------------------------------------- | ------ |------ |
+| Getting Started                       |✅|<kbd> **Claude-Code** [**Changelogs**](https://github.com/zebbern/claude-code-guide/blob/main/CHANGELOG.md)</kbd> |
+| Configuration & Environment Variables |✅|<kbd>**Claude-Code via** [**Discord**](https://github.com/zebbern/claude-code-discord)</kbd> |
+| Commands & Usage                      |✅|<kbd>Security Agents [SKILL.md](https://github.com/zebbern/claude-code-guide/tree/main/skills)</kbd> |
+| Interface & Input                     |✅|<kbd>Let Agent Create [SKILL.md](https://github.com/zebbern/agent-skills-authoring)</kbd> |
+| Advanced Features                     |✅|<kbd>954+ Agent [Skills](https://github.com/zebbern/antigravity-awesome-skills)</kbd> |
+| Automation & Integration              |✅|<kbd>No cost ai [resources](https://github.com/zebbern/no-cost-ai)</kbd>  |
+| Help & Troubleshooting                |✅|<kbd>250+ Mermaid [templates](https://github.com/zebbern/mermaid-templates)</kbd>  |
+| Third-Party Integrations              |✅|<kbd>Discord Communication [MCP](https://github.com/zebbern/mermaid-templates)</kbd> |
 
-### Interact with Claude Code Via Discord Guide [Here!](https://github.com/zebbern/claude-code-discord)
 
 </kbd>
-
-#### Daily Updated [Claude Changelogs](https://github.com/zebbern/claude-code-guide/blob/main/CHANGELOG.md)
-
-#### Security Focused Agent [SKILL.md files](https://github.com/zebbern/claude-code-guide/tree/main/skills) `\|/` How to create [agent-skills-authoring](https://github.com/zebbern/agent-skills-authoring)
 
 </div>
 
