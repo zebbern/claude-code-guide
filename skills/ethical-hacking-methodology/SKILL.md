@@ -4,6 +4,7 @@ description: This skill should be used when the user asks to "learn ethical hack
 metadata:
   author: zebbern
   version: "1.1"
+  risk: high
 ---
 
 # Ethical Hacking Methodology

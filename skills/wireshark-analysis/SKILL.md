@@ -4,6 +4,7 @@ description: This skill should be used when the user asks to "analyze network tr
 metadata:
   author: zebbern
   version: "1.1"
+  risk: high
 ---
 
 # Wireshark Network Traffic Analysis

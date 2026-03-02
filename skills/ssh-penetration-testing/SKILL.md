@@ -4,6 +4,7 @@ description: This skill should be used when the user asks to "pentest SSH servic
 metadata:
   author: zebbern
   version: "1.1"
+  risk: high
 ---
 
 # SSH Penetration Testing
