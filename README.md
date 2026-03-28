@@ -3685,6 +3685,13 @@ claude "Create sequence diagrams for the authentication flow."
 
 ---
 
+
+<h2 id="community-tools">Community Tools</h2>
+
+| Tool | Description |
+|------|-------------|
+| [Claude Code Power Stack](https://github.com/bluzername/claude-code-power-stack) | Curated toolkit bundling Ghost (persistent memory), cc-conversation-search (cross-project session search), session naming, and Manus-style file-based planning into one-command install with cheat sheet PDF |
+
 <h1 id="third-party-integrations">Third-Party Integrations</h1>
 
 <h2 id="deepseek-integration">DeepSeek Integration</h2>
