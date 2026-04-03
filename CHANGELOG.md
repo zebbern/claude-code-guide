@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.1.91
+
+- Added MCP tool result persistence override via `_meta["anthropic/maxResultSizeChars"]` annotation (up to 500K), allowing larger results like DB schemas to pass through without truncation
+- Added `disableSkillShellExecution` setting to disable inline shell execution in skills, custom slash commands, and plugin commands
+- Added support for multi-line prompts in `claude-cli://open?q=` deep links (encoded newlines `%0A` no longer rejected)
+- Plugins can now ship executables under `bin/` and invoke them as bare commands from the Bash tool
+- Fixed transcript chain breaks on `--resume` that could lose conversation history when async transcript writes fail silently
+- Fixed `cmd+delete` not deleting to start of line on iTerm2, kitty, WezTerm, Ghostty, and Windows Terminal
+- Fixed plan mode in remote sessions losing track of the plan file after a container restart, which caused permission prompts on plan edits and an empty plan-approval modal
+- Fixed JSON schema validation for `permissions.defaultMode: "auto"` in settings.json
+- Fixed Windows version cleanup not protecting the active version's rollback copy
+- `/feedback` now explains why it's unavailable instead of disappearing from the slash menu
+- Improved `/claude-api` skill guidance for agent design patterns including tool surface decisions, context management, and caching strategy
+- Improved performance: faster `stripAnsi` on Bun by routing through `Bun.stripANSI`
+- Edit tool now uses shorter `old_string` anchors, reducing output tokens
+
 ## 2.1.90
 
 - Added `/powerup` — interactive lessons teaching Claude Code features with animated demos
