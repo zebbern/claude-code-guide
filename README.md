@@ -23,7 +23,7 @@ _For updates and contributions, visit the [official Claude Code documentation](h
 | Advanced Features                     |✅|<kbd>954+ Agent [Skills](https://github.com/zebbern/antigravity-awesome-skills)</kbd> |
 | Automation & Integration              |✅|<kbd>No cost ai [resources](https://github.com/zebbern/no-cost-ai)</kbd>  |
 | Help & Troubleshooting                |✅|<kbd>250+ Mermaid [templates](https://github.com/zebbern/mermaid-templates)</kbd>  |
-| Third-Party Integrations              |✅|<kbd>Discord Communication [MCP](https://github.com/zebbern/mermaid-templates)</kbd> |
+| Third-Party Integrations              |✅|<kbd>Discord Communication [MCP](https://github.com/zebbern/discord-mcp-agent)</kbd> |
 
 
 </kbd>
