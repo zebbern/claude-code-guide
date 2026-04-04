@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.1.92
+
+- Added `forceRemoteSettingsRefresh` policy setting: when set, the CLI blocks startup until remote managed settings are freshly fetched, and exits if the fetch fails (fail-closed)
+- Added interactive Bedrock setup wizard accessible from the login screen when selecting "3rd-party platform" — guides you through AWS authentication, region configuration, credential verification, and model pinning
+- Added per-model and cache-hit breakdown to `/cost` for subscription users
+- `/release-notes` is now an interactive version picker
+- Remote Control session names now use your hostname as the default prefix (e.g. `myhost-graceful-unicorn`), overridable with `--remote-control-session-name-prefix`
+- Pro users now see a footer hint when returning to a session after the prompt cache has expired, showing roughly how many tokens the next turn will send uncached
+- Fixed subagent spawning permanently failing with "Could not determine pane count" after tmux windows are killed or renumbered during a long-running session
+- Fixed prompt-type Stop hooks incorrectly failing when the small fast model returns `ok:false`, and restored `preventContinuation:true` semantics for non-Stop prompt-type hooks
+- Fixed tool input validation failures when streaming emits array/object fields as JSON-encoded strings
+- Fixed an API 400 error that could occur when extended thinking produced a whitespace-only text block alongside real content
+- Fixed accidental feedback survey submissions from auto-pilot keypresses and consecutive-prompt digit collisions
+- Fixed misleading "esc to interrupt" hint appearing alongside "esc to clear" when a text selection exists in fullscreen mode during processing
+- Fixed Homebrew install update prompts to use the cask's release channel (`claude-code` → stable, `claude-code@latest` → latest)
+- Fixed `ctrl+e` jumping to the end of the next line when already at end of line in multiline prompts
+- Fixed an issue where the same message could appear at two positions when scrolling up in fullscreen mode (iTerm2, Ghostty, and other terminals with DEC 2026 support)
+- Fixed idle-return "/clear to save X tokens" hint showing cumulative session tokens instead of current context size
+- Fixed plugin MCP servers stuck "connecting" on session start when they duplicate a claude.ai connector that is unauthenticated
+- Improved Write tool diff computation speed for large files (60% faster on files with tabs/`&`/`$`)
+- Removed `/tag` command
+- Removed `/vim` command (toggle vim mode via `/config` → Editor mode)
+- Linux sandbox now ships the `apply-seccomp` helper in both npm and native builds, restoring unix-socket blocking for sandboxed commands
+
 ## 2.1.91
 
 - Added MCP tool result persistence override via `_meta["anthropic/maxResultSizeChars"]` annotation (up to 500K), allowing larger results like DB schemas to pass through without truncation
