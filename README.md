@@ -3707,3 +3707,20 @@ export ANTHROPIC_SMALL_FAST_MODEL=deepseek-chat
 3. ###### Now all you need to do is launch `claude`
 
 Find more information from the [Official Deepseek Docs](https://api-docs.deepseek.com/guides/anthropic_api)
+<h2 id="windows-macos-installer">Windows & macOS Community Installer</h2>
+
+[ClaudeCode Launchpad CLI](https://github.com/noambrand/kivun-terminal) is a community installer that sets up Node.js, Git, and Claude Code automatically on Windows and macOS in about 2 minutes.
+
+**Features:**
+- Two-line live status bar (model, context %, token count, session/weekly usage)
+- Folder picker and right-click context menu integration (Windows)
+- Optional light-blue terminal theme
+- Claude flags support (e.g. `--continue`) from the launcher
+
+**Install:**
+
+1. [Download the latest release](https://github.com/noambrand/kivun-terminal/releases/latest)
+2. Windows: run `ClaudeCode_Launchpad_CLI_Setup.exe` as Administrator
+3. macOS: right-click `ClaudeCode_Launchpad_CLI_Setup_<version>.pkg` → Open
+
+
