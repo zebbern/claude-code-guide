@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.1.94
+
+- Added support for Amazon Bedrock powered by Mantle, set `CLAUDE_CODE_USE_MANTLE=1`
+- Changed default effort level from medium to high for API-key, Bedrock/Vertex/Foundry, Team, and Enterprise users (control this with `/effort`)
+- Added compact `Slacked #channel` header with a clickable channel link for Slack MCP send-message tool calls
+- Added `keep-coding-instructions` frontmatter field support for plugin output styles
+- Added `hookSpecificOutput.sessionTitle` to `UserPromptSubmit` hooks for setting the session title
+- Plugin skills declared via `"skills": ["./"]` now use the skill's frontmatter `name` for the invocation name instead of the directory basename, giving a stable name across install methods
+- Fixed agents appearing stuck after a 429 rate-limit response with a long Retry-After header — the error now surfaces immediately instead of silently waiting
+- Fixed Console login on macOS silently failing with "Not logged in" when the login keychain is locked or its password is out of sync — the error is now surfaced and `claude doctor` diagnoses the fix
+- Fixed plugin skill hooks defined in YAML frontmatter being silently ignored
+- Fixed plugin hooks failing with "No such file or directory" when `CLAUDE_PLUGIN_ROOT` was not set
+- Fixed `${CLAUDE_PLUGIN_ROOT}` resolving to the marketplace source directory instead of the installed cache for local-marketplace plugins on startup
+- Fixed scrollback showing the same diff repeated and blank pages in long-running sessions
+- Fixed multiline user prompts in the transcript indenting wrapped lines under the `❯` caret instead of under the text
+- Fixed Shift+Space inserting the literal word "space" instead of a space character in search inputs
+- Fixed hyperlinks opening two browser tabs when clicked inside tmux running in an xterm.js-based terminal (VS Code, Hyper, Tabby)
+- Fixed an alt-screen rendering bug where content height changes mid-scroll could leave compounding ghost lines
+- Fixed `FORCE_HYPERLINK` environment variable being ignored when set via `settings.json` `env`
+- Fixed native terminal cursor not tracking the selected tab in dialogs, so screen readers and magnifiers can follow tab navigation
+- Fixed Bedrock invocation of Sonnet 3.5 v2 by using the `us.` inference profile ID
+- Fixed SDK/print mode not preserving the partial assistant response in conversation history when interrupted mid-stream
+- Improved `--resume` to resume sessions from other worktrees of the same repo directly instead of printing a `cd` command
+- Fixed CJK and other multibyte text being corrupted with U+FFFD in stream-json input/output when chunk boundaries split a UTF-8 sequence
+- [VSCode] Reduced cold-open subprocess work on starting a session
+- [VSCode] Fixed dropdown menus selecting the wrong item when the mouse was over the list while typing or using arrow keys
+- [VSCode] Added a warning banner when `settings.json` files fail to parse, so users know their permission rules are not being applied
+
 ## 2.1.92
 
 - Added `forceRemoteSettingsRefresh` policy setting: when set, the CLI blocks startup until remote managed settings are freshly fetched, and exits if the fetch fails (fail-closed)
