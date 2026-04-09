@@ -1,5 +1,58 @@
 # Changelog
 
+## 2.1.97
+
+- Added focus view toggle (`Ctrl+O`) in `NO_FLICKER` mode showing prompt, one-line tool summary with edit diffstats, and final response
+- Added `refreshInterval` status line setting to re-run the status line command every N seconds
+- Added `workspace.git_worktree` to the status line JSON input, set when the current directory is inside a linked git worktree
+- Added `● N running` indicator in `/agents` next to agent types with live subagent instances
+- Added syntax highlighting for Cedar policy files (`.cedar`, `.cedarpolicy`)
+- Fixed `--dangerously-skip-permissions` being silently downgraded to accept-edits mode after approving a write to a protected path
+- Fixed and hardened Bash tool permissions, tightening checks around env-var prefixes and network redirects, and reducing false prompts on common commands
+- Fixed permission rules with names matching JavaScript prototype properties (e.g. `toString`) causing `settings.json` to be silently ignored
+- Fixed managed-settings allow rules remaining active after an admin removed them until process restart
+- Fixed `permissions.additionalDirectories` changes in settings not applying mid-session
+- Fixed removing a directory from `settings.permissions.additionalDirectories` revoking access to the same directory passed via `--add-dir`
+- Fixed MCP HTTP/SSE connections accumulating ~50 MB/hr of unreleased buffers when servers reconnect
+- Fixed MCP OAuth `oauth.authServerMetadataUrl` not being honored on token refresh after restart, fixing ADFS and similar IdPs
+- Fixed 429 retries burning all attempts in ~13 seconds when the server returns a small `Retry-After` — exponential backoff now applies as a minimum
+- Fixed rate-limit upgrade options disappearing after context compaction
+- Fixed several `/resume` picker issues: `--resume <name>` opening uneditable, Ctrl+A reload wiping search, empty list swallowing navigation, task-status text replacing conversation summary, and cross-project staleness
+- Fixed file-edit diffs disappearing on `--resume` when the edited file was larger than 10KB
+- Fixed `--resume` cache misses and lost mid-turn input from attachment messages not being saved to the transcript
+- Fixed messages typed while Claude is working not being persisted to the transcript
+- Fixed prompt-type `Stop`/`SubagentStop` hooks failing on long sessions, and hook evaluator API errors displaying "JSON validation failed" instead of the actual message
+- Fixed subagents with worktree isolation or `cwd:` override leaking their working directory back to the parent session's Bash tool
+- Fixed compaction writing duplicate multi-MB subagent transcript files on prompt-too-long retries
+- Fixed `claude plugin update` reporting "already at the latest version" for git-based marketplace plugins when the remote had newer commits
+- Fixed slash command picker breaking when a plugin's frontmatter `name` is a YAML boolean keyword
+- Fixed copying wrapped URLs in `NO_FLICKER` mode inserting spaces at line breaks
+- Fixed scroll rendering artifacts in `NO_FLICKER` mode when running inside zellij
+- Fixed a crash in `NO_FLICKER` mode when hovering over MCP tool results
+- Fixed a `NO_FLICKER` mode memory leak where API retries left stale streaming state
+- Fixed slow mouse-wheel scrolling in `NO_FLICKER` mode on Windows Terminal
+- Fixed custom status line not displaying in `NO_FLICKER` mode on terminals shorter than 24 rows
+- Fixed Shift+Enter and Alt/Cmd+arrow shortcuts not working in Warp with `NO_FLICKER` mode
+- Fixed Korean/Japanese/Unicode text becoming garbled when copied in no-flicker mode on Windows
+- Fixed Bedrock SigV4 authentication failing when `AWS_BEARER_TOKEN_BEDROCK` or `ANTHROPIC_BEDROCK_BASE_URL` are set to empty strings (as GitHub Actions does for unset inputs)
+- Improved Accept Edits mode to auto-approve filesystem commands prefixed with safe env vars or process wrappers (e.g. `LANG=C rm foo`, `timeout 5 mkdir out`)
+- Improved auto mode and bypass-permissions mode to auto-approve sandbox network access prompts
+- Improved sandbox: `sandbox.network.allowMachLookup` now takes effect on macOS
+- Improved image handling: pasted and attached images are now compressed to the same token budget as images read via the Read tool
+- Improved slash command and `@`-mention completion to trigger after CJK sentence punctuation, so Japanese/Chinese input no longer requires a space before `/` or `@`
+- Improved Bridge sessions to show the local git repo, branch, and working directory on the claude.ai session card
+- Improved footer layout: indicators (Focus, notifications) now stay on the mode-indicator row instead of wrapping below
+- Improved context-low warning to show as a transient footer notification instead of a persistent row
+- Improved markdown blockquotes to show a continuous left bar across wrapped lines
+- Improved session transcript size by skipping empty hook entries and capping stored pre-edit file copies
+- Improved transcript accuracy: per-block entries now carry the final token usage instead of the streaming placeholder
+- Improved Bash tool OTEL tracing: subprocesses now inherit a W3C `TRACEPARENT` env var when tracing is enabled
+- Updated `/claude-api` skill to cover Managed Agents alongside the Claude API
+
+## 2.1.96
+
+- Fixed Bedrock requests failing with `403 "Authorization header is missing"` when using `AWS_BEARER_TOKEN_BEDROCK` or `CLAUDE_CODE_SKIP_BEDROCK_AUTH` (regression in 2.1.94)
+
 ## 2.1.94
 
 - Added support for Amazon Bedrock powered by Mantle, set `CLAUDE_CODE_USE_MANTLE=1`
