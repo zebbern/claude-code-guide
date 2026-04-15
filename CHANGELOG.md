@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.1.108
+
+- Added `ENABLE_PROMPT_CACHING_1H` env var to opt into 1-hour prompt cache TTL on API key, Bedrock, Vertex, and Foundry (`ENABLE_PROMPT_CACHING_1H_BEDROCK` is deprecated but still honored), and `FORCE_PROMPT_CACHING_5M` to force 5-minute TTL
+- Added recap feature to provide context when returning to a session, configurable in /config and manually invocable with /recap; force with `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` if telemetry disabled.
+- The model can now discover and invoke built-in slash commands like `/init`, `/review`, and `/security-review` via the Skill tool
+- `/undo` is now an alias for `/rewind`
+- Improved `/model` to warn before switching models mid-conversation, since the next response re-reads the full history uncached
+- Improved `/resume` picker to default to sessions from the current directory; press `Ctrl+A` to show all projects
+- Improved error messages: server rate limits are now distinguished from plan usage limits; 5xx/529 errors show a link to status.claude.com; unknown slash commands suggest the closest match
+- Reduced memory footprint for file reads, edits, and syntax highlighting by loading language grammars on demand
+- Added "verbose" indicator when viewing the detailed transcript (`Ctrl+O`)
+- Added a warning at startup when prompt caching is disabled via `DISABLE_PROMPT_CACHING*` environment variables
+- Fixed paste not working in the `/login` code prompt (regression in 2.1.105)
+- Fixed subscribers who set `DISABLE_TELEMETRY` falling back to 5-minute prompt cache TTL instead of 1 hour
+- Fixed Agent tool prompting for permission in auto mode when the safety classifier's transcript exceeded its context window
+- Fixed Bash tool producing no output when `CLAUDE_ENV_FILE` (e.g. `~/.zprofile`) ends with a `#` comment line
+- Fixed `claude --resume <session-id>` losing the session's custom name and color set via `/rename`
+- Fixed session titles showing placeholder example text when the first message is a short greeting
+- Fixed terminal escape codes appearing as garbage text in the prompt input after `--teleport`
+- Fixed `/feedback` retry: pressing Enter to resubmit after a failure now works without first editing the description
+- Fixed `--teleport` and `--resume <id>` precondition errors (e.g. dirty git tree, session not found) exiting silently instead of showing the error message
+- Fixed Remote Control session titles set in the web UI being overwritten by auto-generated titles after the third message
+- Fixed `--resume` truncating sessions when the transcript contained a self-referencing message
+- Fixed transcript write failures (e.g., disk full) being silently dropped instead of being logged
+- Fixed diacritical marks (accents, umlauts, cedillas) being dropped from responses when the `language` setting is configured
+- Fixed policy-managed plugins never auto-updating when running from a different project than where they were first installed
+
+## 2.1.107
+
+- Show thinking hints sooner during long operations
+
 ## 2.1.105
 
 - Added `path` parameter to the `EnterWorktree` tool to switch into an existing worktree of the current repository
