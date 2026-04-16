@@ -1,9 +1,49 @@
 # Changelog
 
+## 2.1.110
+
+- Added `/tui` command and `tui` setting — run `/tui fullscreen` to switch to flicker-free rendering in the same conversation
+- Added push notification tool — Claude can send mobile push notifications when Remote Control and "Push when Claude decides" config are enabled
+- Changed `Ctrl+O` to toggle between normal and verbose transcript only; focus view is now toggled separately with the new `/focus` command
+- Added `autoScrollEnabled` config to disable conversation auto-scroll in fullscreen mode
+- Added option to show Claude's last response as commented context in the `Ctrl+G` external editor (enable via `/config`)
+- Improved `/plugin` Installed tab — items needing attention and favorites appear at the top, disabled items are hidden behind a fold, and `f` favorites the selected item
+- Improved `/doctor` to warn when an MCP server is defined in multiple config scopes with different endpoints
+- `--resume`/`--continue` now resurrects unexpired scheduled tasks
+- `/autocompact`, `/context`, `/exit`, and `/reload-plugins` now work from Remote Control (mobile/web) clients
+- Write tool now informs the model when you edit the proposed content in the IDE diff before accepting
+- Bash tool now enforces the documented maximum timeout instead of accepting arbitrarily large values
+- SDK/headless sessions now read `TRACEPARENT`/`TRACESTATE` from the environment for distributed trace linking
+- Session recap is now enabled for users with telemetry disabled (Bedrock, Vertex, Foundry, `DISABLE_TELEMETRY`). Opt out via `/config` or `CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0`.
+- Fixed MCP tool calls hanging indefinitely when the server connection drops mid-response on SSE/HTTP transports
+- Fixed non-streaming fallback retries causing multi-minute hangs when the API is unreachable
+- Fixed session recap, local slash-command output, and other system status lines not appearing in focus mode
+- Fixed high CPU usage in fullscreen when text is selected while a tool is running
+- Fixed plugin install not honoring dependencies declared in `plugin.json` when the marketplace entry omits them; `/plugin` install now lists auto-installed dependencies
+- Fixed skills with `disable-model-invocation: true` failing when invoked via `/<skill>` mid-message
+- Fixed `--resume` sometimes showing the first prompt instead of the `/rename` name for sessions still running or exited uncleanly
+- Fixed queued messages briefly appearing twice during multi-tool-call turns
+- Fixed session cleanup not removing the full session directory including subagent transcripts
+- Fixed dropped keystrokes after the CLI relaunches (e.g. `/tui`, provider setup wizards)
+- Fixed garbled startup rendering in macOS Terminal.app and other terminals that don't support synchronized output
+- Hardened "Open in editor" actions against command injection from untrusted filenames
+- Fixed `PermissionRequest` hooks returning `updatedInput` not being re-checked against `permissions.deny` rules; `setMode:'bypassPermissions'` updates now respect `disableBypassPermissionsMode`
+- Fixed `PreToolUse` hook `additionalContext` being dropped when the tool call fails
+- Fixed stdio MCP servers that print stray non-JSON lines to stdout being disconnected on the first stray line (regression in 2.1.105)
+- Fixed headless/SDK session auto-title firing an extra Haiku request when `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` or `CLAUDE_CODE_DISABLE_TERMINAL_TITLE` is set
+- Fixed potential excessive memory allocation when piped (non-TTY) Ink output contains a single very wide line
+- Fixed `/skills` menu not scrolling when the list overflows the modal in fullscreen mode
+- Fixed Remote Control sessions showing a generic error instead of prompting for re-login when the session is too old
+- Fixed Remote Control session renames from claude.ai not persisting the title to the local CLI session
+
+## 2.1.109
+
+- Improved the extended-thinking indicator with a rotating progress hint
+
 ## 2.1.108
 
 - Added `ENABLE_PROMPT_CACHING_1H` env var to opt into 1-hour prompt cache TTL on API key, Bedrock, Vertex, and Foundry (`ENABLE_PROMPT_CACHING_1H_BEDROCK` is deprecated but still honored), and `FORCE_PROMPT_CACHING_5M` to force 5-minute TTL
-- Added recap feature to provide context when returning to a session, configurable in /config and manually invocable with /recap; force with `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` if telemetry disabled.
+- Added recap feature to provide context when returning to a session, configurable in `/config` and manually invocable with `/recap`; force with `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` if telemetry disabled.
 - The model can now discover and invoke built-in slash commands like `/init`, `/review`, and `/security-review` via the Skill tool
 - `/undo` is now an alias for `/rewind`
 - Improved `/model` to warn before switching models mid-conversation, since the next response re-reads the full history uncached
