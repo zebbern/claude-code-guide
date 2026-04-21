@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.1.116
+
+- `/resume` on large sessions is significantly faster (up to 67% on 40MB+ sessions) and handles sessions with many dead-fork entries more efficiently
+- Faster MCP startup when multiple stdio servers are configured; `resources/templates/list` is now deferred to first `@`-mention
+- Smoother fullscreen scrolling in VS Code, Cursor, and Windsurf terminals — `/terminal-setup` now configures the editor's scroll sensitivity
+- Thinking spinner now shows progress inline ("still thinking", "thinking more", "almost done thinking"), replacing the separate hint row
+- `/config` search now matches option values (e.g. searching "vim" finds the Editor mode setting)
+- `/doctor` can now be opened while Claude is responding, without waiting for the current turn to finish
+- `/reload-plugins` and background plugin auto-update now auto-install missing plugin dependencies from marketplaces you've already added
+- Bash tool now surfaces a hint when `gh` commands hit GitHub's API rate limit, so agents can back off instead of retrying
+- The Usage tab in Settings now shows your 5-hour and weekly usage immediately and no longer fails when the usage endpoint is rate-limited
+- Agent frontmatter `hooks:` now fire when running as a main-thread agent via `--agent`
+- Slash command menu now shows "No commands match" when your filter has zero results, instead of disappearing
+- Security: sandbox auto-allow no longer bypasses the dangerous-path safety check for `rm`/`rmdir` targeting `/`, `$HOME`, or other critical system directories
+- Fixed Devanagari and other Indic scripts rendering with broken column alignment in the terminal UI
+- Fixed Ctrl+- not triggering undo in terminals using the Kitty keyboard protocol (iTerm2, Ghostty, kitty, WezTerm, Windows Terminal)
+- Fixed Cmd+Left/Right not jumping to line start/end in terminals that use the Kitty keyboard protocol (Warp fullscreen, kitty, Ghostty, WezTerm)
+- Fixed Ctrl+Z hanging the terminal when Claude Code is launched via a wrapper process (e.g. `npx`, `bun run`)
+- Fixed scrollback duplication in inline mode where resizing the terminal or large output bursts would repeat earlier conversation history
+- Fixed modal search dialogs overflowing the screen at short terminal heights, hiding the search box and keyboard hints
+- Fixed scattered blank cells and disappearing composer chrome in the VS Code integrated terminal during scrolling
+- Fixed an intermittent API 400 error related to cache control TTL ordering that could occur when a parallel request completed during request setup
+- Fixed `/branch` rejecting conversations with transcripts larger than 50MB
+- Fixed `/resume` silently showing an empty conversation on large session files instead of reporting the load error
+- Fixed `/plugin` Installed tab showing the same item twice when it appears under Needs attention or Favorites
+- Fixed `/update` and `/tui` not working after entering a worktree mid-session
+
 ## 2.1.114
 
 - Fixed a crash in the permission dialog when an agent teams teammate requested tool permission
