@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.1.117
+
+- Forked subagents can now be enabled on external builds by setting `CLAUDE_CODE_FORK_SUBAGENT=1`
+- Agent frontmatter `mcpServers` are now loaded for main-thread agent sessions via `--agent`
+- Improved `/model`: selections now persist across restarts even when the project pins a different model, and the startup header shows when the active model comes from a project or managed-settings pin
+- The `/resume` command now offers to summarize stale, large sessions before re-reading them, matching the existing `--resume` behavior
+- Faster startup when both local and claude.ai MCP servers are configured (concurrent connect now default)
+- `plugin install` on an already-installed plugin now installs any missing dependencies instead of stopping at "already installed"
+- Plugin dependency errors now say "not installed" with an install hint, and `claude plugin marketplace add` now auto-resolves missing dependencies from configured marketplaces
+- Managed-settings `blockedMarketplaces` and `strictKnownMarketplaces` are now enforced on plugin install, update, refresh, and autoupdate
+- Advisor Tool (experimental): dialog now carries an "experimental" label, learn-more link, and startup notification when enabled; sessions no longer get stuck with "Advisor tool result content could not be processed" errors on every prompt and `/compact`
+- The `cleanupPeriodDays` retention sweep now also covers `~/.claude/tasks/`, `~/.claude/shell-snapshots/`, and `~/.claude/backups/`
+- OpenTelemetry: `user_prompt` events now include `command_name` and `command_source` for slash commands; `cost.usage`, `token.usage`, `api_request`, and `api_error` now include an `effort` attribute when the model supports effort levels. Custom/MCP command names are redacted unless `OTEL_LOG_TOOL_DETAILS=1` is set
+- Native builds on macOS and Linux: the `Glob` and `Grep` tools are replaced by embedded `bfs` and `ugrep` available through the Bash tool — faster searches without a separate tool round-trip (Windows and npm-installed builds unchanged)
+- Windows: cached `where.exe` executable lookups per process for faster subprocess launches
+- Default effort for Pro/Max subscribers on Opus 4.6 and Sonnet 4.6 is now `high` (was `medium`)
+- Fixed Plain-CLI OAuth sessions dying with "Please run /login" when the access token expires mid-session — the token is now refreshed reactively on 401
+- Fixed `WebFetch` hanging on very large HTML pages by truncating input before HTML-to-markdown conversion
+- Fixed a crash when a proxy returns HTTP 204 No Content — now surfaces a clear error instead of a `TypeError`
+- Fixed `/login` having no effect when launched with `CLAUDE_CODE_OAUTH_TOKEN` env var and that token expires
+- Fixed prompt-input undo (`Ctrl+_`) doing nothing immediately after typing, and skipping a state on each undo step
+- Fixed `NO_PROXY` not being respected for remote API requests when running under Bun
+- Fixed rare spurious escape/return triggers when key names arrive as coalesced text over slow connections
+- Fixed SDK `reload_plugins` reconnecting all user MCP servers serially
+- Fixed Bedrock application-inference-profile requests failing with 400 when backed by Opus 4.7 with thinking disabled
+- Fixed MCP `elicitation/create` requests auto-cancelling in print/SDK mode when the server finishes connecting mid-turn
+- Fixed subagents running a different model than the main agent incorrectly flagging file reads with a malware warning
+- Fixed idle re-render loop when background tasks are present, reducing memory growth on Linux
+- [VSCode] Fixed "Manage Plugins" panel breaking when multiple large marketplaces are configured
+- Fixed Opus 4.7 sessions showing inflated `/context` percentages and autocompacting too early — Claude Code was computing against a 200K context window instead of Opus 4.7's native 1M
+
 ## 2.1.116
 
 - `/resume` on large sessions is significantly faster (up to 67% on 40MB+ sessions) and handles sessions with many dead-fork entries more efficiently
