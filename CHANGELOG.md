@@ -1,5 +1,42 @@
 # Changelog
 
+## 2.1.118
+
+- Added vim visual mode (`v`) and visual-line mode (`V`) with selection, operators, and visual feedback
+- Merged `/cost` and `/stats` into `/usage` — both remain as typing shortcuts that open the relevant tab
+- Create and switch between named custom themes from `/theme`, or hand-edit JSON files in `~/.claude/themes/`; plugins can also ship themes via a `themes/` directory
+- Hooks can now invoke MCP tools directly via `type: "mcp_tool"`
+- Added `DISABLE_UPDATES` env var to completely block all update paths including manual `claude update` — stricter than `DISABLE_AUTOUPDATER`
+- WSL on Windows can now inherit Windows-side managed settings via the `wslInheritsWindowsSettings` policy key
+- Auto mode: include `"$defaults"` in `autoMode.allow`, `autoMode.soft_deny`, or `autoMode.environment` to add custom rules alongside the built-in list instead of replacing it
+- Added a "Don't ask again" option to the auto mode opt-in prompt
+- Added `claude plugin tag` to create release git tags for plugins with version validation
+- `--continue`/`--resume` now find sessions that added the current directory via `/add-dir`
+- `/color` now syncs the session accent color to claude.ai/code when Remote Control is connected
+- The `/model` picker now honors `ANTHROPIC_DEFAULT_*_MODEL_NAME`/`_DESCRIPTION` overrides when using a custom `ANTHROPIC_BASE_URL` gateway
+- When auto-update skips a plugin due to another plugin's version constraint, the skip now appears in `/doctor` and the `/plugin` Errors tab
+- Fixed `/mcp` menu hiding OAuth Authenticate/Re-authenticate actions for servers configured with `headersHelper`, and HTTP/SSE MCP servers with custom headers being stuck in "needs authentication" after a transient 401
+- Fixed MCP servers whose OAuth token response omits `expires_in` requiring re-authentication every hour
+- Fixed MCP step-up authorization silently refreshing instead of prompting for re-consent when the server's `insufficient_scope` 403 names a scope the current token already has
+- Fixed an unhandled promise rejection when an MCP server's OAuth flow times out or is cancelled
+- Fixed MCP OAuth refresh proceeding without its cross-process lock under contention
+- Fixed macOS keychain race where a concurrent MCP token refresh could overwrite a freshly-refreshed OAuth token, causing unexpected "Please run /login" prompts
+- Fixed OAuth token refresh failing when the server revokes a token before its local expiry time
+- Fixed credential save crash on Linux/Windows corrupting `~/.claude/.credentials.json`
+- Fixed `/login` having no effect in a session launched with `CLAUDE_CODE_OAUTH_TOKEN` — the env token is now cleared so disk credentials take effect
+- Fixed unreadable text in the "new messages" scroll pill and `/plugin` badges
+- Fixed plan acceptance dialog offering "auto mode" instead of "bypass permissions" when running with `--dangerously-skip-permissions`
+- Fixed agent-type hooks failing with "Messages are required for agent hooks" when configured for events other than `Stop` or `SubagentStop`
+- Fixed `prompt` hooks re-firing on tool calls made by an agent-hook verifier subagent
+- Fixed `/fork` writing the full parent conversation to disk per fork — now writes a pointer and hydrates on read
+- Fixed Alt+K / Alt+X / Alt+^ / Alt+_ freezing keyboard input
+- Fixed connecting to a remote session overwriting your local `model` setting in `~/.claude/settings.json`
+- Fixed typeahead showing "No commands match" error when pasting file paths that start with `/`
+- Fixed `plugin install` on an already-installed plugin not re-resolving a dependency installed at the wrong version
+- Fixed unhandled errors from file watcher on invalid paths or fd exhaustion
+- Fixed Remote Control sessions getting archived on transient CCR initialization blips during JWT refresh
+- Fixed subagents resumed via `SendMessage` not restoring the explicit `cwd` they were spawned with
+
 ## 2.1.117
 
 - Forked subagents can now be enabled on external builds by setting `CLAUDE_CODE_FORK_SUBAGENT=1`
@@ -45,6 +82,7 @@
 - Agent frontmatter `hooks:` now fire when running as a main-thread agent via `--agent`
 - Slash command menu now shows "No commands match" when your filter has zero results, instead of disappearing
 - Security: sandbox auto-allow no longer bypasses the dangerous-path safety check for `rm`/`rmdir` targeting `/`, `$HOME`, or other critical system directories
+- Claude Code and installer now use `https://downloads.claude.ai/claude-code-releases` instead of `https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases`
 - Fixed Devanagari and other Indic scripts rendering with broken column alignment in the terminal UI
 - Fixed Ctrl+- not triggering undo in terminals using the Kitty keyboard protocol (iTerm2, Ghostty, kitty, WezTerm, Windows Terminal)
 - Fixed Cmd+Left/Right not jumping to line start/end in terminals that use the Kitty keyboard protocol (Warp fullscreen, kitty, Ghostty, WezTerm)
