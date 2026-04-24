@@ -1,5 +1,59 @@
 # Changelog
 
+## 2.1.119
+
+- `/config` settings (theme, editor mode, verbose, etc.) now persist to `~/.claude/settings.json` and participate in project/local/policy override precedence
+- Added `prUrlTemplate` setting to point the footer PR badge at a custom code-review URL instead of github.com
+- Added `CLAUDE_CODE_HIDE_CWD` environment variable to hide the working directory in the startup logo
+- `--from-pr` now accepts GitLab merge-request, Bitbucket pull-request, and GitHub Enterprise PR URLs
+- `--print` mode now honors the agent's `tools:` and `disallowedTools:` frontmatter, matching interactive-mode behavior
+- `--agent <name>` now honors the agent definition's `permissionMode` for built-in agents
+- PowerShell tool commands can now be auto-approved in permission mode, matching Bash behavior
+- Hooks: `PostToolUse` and `PostToolUseFailure` hook inputs now include `duration_ms` (tool execution time, excluding permission prompts and PreToolUse hooks)
+- Subagent and SDK MCP server reconfiguration now connects servers in parallel instead of serially
+- Plugins pinned by another plugin's version constraint now auto-update to the highest satisfying git tag
+- Vim mode: Esc in INSERT no longer pulls a queued message back into the input; press Esc again to interrupt
+- Slash command suggestions now highlight the characters that matched your query
+- Slash command picker now wraps long descriptions onto a second line instead of truncating
+- `owner/repo#N` shorthand links in output now use your git remote's host instead of always pointing at github.com
+- Security: `blockedMarketplaces` now correctly enforces `hostPattern` and `pathPattern` entries
+- OpenTelemetry: `tool_result` and `tool_decision` events now include `tool_use_id`; `tool_result` also includes `tool_input_size_bytes`
+- Status line: stdin JSON now includes `effort.level` and `thinking.enabled`
+- Fixed pasting CRLF content (Windows clipboards, Xcode console) inserting an extra blank line between every line
+- Fixed multi-line paste losing newlines in terminals using kitty keyboard protocol sequences inside bracketed paste
+- Fixed Glob and Grep tools disappearing on native macOS/Linux builds when the Bash tool is denied via permissions
+- Fixed scrolling up in fullscreen mode snapping back to the bottom every time a tool finishes
+- Fixed MCP HTTP connections failing with "Invalid OAuth error response" when servers returned non-JSON bodies for OAuth discovery requests
+- Fixed Rewind overlay showing "(no prompt)" for messages with image attachments
+- Fixed auto mode overriding plan mode with conflicting "Execute immediately" instructions
+- Fixed async `PostToolUse` hooks that emit no response payload writing empty entries to the session transcript
+- Fixed spinner staying on when a subagent task notification is orphaned in the queue
+- Tool search is now disabled by default on Vertex AI to avoid an unsupported beta header error (opt in with `ENABLE_TOOL_SEARCH`)
+- Fixed `@`-file Tab completion replacing the entire prompt when used inside a slash command with an absolute path
+- Fixed a stray `p` character appearing at the prompt on startup in macOS Terminal.app via Docker or SSH
+- Fixed `${ENV_VAR}` placeholders in `headers` for HTTP/SSE/WebSocket MCP servers not being substituted before requests
+- Fixed MCP OAuth client secret stored via `--client-secret` not being sent during token exchange for servers requiring `client_secret_post`
+- Fixed `/skills` Enter key closing the dialog instead of pre-filling `/<skill-name>` in the prompt
+- Fixed `/agents` detail view mislabeling built-in tools unavailable to subagents as "Unrecognized"
+- Fixed MCP servers from plugins not spawning on Windows when the plugin cache was incomplete
+- Fixed `/export` showing the current default model instead of the model the conversation actually used
+- Fixed verbose output setting not persisting after restart
+- Fixed `/usage` progress bars overlapping with their "Resets …" labels
+- Fixed plugin MCP servers failing when `${user_config.*}` references an optional field left blank
+- Fixed list items containing a sentence-final number wrapping the number onto its own line
+- Fixed `/plan` and `/plan open` not acting on the existing plan when entering plan mode
+- Fixed skills invoked before auto-compaction being re-executed against the next user message
+- Fixed `/reload-plugins` and `/doctor` reporting load errors for disabled plugins
+- Fixed Agent tool with `isolation: "worktree"` reusing stale worktrees from prior sessions
+- Fixed disabled MCP servers appearing as "failed" in `/status`
+- Fixed `TaskList` returning tasks in arbitrary filesystem order instead of sorted by ID
+- Fixed spurious "GitHub API rate limit exceeded" hints when `gh` output contained PR titles mentioning "rate limit"
+- Fixed SDK/bridge `read_file` not correctly enforcing size cap on growing files
+- Fixed PR not linked to session when working in a git worktree
+- Fixed `/doctor` warning about MCP server entries overridden by a higher-precedence scope
+- Windows: removed false-positive "Windows requires 'cmd /c' wrapper" MCP config warning
+- [VSCode] Fixed voice dictation's first recording producing nothing on macOS while the microphone permission prompt is showing
+
 ## 2.1.118
 
 - Added vim visual mode (`v`) and visual-line mode (`V`) with selection, operators, and visual feedback
