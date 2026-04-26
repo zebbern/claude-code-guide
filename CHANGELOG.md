@@ -1,30 +1,5 @@
 # Changelog
 
-## 2.1.120
-
-- Windows: Git for Windows (Git Bash) is no longer required — when absent, Claude Code uses PowerShell as the shell tool
-- Added `claude ultrareview [target]` subcommand to run `/ultrareview` non-interactively from CI or scripts — prints findings to stdout (`--json` for raw output) and exits 0 on completion or 1 on failure
-- Skills can now reference the current effort level with `${CLAUDE_EFFORT}` in their content
-- Set `AI_AGENT` environment variable for subprocesses so `gh` can attribute traffic to Claude Code
-- Spinner tips that recommend installing the desktop app or creating skills/agents are now hidden when you already have them
-- Show a "use PgUp/PgDn to scroll" hint when the terminal sends arrow keys instead of scroll events
-- Faster session start when you have many claude.ai connectors configured but not authorized
-- The auto mode denial message now links to the configuration docs
-- `claude plugin validate` now accepts `$schema`, `version`, and `description` at the top level of `marketplace.json` and `$schema` in `plugin.json`
-- Auto-compact in auto mode now displays `auto` (lowercase, no token count) instead of a misleading token value
-- Fixed pressing Esc during a stdio MCP tool call closing the entire server connection (regression in 2.1.105)
-- Fixed `/rewind` and other interactive overlays not responding to keyboard input after launching with `claude --resume`
-- Fixed terminal scrollback duplication in non-fullscreen mode (resize, dialog dismiss, long sessions)
-- Fixed `DISABLE_TELEMETRY` / `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` not suppressing usage metrics telemetry for API and enterprise users
-- Fixed false-positive "Dangerous rm operation" permission prompts in auto mode for multi-line bash commands containing both a pipe and a redirect
-- Fixed long selection menus clipping below the terminal in fullscreen mode — the focused option now stays on screen as you scroll
-- Fixed Write tool output collapsing instead of expanding when clicking "+N lines" in fullscreen
-- Fixed slash command picker jumping while typing, and improved highlight to only match contiguous substrings in blue
-- Fixed `/plugin` marketplace failing to load when one entry uses an unrecognized source format — that entry is shown but installing it prompts you to update
-- [VSCode] `/usage` now opens the native Account & Usage dialog instead of returning plain-text session cost
-- [VSCode] Voice dictation now respects the `language` setting in `~/.claude/settings.json`
-- Fixed `find` in the Bash tool exhausting open file descriptors on large directory trees, causing host-wide crashes (macOS/Linux native builds)
-
 ## 2.1.119
 
 - `/config` settings (theme, editor mode, verbose, etc.) now persist to `~/.claude/settings.json` and participate in project/local/policy override precedence
