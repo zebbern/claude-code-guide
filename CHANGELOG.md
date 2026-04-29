@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.1.122
+
+- Added `ANTHROPIC_BEDROCK_SERVICE_TIER` environment variable to select a Bedrock service tier (`default`, `flex`, or `priority`), sent as the `X-Amzn-Bedrock-Service-Tier` header
+- Pasting a PR URL into the `/resume` search box now finds the session that created that PR (GitHub, GitHub Enterprise, GitLab, and Bitbucket)
+- `/mcp` now shows claude.ai connectors hidden by a manually-added server with the same URL, with a hint to remove the duplicate
+- Clarified the `/mcp` message shown when an MCP server is still unauthorized after the browser sign-in flow
+- OpenTelemetry: numeric attributes on `api_request`/`api_error` log events are now emitted as numbers, not strings
+- OpenTelemetry: added `claude_code.at_mention` log event for `@`-mention resolution
+- Fixed `/branch` producing forks that fail with "tool_use ids were found without tool_result blocks" when the source session contained entries from rewound timelines
+- Fixed `/model` not showing the Effort option for Bedrock application inference profile ARNs, and those ARNs not receiving `output_config.effort`
+- Fixed Vertex AI / Bedrock returning `invalid_request_error: output_config: Extra inputs are not permitted` on session-title generation and other structured-output queries
+- Fixed Vertex AI `count_tokens` endpoint returning 400 errors for users behind proxy gateways
+- Fixed `spinnerTipsOverride.excludeDefault` not suppressing the time-based spinner tips
+- Fixed ToolSearch missing MCP tools that connected after session start in nonblocking mode
+- Fixed `!exit` / `!quit` in bash mode terminating the CLI instead of running as a shell command
+- Fixed images sent to newer models being resized to 2576px per side instead of the correct 2000px maximum
+- Fixed remote control session idle status redrawing twice per second, which could flood `tmux -CC` control pipes and pause the terminal
+- Fixed assistant messages appearing blank in some sessions due to a stale view preference
+- Fixed a malformed hooks entry in `settings.json` no longer invalidating the entire file
+- Voice mode: keybindings bound to Caps Lock now show an error since terminals don't deliver Caps Lock as a key event
+
 ## 2.1.121
 
 - Added `alwaysLoad` option to MCP server config — when `true`, all tools from that server skip tool-search deferral and are always available
