@@ -1,5 +1,64 @@
 # Changelog
 
+## 2.1.137
+
+- [VSCode] Fixed extension failing to activate on Windows
+
+## 2.1.136
+
+- Added `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` to re-enable the session quality survey for enterprises capturing responses through OpenTelemetry
+- Added `settings.autoMode.hard_deny` for auto mode classifier rules that block unconditionally regardless of user intent or allow exceptions
+- Fixed MCP servers configured in `.mcp.json`, plugins, and claude.ai connectors silently disappearing after `/clear` in the VS Code extension, JetBrains plugin, and Agent SDK
+- Fixed a rare login loop where a concurrent credential write could overwrite a freshly-rotated OAuth token and force re-login
+- Fixed MCP OAuth refresh tokens being lost when multiple servers refresh concurrently — users with several remote MCP servers should no longer need daily re-authentication
+- Fixed an API error (400) when extended thinking emitted a redacted thinking block after a tool call
+- Fixed `--resume` / `--continue` not finding sessions when the project path contains underscores
+- Fixed plan mode not blocking file writes when a matching `Edit(...)` allow rule exists
+- WSL2: image paste from Windows clipboard now works via a PowerShell fallback when xclip/wl-paste cannot read image data
+- Fixed plugin `Stop`/`UserPromptSubmit` hooks failing when cache cleanup deletes a version still in use by a running session
+- Improved visual consistency across slash command dialogs: standardized footer hints, dialog spacing, and arrow-key styling, and the dialog frame now appears immediately during loading instead of popping in after
+- Fixed colors appearing at wrong positions in bash command output and markdown code blocks
+- Fixed ReasonML diffs rendering corrupted "undefined" text artifacts at word-diff boundaries
+- Fixed worktree exit dialog warning about uncommitted files in the wrong directory after worktree removal
+- Fixed `@` file picker not matching files created mid-session in small non-git directories
+- Fixed `@`-mention file picker not finding files in directories with more than 100 entries
+- Fixed failed tool calls not being click-to-expand in fullscreen mode when their output was truncated
+- Fixed Backspace and Ctrl+Backspace getting swapped after using Ctrl+G to open an external editor on terminals with persistent extended-key modes
+- Fixed `/usage` weekly reset showing time of day instead of the calendar date
+- Fixed welcome banner ellipsis causing column overflow on CJK terminals
+- Fixed `/insights` crash when session history contains tool calls with malformed input fields
+- Fixed a renderer crash when a tool's collapsibility classification changes mid-session
+- Fixed a `skills` entry in `plugin.json` hiding the plugin's default `skills/` directory, and listing a file path now shows an error instead of failing silently
+- Fixed IDE shell-integration lock files not respecting `CLAUDE_CONFIG_DIR`
+- Fixed trailing whitespace in copied terminal output during streaming
+- Fixed plugin uninstall and enable/disable not matching slugs case-insensitively
+- Fixed tool error truncation marker showing a negative count for surrogate-pair strings
+- Fixed env vars from `CLAUDE_ENV_FILE` SessionStart hooks going stale after `/resume` or `/clear`
+- Fixed `/branch` saving a multi-line session title when given a pasted multi-line name
+- Fixed a stray leading space on the second line of wrapped text at the column boundary
+- Fixed Esc not dismissing dialogs in `/install-github-app`, `/desktop`, `/resume`, and `/web-setup`
+- Fixed `/doctor` MCP schema errors not naming the missing field or showing the source file path
+- Fixed Bash permission prompts showing an internal parser diagnostic instead of a user-readable explanation
+- Fixed plugin slash commands with spaces (e.g. `/myplugin review`) not resolving to their namespaced form
+- Fixed `AskUserQuestion` discarding multi-select answers when supplied as an array
+- Fixed `/clear <name>` not labeling the cleared session for `/resume`
+- Fixed `CronList` output missing qualifiers and the scheduled prompt
+- Fixed "Jump to bottom" overlay leaving color artifacts on CJK characters in fullscreen mode
+- Fixed wide markdown tables leaving a stale bordered render in terminal scrollback while streaming
+- Fixed pasted text being silently dropped when a long prompt with a pasted-text placeholder was auto-truncated
+- Fixed `/release-notes` getting stuck on an old version after a failed changelog refresh
+- Fixed `/mcp` server list not scrolling when there are more servers than fit in the terminal
+- Fixed mid-input slash command autocomplete not working after an initial slash command
+- Fixed scrolling to bottom re-engaging auto-follow with `autoScrollEnabled: false`
+- Fixed prompt suggestions being auto-submitted by Enter on an empty input instead of requiring Tab or arrow to accept
+- Fixed keyboard shortcut hints not reflecting rebound keys from `keybindings.json`
+- Fixed `/settings` language change being reverted on Escape after confirming
+- Fixed `/terminal-setup` only appearing in autocomplete on exact name match instead of partial prefixes
+- Fixed "Chat about this" on an `AskUserQuestion` dialog erasing the question text
+- Fixed MCP tool results being invisible when the server returns content blocks
+- Improved error message when `--worktree` collides with an existing or stale worktree
+- Changed plugin marketplace removal key to `d` (matching delete elsewhere) instead of `r` which collided with retry
+
 ## 2.1.133
 
 - Added `worktree.baseRef` setting (`fresh` | `head`) to choose whether `--worktree`, `EnterWorktree`, and agent-isolation worktrees branch from `origin/<default>` or local `HEAD`. **Note:** the default `fresh` changes `EnterWorktree`'s base back to `origin/<default>` (it has been local `HEAD` since 2.1.128) — set `worktree.baseRef: "head"` to keep unpushed commits in new worktrees
