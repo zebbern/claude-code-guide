@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.1.142
+
+- Added new `claude agents` flags: `--add-dir`, `--settings`, `--mcp-config`, `--plugin-dir`, `--permission-mode`, `--model`, `--effort`, and `--dangerously-skip-permissions` to configure dispatched background sessions
+- Fast mode now uses Opus 4.7 by default (previously Opus 4.6). Set `CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE=1` to pin fast mode to Opus 4.6
+- Plugins with a root-level `SKILL.md` and no `skills/` subdirectory are now surfaced as a skill
+- The `/plugin` details pane and `claude plugin details` now show LSP servers a plugin provides
+- `/web-setup` warns before replacing an existing GitHub App connection
+- Fixed `MCP_TOOL_TIMEOUT` not raising the per-request fetch timeout for remote HTTP and SSE MCP servers, which capped tool calls at 60 seconds regardless of the configured value
+- Fixed background sessions not recognizing pre-existing git worktrees, blocking Edit while EnterWorktree refused to create a duplicate
+- Fixed background sessions disappearing and daemon reconnect failing after macOS sleep/wake — the daemon now detects clock jumps instead of treating them as elapsed idle time
+- Fixed daemon not exiting cleanly after the binary is upgraded (e.g. `brew upgrade`), causing dispatched agents to crash-loop on the deleted path
+- Fixed background agents crash-looping when the Claude-in-Chrome extension is connected without a shared tab
+- Fixed clicking links in an attached `claude agents` session — the background worker's headless browser shim no longer applies while attached
+- Fixed `claude agents` "v to open in editor" using the daemon's default editor instead of your shell's `$EDITOR`/`$VISUAL`
+- Fixed `claude agents` deadlocking on Windows with network-drive working directories; Ctrl+C now works during startup
+- Fixed background-color bleed when attaching to a `claude agents` session from Apple Terminal or other 256-color-only terminals
+- Fixed `claude --bg --dangerously-skip-permissions` not persisting across retire/wake
+- Fixed session titles being derived from the URL when the first message is a link
+- Fixed redundant `set_model` requests from remote clients injecting duplicate `/model` breadcrumbs into the transcript
+- Fixed plugins using `skills: ["./"]` showing a false "path escapes plugin directory" error
+- Fixed plugin cache cleanup deleting the active plugin version directory when no installation metadata is present
+- Fixed `/plugin` browse pane showing "0 installs" for newly published plugins
+- Fixed plugin advisories not naming every `plugin.json` key that shadows a default folder
+- Improved reactive compaction: the first summarize attempt now seeds from the original request's overflow size, avoiding a wasted near-full-context retry
+- Improved hook configuration error: configuring a prompt- or agent-type hook for `SessionStart`/`Setup`/`SubagentStart` now shows a clear "use a command-type hook instead" error
+- Removed stale `/model claude-sonnet-4-20250514` suggestion from Usage Policy refusal messages
+
 ## 2.1.141
 
 - Added `terminalSequence` field to hook JSON output so hooks can emit desktop notifications, window titles, and bells without a controlling terminal
