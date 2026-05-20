@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.1.145
+
+- Added `claude agents --json` to list live Claude sessions as JSON for scripting (tmux-resurrect, status bars, session pickers)
+- Added `agent_id` and `parent_agent_id` attributes to `claude_code.tool` OTEL spans, and fixed trace parenting so background subagent spans nest under the dispatching Agent tool span
+- Status line JSON input now includes GitHub repo and PR information when detected
+- `/plugin` Discover and Browse screens now show a plugin's commands, agents, skills, hooks, and MCP/LSP servers before installation
+- `claude agents` terminal tab title now shows the awaiting-input count so an alt-tabbed window tells you when an agent needs attention
+- Slash command and @-mention suggestion list now supports mouse hover and click in fullscreen mode
+- Stop and SubagentStop hook input now includes `background_tasks` and `session_crons` fields
+- Fixed a permission-prompt bypass where bare variable assignments to non-allowlisted environment variables in Bash commands were auto-approved
+- Fixed MCP prompt slash commands showing raw server validation errors when a required argument is omitted — the error now names the missing argument and shows expected usage
+- Fixed the spinner and elapsed-time display freezing until a keypress after the terminal was resized or refocused
+- Fixed the cross-project resume hint failing in default Windows PowerShell 5.1 — Windows now uses `;` as the command separator
+- Fixed voice push-to-talk not working in the agent view's reply pane
+- Fixed task lists rendering in random order when several tasks are created at once
+- Fixed stale "Failed to install Anthropic marketplace" banner showing when the marketplace is already installed
+- Fixed the PR badge in the footer not updating immediately after `gh pr create` and other PR-state-changing commands run in-session
+- Fixed Agent Teams teammates with non-ASCII names failing every API call due to invalid header encoding
+- Fixed `/review` using a deprecated `projectCards` GraphQL query that errored on repos with Classic Projects
+- Fixed `claude plugin validate` not flagging `skills:` entries that point at a file instead of a directory — the error now suggests the parent directory
+- Fixed an infinite loop where a skill using `context: fork` could repeatedly re-invoke itself instead of running
+- Improved the Read tool to return a truncated first page with a "PARTIAL view" notice instead of a hard error when a whole-file read exceeds the token limit
+
 ## 2.1.144
 
 - Added `/resume` support for background sessions — sessions started via `claude --bg` or agent view now appear alongside interactive ones, marked with `bg`
@@ -30,8 +53,6 @@
 - Fixed background side-queries on custom `ANTHROPIC_BASE_URL` setups and Bedrock Mantle not using Haiku — now falls back correctly when a first-party API key is configured or no Haiku model is set
 - Fixed scrolling in attached background sessions on Windows — PgUp/PgDn, mouse wheel, and Ctrl+O transcript navigation now work
 - Fixed a crash when closing the terminal while attached to a background session
-- Fixed `! <cmd>` exec sessions not responding to Ctrl+C while attached — now interrupts the running command
-- Fixed agent view shell-command rows lingering under Working after completion, and pressing Enter on a completed row re-running the command after its output expired
 - Fixed on Windows, pressing ← in `claude agents` leaving the list unresponsive to keyboard input
 - Fixed ghost characters at the left edge when switching panes in Agent View on Windows Terminal with CJK content
 - `/bg` and `←`-detach now preserve directories added via `/add-dir`
