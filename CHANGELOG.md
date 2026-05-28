@@ -1,5 +1,80 @@
 # Changelog
 
+## 2.1.153
+
+- Added `skipLfs` option to `github`/`git` plugin marketplace sources to skip Git LFS downloads during clone and update
+- Claude Code now shows a one-time notice when your npm global install can't auto-update; `/doctor` lists the fixes
+- Status line commands now receive `COLUMNS` and `LINES` environment variables so scripts can size output to the terminal width
+- `claude agents`: autocomplete in the dispatch input now suggests native slash commands and bundled skills, not just project skills
+- `claude agents`: PR column now shows `PR #N` for a single PR or `N PRs` for multiple
+- `claude doctor` now shows the result of your last update attempt
+- Combined the separate "needs authentication" startup notifications for MCP servers and connectors into a single message
+- macOS: background agents now appear as "Claude Code" in Privacy & Security and keep their permission grants across upgrades
+- Fixed stateful MCP servers without the optional GET SSE stream reconnect-looping on `tools/list` (regression in v2.1.147)
+- Fixed a regression where a custom API gateway could receive the user's Anthropic OAuth credential instead of the gateway's own token
+- Fixed subagent (Agent tool) frontmatter MCP servers ignoring `--strict-mcp-config`, `--bare`, remote mode, enterprise managed MCP config, and managed-settings MCP server allow/deny policies
+- `--strict-mcp-config` no longer strips inline `mcpServers` from explicitly-passed agent definitions (`--agents` / SDK `agents`), and blocked subagent MCP servers now surface a visible warning
+- Fixed the Windows PowerShell installer reporting "Installation complete!" when installation actually failed
+- Fixed `claude update` installing the latest version instead of the configured release channel's version for npm installations
+- Fixed excessive memory usage (multiple GB) when resuming a session by transcript file path on machines with many stored sessions
+- Fixed `claude agents` and `claude --bg` running on a stale daemon started before binary-takeover support, even after upgrading
+- Fixed a hang where the CLI could fail to exit when stdin was closed without EOF in stream-json mode, leaving a stale session marker behind
+- Fixed malformed `file://` links in Claude's responses not being clickable in the terminal
+- Fixed `claude --help` rendering unwrapped output on terminals narrower than 92 columns
+- Fixed MCP tool progress notifications not rendering in the collapsed tool view
+- Fixed `Agent` tool with `subagent_type: 'claude'` running in an undocumented temporary worktree, which could silently discard outputs written to gitignored paths
+- `/bg` while Claude is responding now continues the response in the background session instead of dropping it
+- Fixed `/btw` keyboard shortcuts becoming unresponsive in background sessions while a task is running
+- Fixed background sessions writing temp files to `$CLAUDE_JOB_DIR` triggering a "sensitive file" permission prompt
+- Fixed recovering a background agent whose working directory was deleted showing a truncated stack trace instead of a clear error message
+- Fixed `EnterWorktree` not being available immediately in background sessions (previously required `ToolSearch` first)
+- Fixed `cmd+k` in iTerm2/Terminal.app not repainting attached background sessions
+- Fixed the IME candidate window appearing at the bottom of the screen instead of next to the input caret in attached background sessions on Windows
+- Fixed background-color bleed when attaching to a background agent from 256-color-only terminals after the agent had rendered file diffs
+- Fixed `/copy` and copy-on-select silently failing to update the system clipboard when attached to a background session inside tmux
+- Fixed opening `claude agents` with Remote Control enabled leaving zombie session entries on the Code tab after exiting
+- Fixed `/rename` in background sessions not updating the session banner immediately
+- Fixed Windows update rollback: if a Windows update fails, Claude Code now restores the original executable by copy and tells you how to recover
+- [VSCode] Fixed Claude Code processes not shutting down cleanly when VS Code closed on Windows, causing false "unclean exit" reports and orphaned MCP servers
+- `/model` now saves your selection as the default for new sessions (matching the IDE). Press `s` in the picker to switch models for the current session only.
+- If you customized the `modelPicker:setAsDefault` keybinding, rename it to `modelPicker:thisSessionOnly` in keybindings.json (the `d` action was replaced by `s`)
+
+## 2.1.152
+
+- `/code-review --fix` now applies review findings to your working tree after the review, surfacing reuse, simplification, and efficiency suggestions; `/simplify` now invokes `/code-review --fix`
+- Skills and slash commands can now set `disallowed-tools` in frontmatter to remove tools from the model while the skill is active
+- Added `/reload-skills` command to re-scan skill directories without restarting the session
+- `SessionStart` hooks can now return `reloadSkills: true` to re-scan skill directories, making skills installed by the hook available in the same session
+- `SessionStart` hooks can now set the session title via `hookSpecificOutput.sessionTitle` on startup and resume
+- Added a `MessageDisplay` hook event that lets hooks transform or hide assistant message text as it is displayed
+- Added `pluginSuggestionMarketplaces` managed setting: admins can allowlist org marketplaces whose plugins may be suggested via context-aware tips
+- `claude plugin marketplace remove` now accepts `--scope user|project|local` for symmetry with `marketplace add`, `install`, and `uninstall`
+- Claude Code now switches to your configured `--fallback-model` for the rest of the session when the primary model is not found, instead of failing every request
+- Auto mode no longer requires opt-in consent
+- Vim mode: `/` in NORMAL mode now opens reverse history search (like Ctrl+R), matching bash/zsh vi-mode
+- The `/usage` breakdown now includes large session files; files are scanned with a streaming read so memory usage stays flat
+- Thinking summaries in the collapsed group now stay readable for at least 3 seconds, render as markdown, and cap at 10 lines (`Ctrl+O` shows the full thinking)
+- In fullscreen mode, the "Thinking for Ns" indicator now counts up live while the model is thinking, and keeps its value if you interrupt mid-thought
+- Simplified the Workflow tool's inline progress display — live agent counts now show only in the persistent workflow status row below the prompt
+- The post-response timer now shows "Waiting for N background agents/workflows to finish" when backgrounded agents or workflows are still running, and reports the cumulative time once their results are processed
+- Added the session entrypoint as an OpenTelemetry metric attribute (`app.entrypoint`, opt-in via `OTEL_METRICS_INCLUDE_ENTRYPOINT=true`)
+- Fixed terminal styling degrading in very long sessions by recycling the renderer's style pool
+- Fixed the sandbox-enabled warning not appearing in condensed startup mode — it now shows in every layout
+- Fixed the loading spinner showing "still thinking"/"almost done thinking" while a tool is running, and reset the thinking status to "thinking" after each tool
+- Fixed focus mode showing a spurious "N messages hidden" count on turns with no hidden activity
+- Fixed clicking a link inside an expanded tool result collapsing the section instead of opening the link
+- Fixed markdown table cell borders inheriting the color of inline code, wrapped continuation lines losing their style, and empty header cells showing a label in the narrow-terminal stacked layout
+- Fixed plugin MCP servers with the same command but different environment variables being incorrectly deduplicated
+- Fixed `/doctor` reporting "marketplace not found" or "plugin not found" for stale `enabledPlugins` entries referencing removed marketplaces or dropped plugins
+- Fixed plugins that track a git branch silently no longer receiving updates after the plugin registry was rebuilt
+- Fixed remote MCP servers failing to connect in Claude Code Remote sessions when the egress proxy is enabled
+- Fixed the effort-change confirmation dialog appearing when the conversation has no messages or when switching between effort levels that resolve to the same underlying value
+- Fixed the Agent tool description referencing an agent list that is never delivered when running with `--bare` or with attachments disabled
+- Fixed a background worker crash in `claude agents` when accepting a stale permission prompt after a subagent was cancelled
+- Fixed `cache_creation_input_tokens` reporting as 0 in transcript and result usage when the API reports cache writes only via the nested `cache_creation` breakdown
+- Fixed the PushNotification tool incorrectly reporting "Mobile push not sent (Remote Control inactive)" in SDK-hosted sessions when Remote Control is enabled
+- Fixed sessions getting stuck after a model or login switch left stale thinking-block signatures in history; now stripped proactively with a retry safety-net
+
 ## 2.1.150
 
 - Internal infrastructure improvements (no user-facing changes)
