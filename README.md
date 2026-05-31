@@ -16,14 +16,14 @@ _For reference and contributions, visit the [official Claude Code documentation]
 
 | Section                               | Status | Other Resources                                                                                         |
 | ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------- |
-| Getting Started                       | Done   | **Claude-Code** [**Docs**](https://code.claude.com/docs/en/overview)                                    |
-| Configuration & Environment Variables | Done   | **Claude-Code via** [**Discord**](https://github.com/zebbern/claude-code-discord)                       |
-| Commands & Usage                      | Done   | Security Agents [SKILL.md](https://github.com/zebbern/claude-code-guide/tree/main/skills)               |
-| Interface & Input                     | Done   | Let Agent Create [SKILL.md](https://github.com/zebbern/agent-skills-authoring)                          |
-| Advanced Features                     | Done   | 954+ Agent [Skills](https://github.com/zebbern/antigravity-awesome-skills)                              |
-| Automation & Integration              | Done   | No cost ai [resources](https://github.com/zebbern/no-cost-ai)                                           |
-| Help & Troubleshooting                | Done   | 250+ Mermaid [templates](https://github.com/zebbern/mermaid-templates)                                  |
-| Third-Party Integrations              | Done   | Discord Communication [MCP](https://github.com/zebbern/discord-mcp-agent)                               |
+| Getting Started                       | ✅   | **Claude-Code** [Docs](https://code.claude.com/docs/en/overview)                                    |
+| Configuration & Environment Variables | ✅   | **Claude-Code via** [**Discord**](https://github.com/zebbern/claude-code-discord)                       |
+| Commands & Usage                      | ✅   | Security Agents [SKILL.md](https://github.com/zebbern/claude-code-guide/tree/main/skills)               |
+| Interface & Input                     | ✅   | Let Agent Create [SKILL.md](https://github.com/zebbern/agent-skills-authoring)                          |
+| Advanced Features                     | ✅   | 954+ Agent [Skills](https://github.com/zebbern/antigravity-awesome-skills)                              |
+| Automation & Integration              | ✅   | No cost ai [resources](https://github.com/zebbern/no-cost-ai)                                           |
+| Help & Troubleshooting                | ✅   | 250+ Mermaid [templates](https://github.com/zebbern/mermaid-templates)                                  |
+| Third-Party Integrations              | ✅   | Discord Communication [MCP](https://github.com/zebbern/discord-mcp-agent)                               |
 
 
 </kbd>
