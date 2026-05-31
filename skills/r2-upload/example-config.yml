@@ -1,0 +1,40 @@
+# Example R2/S3 Upload Configuration
+# Copy to ~/.r2-upload.yml and fill in your credentials
+
+# Default bucket to use when none specified
+default: my-files
+
+# Bucket configurations
+buckets:
+  # Cloudflare R2 example
+  my-files:
+    endpoint: https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com
+    access_key_id: YOUR_R2_ACCESS_KEY_ID
+    secret_access_key: YOUR_R2_SECRET_ACCESS_KEY
+    bucket_name: my-files
+    region: auto
+    public_url: https://files.yourdomain.com  # Optional: custom domain
+
+  # Another R2 bucket
+  personal:
+    endpoint: https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com
+    access_key_id: YOUR_R2_ACCESS_KEY_ID
+    secret_access_key: YOUR_R2_SECRET_ACCESS_KEY
+    bucket_name: personal-backup
+    region: auto
+
+  # AWS S3 example
+  aws-backup:
+    endpoint: https://s3.us-east-1.amazonaws.com
+    access_key_id: YOUR_AWS_ACCESS_KEY_ID
+    secret_access_key: YOUR_AWS_SECRET_ACCESS_KEY
+    bucket_name: my-aws-bucket
+    region: us-east-1
+
+  # MinIO / Self-hosted S3 example
+  minio:
+    endpoint: https://minio.example.com
+    access_key_id: minioadmin
+    secret_access_key: minioadmin
+    bucket_name: uploads
+    region: us-east-1

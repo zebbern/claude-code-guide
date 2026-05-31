@@ -1,5 +1,5 @@
 ---
-name: Security Scanning Tools
+name: scanning-tools
 description: This skill should be used when the user asks to "perform vulnerability scanning", "scan networks for open ports", "assess web application security", "scan wireless networks", "detect malware", "check cloud security", or "evaluate system compliance". It provides comprehensive guidance on security scanning tools and methodologies.
 metadata:
   author: zebbern
