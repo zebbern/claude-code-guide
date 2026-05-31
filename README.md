@@ -32,12 +32,28 @@ _For updates and contributions, visit the [official Claude Code documentation](h
 
 ---
 
-<h3 id="content">Content</h3>
+<h3 id="content">Contents</h3>
 
-_Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Shortcuts](#keyboard-shortcuts) · [MCP](#mcp-integration) · [Troubleshoot](#help--troubleshooting)
+**Fast paths:** [Install](#quick-start) · [Commands](#claude-commands) · [Config](#configuration--environment) · [MCP](#mcp-integration) · [Agents](#sub-agents) · [Troubleshoot](#help--troubleshooting)
+
+| Area | Start here | Also useful |
+| --- | --- | --- |
+| [Getting Started](#getting-started) | [Quick Start](#quick-start) | [Initial Setup](#initial-setup), [System Requirements](#system-requirements) |
+| [Configuration](#configuration--environment) | [Environment Variables](#environment-variables) | [Configuration Files](#configuration-files) |
+| [Commands](#commands--usage) | [Slash Commands](#claude-commands) | [CLI Quick Reference](#cheat-sheet) |
+| [Interface](#interface--input) | [Keyboard Shortcuts](#keyboard-shortcuts) | [Vim Mode](#vim-mode) |
+| [Advanced Features](#advanced-features) | [Plan Mode](#plan-mode), [Auto Mode](#auto-mode), [MCP](#mcp-integration) | [Sub Agents](#sub-agents), [Skills](#skills), [Hooks](#hooks-system) |
+| [Security](#security--permissions) | [Security & Permissions](#security--permissions) | [Dangerous Mode](#dangerous-mode), [Best Practices](#security-best-practices-main) |
+| [Automation](#automation--integration) | [Automation & Scripting](#automation--scripting-with-claude-code) | [PR Review](#auto-pr-review-inline-comments), [Issue Triage](#issue-triage-suggest-labels--severity) |
+| [Help](#help--troubleshooting) | [Troubleshooting](#help--troubleshooting) | [Migration Notes](#migration-notes), [Best Practices](#best-practices) |
+| [Third-Party Integrations](#third-party-integrations) | [DeepSeek Integration](#deepseek-integration) | Provider setup examples |
+
+<details>
+<summary>Full content map</summary>
 
 - **[Getting Started](#getting-started)**
   - [Quick Start](#quick-start)
+  - [System Requirements](#system-requirements)
   - [Initial Setup](#initial-setup)
 
 - **[Configuration & Environment](#configuration--environment)**
@@ -54,27 +70,32 @@ _Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Short
 
 - **[Advanced Features](#advanced-features)**
   - [Thinking Mode](#thinking-keywords)
-  - [Plan Mode](#plan-mode)
+  - [Effort Levels](#effort-levels)
   - [Fast Mode](#fast-mode)
+  - [Auto Mode](#auto-mode)
+  - [Plan Mode](#plan-mode)
   - [Background Tasks](#background-tasks)
+  - [Workflows & Scheduling](#workflows--scheduling)
+  - [Remote Sessions](#remote-sessions)
   - [Claude in Chrome](#claude-in-chrome)
   - [Sandbox Mode](#sandbox-mode)
   - [LSP Tool](#lsp-tool)
-  - [Remote Sessions](#remote-sessions)
   - [Sub Agents](#sub-agents)
   - [Agent Teams](#agent-teams)
   - [Skills](#skills)
   - [Plugin System](#plugin-system)
   - [Worktree Isolation](#worktree-isolation)
-  - [MCP Integration](#mcp-integration)
-  - [Hooks System](#hooks-system)
   - [Native Installer](#native-installer)
   - [Authentication CLI](#claude-auth)
   - [Agent Management CLI](#claude-agents-cli)
   - [Remote Control](#remote-control)
   - [Managed Settings](#managed-settings)
   - [Model Updates](#model-updates)
+  - [Theming & Customization](#theming--customization)
+  - [Code Review](#code-review)
   - [Insights](#insights)
+  - [MCP Integration](#mcp-integration)
+  - [Hooks System](#hooks-system)
 
 - **[Security & Permissions](#security--permissions)**
   - [Dangerous Mode](#dangerous-mode)
@@ -88,10 +109,13 @@ _Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Short
 - **[Help & Troubleshooting](#help--troubleshooting)**
   - [Installation Issues](#installation--nodejs-issues)
   - [MCP Issues](#mcp-model-context-protocol-issues)
+  - [Migration Notes](#migration-notes)
   - [Best Practices](#best-practices)
 
 - **[Third-Party Integrations](#third-party-integrations)**
   - [DeepSeek Integration](#deepseek-integration)
+
+</details>
 
 ---
 
@@ -151,7 +175,7 @@ _Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Short
 # Common Management
 /*claude config          */ Configure settings
 /*claude mcp list        */ Setup MCP servers, you can also replace "list" with add/remove
-/*claude /agents         */ Configure/Setup Subagents for different tasks
+/*claude agents          */ Open the agent/session dashboard
 /*claude update          */ Update to latest
 ```
 
@@ -174,12 +198,9 @@ _Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Short
 
 > - Hardware: 4GB RAM minimum 8GB+ recommended
 
-> - Software: Node.js 18+ or git 2.23+ (optional) & GitHub or GitLab CLI for PR workflows (optional)
-> - _Node.js is only required for npm-based installation. The native installer bundles its own runtime._
+> - Software: Git 2.23+ is optional for PR/worktree workflows. Node.js 18+ is only required for npm-based installation; the native installer bundles its own runtime.
 
 > - Internet: Connection for API calls
-
-> - Node.js 18+ _(only required for npm-based installation; the native installer bundles its own runtime)_
 
 ---
 
@@ -192,9 +213,9 @@ _Quick links:_ [Install](#quick-start) · [Commands](#claude-commands) · [Short
 
 ```C
 # Universal
-/* start login process                    */ claude /login
-/* Setup long-lived authentication token  */ claude setup-token
 /* Authenticate via Anthropic account     */ claude auth login
+/* Authenticate via Console/API billing   */ claude auth login --console
+/* Switch accounts inside Claude          */ /login
 ----------------------------------------------------------------------------------------------------------------------------------
 # Windows
 /* Set-api-key        */ set ANTHROPIC_API_KEY=sk-your-key-here-here
@@ -238,9 +259,9 @@ export ANTHROPIC_API_KEY="sk-your-key-here-here"      # API key sent as X-Api-Ke
 export ANTHROPIC_AUTH_TOKEN="my-auth-token"           # Custom Authorization header; Claude adds "Bearer " prefix automatically
 export ANTHROPIC_CUSTOM_HEADERS="X-Trace-Id: 12345"   # Extra request headers (format: "Name: Value")
 
-export ANTHROPIC_MODEL="claude-sonnet-4-6-20260217"                # Custom model name to use
-export ANTHROPIC_DEFAULT_SONNET_MODEL="claude-sonnet-4-6-20260217" # Default Sonnet model alias
-export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-opus-4-6-20260130"   # Default Opus model alias (Opus 4.6 now available)
+export ANTHROPIC_MODEL="sonnet"                                  # Custom model name or alias to use
+export ANTHROPIC_DEFAULT_SONNET_MODEL="sonnet"                   # Default Sonnet alias or pinned Sonnet model ID
+export ANTHROPIC_DEFAULT_OPUS_MODEL="opus"                       # Default Opus alias; resolves to the current Opus family model
 export ANTHROPIC_SMALL_FAST_MODEL="haiku-model"                  # Haiku-class model for background tasks (placeholder)
 export ANTHROPIC_SMALL_FAST_MODEL_AWS_REGION="REGION"            # Override AWS region for the small/fast model on Bedrock (placeholder)
 
@@ -285,15 +306,10 @@ export MAX_MCP_OUTPUT_TOKENS=25000                    # Max tokens allowed in MC
 
 export USE_BUILTIN_RIPGREP=0                          # (0 or 1) set 0 to use system-installed rg instead of bundled one
 
-export VERTEX_REGION_CLAUDE_3_5_HAIKU="REGION"        # Region override for Claude 3.5 Haiku on Vertex AI (legacy model family name)
-export VERTEX_REGION_CLAUDE_3_5_SONNET="REGION"       # Region override for Claude 3.5 Sonnet on Vertex AI (legacy model family name)
-export VERTEX_REGION_CLAUDE_3_7_SONNET="REGION"       # Region override for Claude 3.7 Sonnet on Vertex AI (legacy model family name)
-# Note: CLAUDE_3_5_* and CLAUDE_3_7_* use legacy model family names and may be updated in future versions.
-export VERTEX_REGION_CLAUDE_4_0_OPUS="REGION"         # Region override for Claude 4.0 Opus on Vertex AI
-export VERTEX_REGION_CLAUDE_4_0_SONNET="REGION"       # Region override for Claude 4.0 Sonnet on Vertex AI
-export VERTEX_REGION_CLAUDE_4_1_OPUS="REGION"         # Region override for Claude 4.1 Opus on Vertex AI
-export VERTEX_REGION_CLAUDE_4_6_OPUS="REGION"         # Region override for Claude 4.6 Opus on Vertex AI
-export VERTEX_REGION_CLAUDE_4_6_SONNET="REGION"       # Region override for Claude 4.6 Sonnet on Vertex AI
+# Vertex AI region overrides follow VERTEX_REGION_CLAUDE_<MODEL_FAMILY>.
+export VERTEX_REGION_CLAUDE_3_5_HAIKU="REGION"        # Legacy 3.x family example
+export VERTEX_REGION_CLAUDE_4_6_SONNET="REGION"       # Sonnet family example
+export VERTEX_REGION_CLAUDE_4_8_OPUS="REGION"         # Current Opus family example
 
 # ── New in v2.1.32–2.1.63 ──────────────────────────────────────────────────────
 export CLAUDE_CODE_SIMPLE=1                            # Minimal mode: disables MCP tools, attachments, hooks, CLAUDE.md, and skills
@@ -315,6 +331,18 @@ export ENABLE_CLAUDEAI_MCP_SERVERS=false               # Opt out from claude.ai-
 export FORCE_AUTOUPDATE_PLUGINS=1                      # Allow plugin auto-update even when main updater is disabled
 export IS_DEMO=1                                       # Demo mode — hides email/org from the UI
 export NO_PROXY="localhost,127.0.0.1"                  # Bypass proxy for specified hosts (comma-separated)
+
+# ── New in v2.1.66–2.1.158 ─────────────────────────────────────────────────────
+export CLAUDE_CODE_ENABLE_AUTO_MODE=1                  # Enable auto mode on Bedrock, Vertex, and Foundry for Opus 4.7/4.8
+export CLAUDE_CODE_USE_POWERSHELL_TOOL=1               # Enable PowerShell tool where available; Windows provider sessions may default to it
+export CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY=1 # Opt out of PowerShell -ExecutionPolicy Bypass behavior
+export CLAUDE_CODE_NO_FLICKER=1                        # Prefer flicker-free alternate-screen rendering where supported
+export CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1    # Let compatible gateways populate the model picker from /v1/models
+export CLAUDE_CODE_FORCE_SYNC_OUTPUT=1                 # Force synchronized terminal output when auto-detection misses support
+export CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE=1       # Let package-manager installs run background upgrades where supported
+export ENABLE_PROMPT_CACHING_1H=true                   # Opt in to 1-hour prompt cache TTL when your provider supports it
+export OTEL_LOG_TOOL_DETAILS=1                         # Include tool parameters in tool_decision telemetry events
+export OTEL_METRICS_INCLUDE_ENTRYPOINT=true            # Include session entrypoint on OpenTelemetry metrics
 ```
 
 <h2 id="global-config-options">Global Config Options</h2>
@@ -327,7 +355,7 @@ claude config set -g verbose true                             # Show full bash/c
 
 claude config set -g attribution false                        # Omit "co-authored-by Claude" in git commits/PRs
 claude config set -g forceLoginMethod claudeai                 # Restrict login flow: claudeai | console
-claude config set -g model "claude-sonnet-4-6-20260217"       # Default model override
+claude config set -g model "sonnet"                          # Default model override; use a full model ID only when pinning
 claude config set -g statusLine '{"type":"command","command":"~/.claude/statusline.sh"}'  # Custom status line
 
 claude config set -g enableAllProjectMcpServers true              # Auto-approve all MCP servers from .mcp.json
@@ -371,25 +399,28 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | :------------------------ | :------------------------------------------------------------------------------------------------------- |
 | `/add-dir`                | Add additional working directories                                                                       |
 | `/agents`                 | Manage custom AI subagents for specialized tasks                                                         |
+| `/branch`                 | Branch or fork the current conversation into a separate session                                          |
 | `/bug`                    | Report bugs (sends conversation to Anthropic)                                                            |
 | `/clear`                  | Clear conversation history                                                                               |
 | `/compact [instructions]` | Compact conversation with optional focus instructions                                                    |
 | `/config`                 | Open the Settings interface (Config tab)                                                                 |
 | `/context`                | Visualize current context usage as a colored grid                                                        |
 | `/copy`                   | Copy conversation content to clipboard                                                                   |
-| `/cost`                   | Show token usage statistics and billing information                                                      |
+| `/code-review [effort]`   | Run correctness-focused code review; use `--fix` to apply findings or `--comment` for PR comments        |
+| `/color`                  | Set or randomize the current session accent color                                                        |
 | `/debug`                  | Troubleshoot current session and diagnose issues                                                         |
 | `/doctor`                 | Checks the health of your Claude Code installation                                                       |
+| `/effort`                 | Pick reasoning effort for the current model/session                                                      |
 | `/exit`                   | Exit the REPL                                                                                            |
 | `/export [filename]`      | Export the current conversation to a file or clipboard                                                   |
-| `/extra-usage`            | Enable extra usage mode (required before `/fast`)                                                        |
-| `/fast`                   | Toggle fast mode for accelerated Opus 4.6 responses                                                      |
-| `/fork`                   | Fork the current conversation into a new session                                                         |
+| `/fast`                   | Toggle fast mode for accelerated Opus responses where available                                          |
+| `/goal`                   | Set a completion condition so Claude keeps working across turns until it is met                          |
 | `/help`                   | Get usage help                                                                                           |
 | `/init`                   | Initialize project with CLAUDE.md guide                                                                  |
 | `/insights`               | Generate an interactive HTML report analyzing your coding habits                                         |
 | `/keybindings`            | Configure custom keyboard shortcuts                                                                      |
 | `/login`                  | Switch Anthropic accounts                                                                                |
+| `/loop`                   | Schedule a recurring prompt or slash command                                                             |
 | `/logout`                 | Sign out from your Anthropic account                                                                     |
 | `/mcp`                    | Manage MCP server connections and OAuth authentication                                                   |
 | `/memory`                 | Edit CLAUDE.md memory files                                                                              |
@@ -398,15 +429,15 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | `/plan`                   | Enter plan mode directly from the prompt                                                                 |
 | `/plugins`                | Manage plugins (install, enable, disable, marketplace)                                                   |
 | `/pr_comments`            | View pull request comments                                                                               |
+| `/release-notes`          | View recent Claude Code release notes                                                                    |
 | `/rename <name>`          | Rename the current session for easier identification                                                     |
 | `/resume [session]`       | Resume a conversation by ID or name, or open session picker                                              |
-| `/review`                 | Request code review                                                                                      |
 | `/rules`                  | View and manage `.claude/rules/` directory (modular project rules)                                       |
 | `/rewind`                 | Rewind the conversation and/or code to a previous point                                                  |
 | `/sandbox`                | View sandbox dependency status with installation instructions                                            |
-| `/stats`                  | Visualize daily usage, session history, streaks, and model preferences                                   |
+| `/scroll-speed`           | Tune mouse wheel scroll speed with a live preview                                                        |
 | `/settings`               | Open Settings interface (alias for `/config`)                                                            |
-| `/simplify`               | Simplify selected code or conversation (bundled skill)                                                   |
+| `/simplify`               | Run cleanup-only review for reuse, simplification, efficiency, and altitude                              |
 | `/status`                 | Open Settings interface (Status tab) showing version, model, account                                     |
 | `/statusline`             | Set up Claude Code's status line UI                                                                      |
 | `/tasks`                  | List and manage background tasks                                                                         |
@@ -415,8 +446,10 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | `/remote-env`             | Configure remote environment settings                                                                    |
 | `/theme`                  | Change the color theme                                                                                   |
 | `/todos`                  | List current TODO items                                                                                  |
+| `/ultrareview [target]`   | Run comprehensive cloud code review with parallel multi-agent analysis                                   |
 | `/usage`                  | Show plan usage limits and rate limit status (subscription plans)                                        |
-| `/vim`                    | Enter vim mode for alternating insert and command modes                                                  |
+| `/usage-credits`          | Enable or inspect usage credits for higher-throughput modes                                              |
+| `/workflows`              | View dynamic workflow runs and background orchestration status                                           |
 | `/batch`                  | Run batch operations on multiple files (bundled skill)                                                   |
 
 <h2 id="command-line-flags">Command Line Flags</h2>
@@ -424,8 +457,7 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | Flag / Command                                       | Description                                                                                                                                                  | Example                                                                                |
 | :--------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
 | `-d, --debug`                                        | Enable debug mode (shows detailed debug output).                                                                                                             | `claude -d -p "query"`                                                                 |
-| `--include-partial-messages`                         | partial message streaming support via CLI flag                                                                                                               |
-| `--mcp-debug`                                        | [DEPRECATED] MCP debug mode (shows MCP server errors). Use `--debug` instead.                                                                                | `claude --mcp-debug`                                                                   |
+| `--include-partial-messages`                         | partial message streaming support via CLI flag                                                                                                               | `claude -p "query" --include-partial-messages`                                         |
 | `--verbose`                                          | Override verbose mode setting from config (shows expanded logging / turn-by-turn output).                                                                    | `claude --verbose`                                                                     |
 | `-p, --print`                                        | Print response and exit (useful for piping output).                                                                                                          | `claude -p "query"`                                                                    |
 | `--output-format <format>`                           | Output format (only works with `--print`): `text` (default), `json` (single result), or `stream-json` (realtime streaming).                                  | `claude -p "query" --output-format json`                                               |
@@ -436,10 +468,10 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | `--mcp-config <configs...>`                          | Load MCP servers from JSON files or strings (space-separated).                                                                                               | `claude --mcp-config ./mcp-servers.json`                                               |
 | `--strict-mcp-config`                                | Only use MCP servers from `--mcp-config`, ignoring other MCP configurations.                                                                                 | `claude --mcp-config ./a.json --strict-mcp-config`                                     |
 | `--append-system-prompt <prompt>`                    | Append a system prompt to the default system prompt (useful in print mode).                                                                                  | `claude -p --append-system-prompt "Do X then Y"`                                       |
-| `--permission-mode <mode>`                           | Permission mode for the session (choices include `acceptEdits`, `bypassPermissions`, `default`, `plan`).                                                     | `claude --permission-mode plan`                                                        |
+| `--permission-mode <mode>`                           | Permission mode for the session (choices include `acceptEdits`, `auto`, `bypassPermissions`, `default`, `plan`).                                             | `claude --permission-mode plan`                                                        |
 | `--permission-prompt-tool <tool>`                    | Specify an MCP tool to handle permission prompts in non-interactive mode.                                                                                    | `claude -p --permission-prompt-tool mcp_auth_tool "query"`                             |
 | `--fallback-model <model>`                           | Enable automatic fallback to a specified model when the default is overloaded (note: only works with `--print` per help).                                    | `claude -p --fallback-model claude-haiku-20240307 "query"`                             |
-| `--model <model>`                                    | Model for the current session. Accepts aliases like `sonnet`/`opus` or a full model name (e.g. `claude-sonnet-4-6-20260217`).                                | `claude --model sonnet`                                                                |
+| `--model <model>`                                    | Model for the current session. Accepts aliases like `sonnet`/`opus` or a full model ID when pinning.                                                         | `claude --model sonnet`                                                                |
 | `--settings <file-or-json>`                          | Load additional settings from a JSON file or a JSON string.                                                                                                  | `claude --settings ./settings.json`                                                    |
 | `--add-dir <directories...>`                         | Additional directories to allow tool access to.                                                                                                              | `claude --add-dir ../apps ../lib`                                                      |
 | `--ide`                                              | Automatically connect to an IDE on startup if exactly one valid IDE is available.                                                                            | `claude --ide`                                                                         |
@@ -448,6 +480,9 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | `--session-id <uuid>`                                | Use a specific session ID for the conversation (must be a valid UUID).                                                                                       | `claude --session-id 123e4567-e89b-12d3-a456-426614174000`                             |
 | `--agents <json>`                                    | Define custom subagents dynamically via JSON (see subagent docs for format).                                                                                 | `claude --agents '{"reviewer":{"description":"Reviews code","prompt":"..."}}'`         |
 | `--agent <name>`                                     | Specify a specific agent for the current session.                                                                                                            | `claude --agent my-custom-agent`                                                       |
+| `--bg`                                               | Start or continue work as a background session that can be viewed from `claude agents`.                                                                      | `claude --bg "fix failing tests"`                                                      |
+| `--bg --exec <command>`                              | Run a shell command as an attachable background session.                                                                                                     | `claude --bg --exec "npm test"`                                                        |
+| `--name <label>`                                     | Name a background or remote session for easier identification.                                                                                               | `claude --bg --name nightly-check "run checks"`                                       |
 | `--chrome`                                           | Enable Chrome browser integration for web automation and testing.                                                                                            | `claude --chrome`                                                                      |
 | `--no-chrome`                                        | Disable Chrome browser integration for this session.                                                                                                         | `claude --no-chrome`                                                                   |
 | `--remote`                                           | Create a new web session on claude.ai with the provided task description.                                                                                    | `claude --remote "Fix the login bug"`                                                  |
@@ -466,7 +501,7 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 | `--no-session-persistence`                           | Disable session persistence so sessions are not saved to disk (print mode only).                                                                             | `claude -p --no-session-persistence "query"`                                           |
 | `--disable-slash-commands`                           | Disable all skills and slash commands for this session.                                                                                                      | `claude --disable-slash-commands`                                                      |
 | `--dangerously-skip-permissions`                     | Bypass all permission checks (only for trusted sandboxes).                                                                                                   | `claude --dangerously-skip-permissions`                                                |
-| `--worktree`, `-w`                                   | Start in an isolated git worktree (v2.1.49).                                                                                                                 | `claude -w "implement feature"`                                                        |
+| `--worktree`, `-w`                                   | Start in an isolated git worktree; `worktree.baseRef` controls whether it branches from fresh remote state or local HEAD.                                    | `claude -w "implement feature"`                                                        |
 | `--from-pr <url>`                                    | Start session from a pull request URL (v2.1.27).                                                                                                             | `claude --from-pr https://github.com/org/repo/pull/123`                                |
 | `--init`                                             | Trigger Setup hook event (v2.1.10).                                                                                                                          | `claude --init`                                                                        |
 | `--init-only`                                        | Run Setup hook and exit (v2.1.10).                                                                                                                           | `claude --init-only`                                                                   |
@@ -481,124 +516,87 @@ Claude now automatically saves useful context to memory during your sessions. Ma
 ```md
 ## Claude Cheat Sheet
 
-# Basics / interactive
+# Start and resume
 
 claude # Start interactive REPL
 claude "explain this project" # Start REPL seeded with a prompt
 claude -p "summarize README.md" # Non-interactive print mode (SDK-backed)
 cat logs.txt | claude -p "explain" # Pipe input to Claude and exit
-claude -c # Continue most recent conversation (alias for --continue)
-claude -r "<session-id>" "finish this" # Resume specific session by ID (alias for --resume)
-claude --model claude-sonnet-4-6-20260217 # Pick model for this run
-claude --max-turns 3 -p "lint this" # Cap agentic turns in print mode
-claude --replay-user-messages # Replay user messages to stdout for debugging / SDK workflows
+claude -c # Continue most recent conversation
+claude -r "<session-id>" "finish this" # Resume by ID or name
+claude --model sonnet # Pick the current Sonnet for this run
+claude --model opus # Pick the current Opus for harder tasks
 
-# Update & install
+# Install, update, and auth
 
 claude update # Manually update Claude Code
 claude doctor # Diagnose install/version & setup
 claude install # Start native binary installer (beta)
 claude migrate-installer # Migrate from global npm to local installer
-
-# Authentication (v2.1.41+)
-
 claude auth login # Log in to your Anthropic account
 claude auth status # Check authentication status
 claude auth logout # Log out
 
-# Agent management (v2.1.50+)
+# Background and remote sessions
 
-claude agents # List all configured agents (project, user, plugin)
+claude agents # Open the live session dashboard: running, blocked, completed
+claude agents --json # Scriptable JSON list of live/background sessions
+claude --bg "run the integration suite and summarize failures" # Start a background session
+claude --bg --exec "npm test" # Run a shell command as an attachable background session
 claude remote-control # Start remote-control mode for external tooling
+claude --remote "Fix the bug" # Create web session on claude.ai
+claude --teleport # Resume web session locally
 
-# Config: interactive wizard + direct ops
+# Config essentials
 
 claude config # Interactive config wizard
-claude config get <key> # Get value (e.g., claude config get theme)
-claude config set <key> <val> # Set value (e.g., claude config set theme dark)
-claude config add <key> <vals…> # Append to array-type keys (e.g., claude config add env DEV=1)
-claude config remove <key> <vals…> # Remove items from list-type keys
-claude config list # Show all current settings for project (project scope is default)
-
-# Example project-scoped settings
-
-claude config set model "claude-sonnet-4-6-20260217" # Override default model for this project
+claude config set model "sonnet" # Override default model for this project
 claude config set attribution false # Disable "co-authored-by Claude" byline in git/PRs
-claude config set forceLoginMethod claudeai # Restrict login flow: claudeai | console
 claude config set enableAllProjectMcpServers true # Auto-approve all MCP servers from .mcp.json
 claude config set defaultMode "acceptEdits" # Set default permission mode
-claude config set disableBypassPermissionsMode disable # Prevent bypassPermissions mode (example key)
-
-# Manage list settings (project scope)
-
-claude config add enabledMcpjsonServers github # Approve a specific MCP server from .mcp.json
-claude config add enabledMcpjsonServers memory # Add another
-claude config remove enabledMcpjsonServers memory # Remove one entry
-claude config add disabledMcpjsonServers filesystem # Explicitly reject a specific MCP server
-
-# Global scope (use -g or --global)
-
+claude config set worktree.baseRef "head" # Use local HEAD instead of origin/default for new worktrees
 claude config set -g autoUpdates false # Turn off automatic updates globally
-claude config set --global preferredNotifChannel iterm2_with_bell
 claude config set -g theme dark # Theme: dark | light | light-daltonized | dark-daltonized
-claude config set -g verbose true # Show full bash/command outputs everywhere
-claude config get -g theme # Confirm a global value
 
-# MCP (Model Context Protocol) management
+# MCP essentials
 
 claude mcp # Launch MCP wizard / configure MCP servers
 claude mcp list # List configured MCP servers
 claude mcp get <name> # Show details for a server
-claude mcp remove <name> # Remove a server
 claude mcp add <name> <command> [args...] # Add local stdio server
-claude mcp add --transport sse <name> <url> # Add remote SSE server
 claude mcp add --transport http <name> <url> # Add remote HTTP server
-claude mcp add <name> --env KEY=VALUE -- <cmd> [args...] # Pass env to server command
-claude mcp add --transport sse private-api https://api.example/mcp \
- --header "Authorization: Bearer TOKEN" # Add with auth header
-claude mcp add-json <name> '<json>' # Add server via JSON blob
-claude mcp add-from-claude-desktop # Import servers from Claude Desktop
 claude mcp reset-project-choices # Reset approvals for project .mcp.json servers
 claude mcp serve # Run Claude Code itself as an MCP stdio server
 
-# Other useful flags (print / SDK mode)
+# High-value flags
 
 claude --add-dir ../apps ../lib # Add additional working directories
 claude --allowedTools "Bash(git log:\*)" "Read" # Allow listed tools without permission prompts
 claude --disallowedTools "Edit" # Disallow listed tools without permission prompts
-claude --append-system-prompt "Custom instruction" # Append to system prompt (only with -p)
 claude -p "query" --output-format json --input-format stream-json # Control IO formats for scripting
 claude --verbose # Verbose logging (turn-by-turn)
 claude --dangerously-skip-permissions # Skip permission prompts (use with caution)
 claude --permission-mode plan # Start in plan mode (read-only analysis)
 claude --max-turns 3 -p "query" # Limit agentic turns (print mode only)
-claude --max-budget-usd 5.00 -p "query" # Cap spending per session (print mode only)
 claude --json-schema '{"type":"object"}' -p "query" # Get validated JSON output
 claude --chrome # Enable Chrome browser integration
-claude --remote "Fix the bug" # Create web session on claude.ai
-claude --teleport # Resume web session locally
-claude --agents '{"name":{...}}' # Define subagents via JSON
+claude --agent code-reviewer # Run this session with a named agent
+claude ultrareview 123 --json # Non-interactive comprehensive review for PR/target 123
 
-# Session management
+# Slash shortcuts
 
-claude -c # Continue most recent conversation
-claude -r "session-name" # Resume by name or ID
 claude --fork-session -r abc123 # Fork instead of reusing original
 claude -w "implement feature" # Start in an isolated git worktree
 /rename auth-refactor # Name current session
 /resume # Open session picker
 /export output.md # Export conversation to file
-/fork # Fork the current conversation
+/branch experiment-name # Branch the current conversation
+/goal "all tests pass and README is updated" # Keep working until the completion condition is met
+/loop 30m "check deploy health and summarize anomalies" # Schedule recurring work
+/workflows # View dynamic workflows and background orchestration
 
-# Quick verification / notes
-
-# - Project scope is default for 'claude config'; use -g/--global to affect all projects.
-
-# - Settings precedence: Enterprise > CLI args > local project > shared project > user (~/.claude).
-
-# - Use 'add' / 'remove' only with list-type keys (e.g., enabledMcpjsonServers).
-
-# - The CLI reference and release notes are the authoritative sources for flags and recent additions.
+# Notes: project scope is default for 'claude config'; use -g/--global for user-global settings.
+# Settings precedence: Enterprise > CLI args > local project > shared project > user (~/.claude).
 ```
 
 ---
@@ -660,7 +658,7 @@ claude -w "implement feature" # Start in an isolated git worktree
 <h2 id="vim-mode">Vim Mode</h2>
 
 > [!Note]
-> Enable vim-style editing with `/vim` command or configure permanently via `/config`.
+> Enable vim-style editing from `/config` -> Editor mode. The old `/vim` command was removed.
 
 <h3 id="vim-mode-switching">Vim Mode Switching</h3>
 
@@ -762,16 +760,30 @@ claude -p "Think harder. Draft a migration plan from REST to gRPC."
 claude -p "Ultrathink. Propose a step-by-step strategy to fix flaky payment tests and add guardrails."
 ```
 
+<h2 id="effort-levels">Effort Levels</h2>
+
+Use `/effort` to tune how much reasoning the selected model applies before answering. Newer Opus releases expose higher effort levels for harder work, including `xhigh` on Opus 4.8.
+
+```bash
+/effort            # Open the effort picker
+/effort low        # Faster, lighter reasoning
+/effort medium     # Balanced default for many tasks
+/effort high       # Deeper planning and review
+/effort xhigh      # Highest effort for Opus 4.8-scale hard tasks
+```
+
+Prefer the lowest effort that still solves the task: higher effort can improve planning, code review, and long-context reasoning, but it usually increases latency and token usage.
+
 <h2 id="fast-mode">Fast Mode</h2>
 
 > [!Note]
-> **Fast Mode provides accelerated response times for Opus 4.6, optimized for rapid iteration and quick tasks.**
+> **Fast Mode provides accelerated Opus responses for rapid iteration. Opus 4.8 fast mode is documented in the changelog as 2.5x speed at 2x the standard rate.**
 
 **How to enable Fast Mode:**
 
 ```bash
-# Enable fast mode in the REPL (requires extra-usage first)
-/extra-usage
+# Enable usage credits if your plan requires it, then toggle fast mode
+/usage-credits
 /fast
 
 # Or toggle during conversation
@@ -781,8 +793,9 @@ claude -p "Ultrathink. Propose a step-by-step strategy to fix flaky payment test
 **Key features:**
 
 - **Faster responses** - Reduced latency for quick tasks
-- **Available for Opus 4.6** - New in version 2.1.36
-- **Requires extra-usage** - Must enable `/extra-usage` first
+- **Current Opus support** - Use with the current Opus family where fast mode is available, including Opus 4.8
+- **Usage credits** - Some plans require `/usage-credits` before `/fast`
+- **Visible state** - The status bar and IDE indicators show when Fast Mode is active
 
 **When to use Fast Mode:**
 
@@ -792,6 +805,32 @@ claude -p "Ultrathink. Propose a step-by-step strategy to fix flaky payment test
 - Iterative debugging
 
 > Fast Mode trades some depth for speed. Use normal mode for complex analysis and planning tasks.
+
+<h2 id="auto-mode">Auto Mode</h2>
+
+Auto mode lets Claude evaluate and approve lower-risk actions automatically while still blocking or asking on higher-risk operations. It is useful for trusted development loops where repeated permission prompts slow down work.
+
+```bash
+# Enable auto mode for Bedrock, Vertex, and Foundry Opus 4.7/4.8 sessions
+export CLAUDE_CODE_ENABLE_AUTO_MODE=1
+```
+
+```json
+{
+  "autoMode": {
+    "allow": ["$defaults"],
+    "soft_deny": ["$defaults"],
+    "hard_deny": []
+  }
+}
+```
+
+Key points:
+
+- Auto mode no longer requires the old `--enable-auto-mode` flow for supported plans.
+- Use `"$defaults"` in `autoMode.allow`, `autoMode.soft_deny`, or `autoMode.environment` to add rules without replacing built-ins.
+- `settings.autoMode.hard_deny` blocks actions unconditionally regardless of user intent.
+- Denied actions can appear in `/permissions` recent activity, where supported, so you can retry or adjust policy.
 
 <h2 id="plan-mode">Plan Mode</h2>
 
@@ -836,7 +875,7 @@ claude --permission-mode plan -p "Analyze the authentication system and suggest 
 <h2 id="background-tasks">Background Tasks</h2>
 
 > [!Note]
-> **Claude Code supports running bash commands in the background, allowing you to continue working while long-running processes execute.**
+> **Claude Code supports background commands and full background sessions, allowing you to continue working while long-running processes or agents execute.**
 
 **How to use background tasks:**
 
@@ -844,13 +883,16 @@ claude --permission-mode plan -p "Analyze the authentication system and suggest 
 | :------------ | :------------------------------------------------------------------------- |
 | Prompt Claude | Ask Claude to "run this in the background"                                 |
 | `Ctrl+B`      | Move a running Bash tool invocation to background (tmux users press twice) |
+| `! <command>` | In `claude agents`, start an attachable background shell session            |
+| `claude --bg` | Launch a task as a background Claude session                                |
 
 **Key features:**
 
-- Output is buffered and Claude can retrieve it using the TaskOutput tool
+- Output is buffered and can be read from the persisted background output file path
 - Background tasks have unique IDs for tracking and output retrieval
-- Background tasks are automatically cleaned up when Claude Code exits
+- Background sessions appear in `/resume` and the `claude agents` dashboard, marked with `bg`
 - Use `/tasks` to list and manage background tasks
+- Use `claude agents --json` for scripts, status bars, session pickers, and tmux integrations
 
 **Common backgrounded commands:**
 
@@ -867,6 +909,12 @@ claude --permission-mode plan -p "Analyze the authentication system and suggest 
 ! npm test
 ! git status
 ! ls -la
+
+# Run a command as an attachable background session
+claude --bg --exec "npm test"
+
+# Name a background session
+claude --bg --name nightly-check "run the full verification suite"
 ```
 
 **Disable background tasks:**
@@ -874,6 +922,26 @@ claude --permission-mode plan -p "Analyze the authentication system and suggest 
 ```bash
 export CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1
 ```
+
+---
+
+<h2 id="workflows--scheduling">Workflows & Scheduling</h2>
+
+Dynamic workflows coordinate many background agents for larger work than a single foreground turn can comfortably handle. Ask Claude to create a workflow, then use `/workflows` to inspect runs and status.
+
+```bash
+/workflows
+/goal "the migration is implemented, tested, and documented"
+/loop 15m "check the deployment dashboard and summarize any incidents"
+```
+
+| Feature      | Purpose                                                                                 |
+| :----------- | :-------------------------------------------------------------------------------------- |
+| `/workflows` | View workflow runs that orchestrate many agents in the background                       |
+| `/goal`      | Give Claude a completion condition and let it continue across turns until it is reached |
+| `/loop`      | Run a prompt or slash command on a recurring interval                                   |
+
+Use workflows for broad, decomposable efforts. Use `/goal` for a single outcome that may require several turns. Use `/loop` for monitoring and scheduled checks.
 
 ---
 
@@ -997,12 +1065,16 @@ _Caption: Agents selection UI in the terminal._
 
 <h3 id="agents-quick-start">Quick start</h3>
 
-> Update CLI and open the agents panel
+> Update CLI and open the agents panel/dashboard
 
 ```bash
 claude update
 /agents
+claude agents
+claude agents --json
 ```
+
+`claude agents` shows running, blocked, completed, and background sessions in one place. It can launch new sessions, attach to background work, and script session lists with `--json`.
 
 <h3 id="agent-scopes">Subagent Scopes</h3>
 
@@ -1012,6 +1084,8 @@ claude update
 | `.claude/agents/`            | Current project         | 2           |
 | `~/.claude/agents/`          | All your projects       | 3           |
 | Plugin's `agents/` directory | Where plugin is enabled | 4 (lowest)  |
+
+Dispatched sessions honor the `agent` field in `settings.json`. Pass `--agent <name>` to override the configured default for a specific run.
 
 <h3 id="define-agents-via-cli">Define Agents via CLI</h3>
 
@@ -1102,12 +1176,14 @@ You are a code reviewer. Analyze the code and provide feedback.
 | `tools`           | No       | Tools the subagent can use (inherits all if omitted)                |
 | `disallowedTools` | No       | Tools to deny, removed from inherited or specified list             |
 | `model`           | No       | Model: `sonnet`, `opus`, `haiku`, or `inherit` (default: sonnet)    |
-| `permissionMode`  | No       | `default`, `acceptEdits`, `dontAsk`, `bypassPermissions`, or `plan` |
+| `permissionMode`  | No       | `default`, `acceptEdits`, `auto`, `bypassPermissions`, or `plan`    |
 | `skills`          | No       | Skills to preload into the subagent's context                       |
 | `hooks`           | No       | Lifecycle hooks scoped to this subagent                             |
 | `memory`          | No       | Persistent memory scope: `user`, `project`, or `local`              |
 | `isolation`       | No       | Set to `worktree` to run the agent in an isolated git worktree      |
 | `background`      | No       | Set to `true` to run the agent as a background task                 |
+
+Background and isolated agents can switch between Claude-managed worktrees with `EnterWorktree` when the session needs to move between related isolated checkouts.
 
 <h3 id="why-this-shift-matters">Why This Shift Matters</h3>
 
@@ -1195,12 +1271,16 @@ Anthropic's research team demonstrated agent teams by tasking 16 parallel Claude
 | `<plugin>/skills/<skill-name>/SKILL.md`  | Plugin   | Where plugin is enabled                       |
 
 > Project skills override personal skills with the same name. Files in `.claude/commands/` still work and support the same frontmatter.
+> Plugins in `.claude/skills` directories are automatically loaded; use `/reload-skills` to re-scan skill directories without restarting the session.
 
 <h3 id="create-skill">Create a Skill</h3>
 
 ```bash
 # Create skill directory
 mkdir -p ~/.claude/skills/explain-code
+
+# Scaffold a plugin-backed skill in the current project
+claude plugin init explain-code
 ```
 
 Create `~/.claude/skills/explain-code/SKILL.md`:
@@ -1239,6 +1319,7 @@ How does this code work?
 | `disable-model-invocation` | No          | Set `true` to prevent Claude from auto-invoking             |
 | `user-invocable`           | No          | Set `false` to hide from / menu                             |
 | `allowed-tools`            | No          | Tools Claude can use without asking permission              |
+| `disallowed-tools`         | No          | Tools removed from the model while the skill is active      |
 | `model`                    | No          | Model to use when this skill is active                      |
 | `context`                  | No          | Set to `fork` to run in a forked subagent context           |
 | `agent`                    | No          | Which subagent to use when `context: fork` is set           |
@@ -1319,24 +1400,16 @@ Research $ARGUMENTS thoroughly:
 **Key commands:**
 
 ```bash
-# Install a plugin from a Git repository
-/plugins install https://github.com/org/claude-plugin-example
-
-# Install from npm registry
+claude plugin init my-plugin
 /plugins install @org/claude-code-plugin
-
-# List installed plugins
 /plugins list
-
-# Enable / disable a plugin
 /plugins enable <plugin-name>
 /plugins disable <plugin-name>
-
-# Validate a plugin's structure
 /plugins validate ./my-plugin
-
-# Browse the plugin marketplace (community plugins)
 /plugins marketplace
+
+# CLI aliases exist for scripting, for example:
+claude plugin install https://github.com/org/claude-plugin-example
 ```
 
 **Plugin structure:**
@@ -1366,14 +1439,22 @@ my-plugin/
   "name": "my-plugin",
   "version": "1.0.0",
   "description": "A Claude Code plugin",
+  "defaultEnabled": false,
   "agents": ["agents/"],
   "skills": ["skills/"],
   "hooks": "hooks/hooks.json",
-  "mcpServers": "mcp-servers/servers.json"
+  "mcpServers": "mcp-servers/servers.json",
+  "dependencies": ["required-plugin"]
 }
 ```
 
-> Plugins auto-update by default. Set `FORCE_AUTOUPDATE_PLUGINS=1` to force updates even when the main updater is disabled, or override with `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` for slow repos.
+> Plugins auto-update by default. Set `FORCE_AUTOUPDATE_PLUGINS=1` to force updates even when the main updater is disabled, or override with `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` for slow repos. Git/GitHub marketplace sources can use `skipLfs` to skip Git LFS downloads during clone and update.
+
+Dependency behavior:
+
+- `claude plugin enable` enables transitive dependencies automatically.
+- `claude plugin disable` refuses when another enabled plugin depends on the target and reports the disable chain.
+- `defaultEnabled: false` lets a plugin ship installed but disabled until the user explicitly enables it.
 
 ---
 
@@ -1388,12 +1469,18 @@ my-plugin/
 # Start Claude in an isolated worktree
 claude -w "implement the new feature"
 
+# Choose whether new worktrees branch from origin/default or local HEAD
+claude config set worktree.baseRef "fresh" # default, uses origin/<default>
+claude config set worktree.baseRef "head"  # use current local HEAD
+
 # Claude will:
-# 1. Create a temporary git worktree from your current branch
+# 1. Create a temporary git worktree from the configured base ref
 # 2. Run in that isolated worktree
 # 3. Commit changes and optionally create a PR
 # 4. Clean up the worktree when done
 ```
+
+For repositories where worktrees are impractical, `worktree.bgIsolation: "none"` lets background sessions edit the working copy directly without `EnterWorktree`.
 
 **Agent-level worktree isolation:**
 
@@ -1452,11 +1539,17 @@ claude auth logout
 <h2 id="claude-agents-cli">Agent Management CLI (v2.1.50+)</h2>
 
 > [!Note]
-> **List and inspect all configured agents from the command line.**
+> **List configured agents and live Claude sessions from the command line.**
 
 ```bash
 # List all agents (project, user, plugin, CLI-defined)
 claude agents
+
+# Script live sessions for status bars, session pickers, or tmux integrations
+claude agents --json
+
+# Dispatch with a specific agent, overriding settings.json for this run
+claude --agent code-reviewer "review the current branch"
 ```
 
 ---
@@ -1494,34 +1587,69 @@ Settings can be deployed via Group Policy to `HKLM\SOFTWARE\Policies\Anthropic\C
 
 <h2 id="model-updates">Model Updates</h2>
 
-### Claude Sonnet 4.6 (February 17, 2026)
+### Current Model Guidance
 
 > [!Note]
-> **Claude Sonnet 4.6 delivers frontier-level performance at Sonnet pricing ($3/$15 per million tokens) with a 1M-token context window.**
+> **Use model family aliases (`sonnet`, `opus`, `haiku`) for most workflows. Pin a full model ID only when reproducibility matters more than automatic upgrades.**
 
 **Key highlights:**
 
-- **Approaches Opus-level performance** on coding, reasoning, and agent planning tasks
-- **1M token context window** (previously only available on Max plan for Sonnet 4.5)
-- **Improved coding benchmarks**: significant gains on SWE-bench, agentic coding, and multi-file refactoring
-- **Better long-context reasoning**: improved accuracy across needle-in-a-haystack and long-document tasks
-- **Enhanced computer use**: more reliable browser automation and GUI interaction
-- **Same pricing as Sonnet 4.5**: $3 input / $15 output per million tokens
+- **Opus 4.8**: current hardest-task Opus path, with `xhigh` effort and fast mode support.
+- **Opus 4.7/4.8 on providers**: Bedrock, Vertex, and Foundry support auto mode opt-in with `CLAUDE_CODE_ENABLE_AUTO_MODE=1`.
+- **Sonnet**: use the `sonnet` alias for balanced coding, planning, and refactoring.
+- **Haiku/small-fast models**: use `ANTHROPIC_SMALL_FAST_MODEL` overrides for background naming and side-query paths when needed.
+- **Gateway discovery**: set `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1` to populate compatible gateway model pickers from `/v1/models`.
 
 **Use in Claude Code:**
 
 ```bash
-# Set as default model
+# Set by family alias
 claude --model sonnet
+claude --model opus
 
-# Or pin the specific version
-claude --model claude-sonnet-4-6-20260217
+# Configure in settings with aliases
+claude config set model "sonnet"
 
-# Configure in settings
-claude config set model "claude-sonnet-4-6-20260217"
+# Pin only when you need exact reproducibility
+claude --model <full-model-id>
 ```
 
-> Sonnet 4.5 with 1M context has been removed from the Max plan in favor of Sonnet 4.6. Claude Opus 4.6 (released in v2.1.32) remains available for the most demanding tasks.
+Migration notes:
+
+- Update older Opus 4.6-only fast-mode docs to current Opus guidance.
+- Replace hardcoded model IDs in examples with aliases unless the example teaches pinning.
+- `CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE` is deprecated; use `/model` and `/fast` instead.
+
+---
+
+<h2 id="theming--customization">Theming & Customization</h2>
+
+Claude Code supports built-in themes, custom named themes, and session accent colors.
+
+```bash
+/theme          # Pick a theme or create a custom one
+/color          # Pick a session accent color
+/color random   # Randomize session accent color
+```
+
+Custom themes can be edited as JSON under `~/.claude/themes/`, and plugins can ship themes for teams. The `Auto (match terminal)` theme follows terminal light/dark mode where supported.
+
+---
+
+<h2 id="code-review">Code Review</h2>
+
+Claude Code's review commands changed substantially after the README's previous `v2.1.63` coverage point.
+
+| Command | Current behavior |
+| :------ | :--------------- |
+| `/code-review [effort]` | Correctness-focused review at the chosen effort level |
+| `/code-review --fix` | Applies review findings to the working tree, including reuse/simplification/efficiency suggestions |
+| `/code-review --comment` | Posts inline GitHub PR comments where supported |
+| `/simplify` | Cleanup-only review for reuse, simplification, efficiency, and altitude |
+| `/ultrareview [target]` | Cloud review using parallel multi-agent analysis and critique |
+| `claude ultrareview [target]` | Non-interactive CI/script entrypoint; supports JSON output |
+
+Use `/code-review` for local correctness review, `/simplify` for cleanup, and `/ultrareview` when you want a broader cloud review of a branch or PR.
 
 ---
 
@@ -1571,6 +1699,13 @@ xdg-open ~/.claude/usage-data/report.html  # Linux
 #### What is MCP?
 
 > MCP extends Claude's capabilities by connecting to external services, databases, APIs, and tools (filesystem, Puppeteer, GitHub, Context7 etc...)
+
+Recent MCP behavior to know:
+
+- MCP servers are available in more headless `claude -p` workflows, so automation can use configured tools without opening the full REPL.
+- Remote OAuth and claude.ai connector flows have improved reconnect and refresh handling; use `/mcp` to reconnect after changing `.mcp.json`.
+- Large MCP tool results can be persisted or capped by server annotations, reducing context blowups for large outputs.
+- Tool names still follow the `mcp__server__tool` pattern for permissions and hooks.
 
 ###### **MCP Architecture:**
 
@@ -2107,7 +2242,8 @@ Hooks are organized by matchers, where each matcher can have multiple hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "your-command-here"
+            "command": "your-command-here",
+            "args": ["--flag", "value"]
           }
         ]
       }
@@ -2151,6 +2287,7 @@ HTTP hooks send the same JSON payload that `command` hooks receive via stdin, as
   - `type`: `"command"` (shell command) or `"http"` (POST JSON to a URL, v2.1.63+)
   - `command`: The bash command to execute (can use `$CLAUDE_PROJECT_DIR`
     environment variable)
+  - `args`: Optional exec-form arguments for command hooks, avoiding shell quoting issues
   - `timeout`: (Optional) How long a command should run, in seconds, before
     canceling that specific command.
 
@@ -2219,7 +2356,7 @@ Runs after Claude creates tool parameters and before processing the tool call.
 
 Runs immediately after a tool completes successfully.
 
-Recognizes the same matcher values as PreToolUse.
+Recognizes the same matcher values as PreToolUse. Set `continueOnBlock: true` in hook config when you want a `PostToolUse` block reason to be fed back to Claude and allow the turn to continue.
 
 #### Notification
 
@@ -2273,6 +2410,18 @@ Triggered via `--init`, `--init-only`, or `--maintenance` CLI flags. Useful for 
 
 Fires when Claude shows a permission prompt to the user. Useful for logging or automating permission decisions.
 
+#### PermissionDenied
+
+Fires after an auto mode classifier denial. Hooks can return `{ "retry": true }` when the model should retry with the denial feedback.
+
+#### MessageDisplay
+
+Runs as assistant message text is displayed, allowing hooks to transform or hide displayed assistant content.
+
+#### PostCompact
+
+Runs after a compaction operation completes.
+
 #### PreCompact
 
 Runs before Claude Code is about to run a compact operation.
@@ -2293,6 +2442,8 @@ development context like existing issues or recent changes to your codebase.
 - `startup` - Invoked from startup
 - `resume` - Invoked from `--resume`, `--continue`, or `/resume`
 - `clear` - Invoked from `/clear`
+
+SessionStart hooks can also request `reloadSkills: true` and set `hookSpecificOutput.sessionTitle`, making newly installed skills available immediately and naming startup/resume sessions.
 
 <h3 id="hook-input">Hook Input</h3>
 
@@ -2515,6 +2666,7 @@ to Claude.
 `PostToolUse` hooks can control whether a tool call proceeds.
 
 - `"block"` automatically prompts Claude with `reason`.
+- `continueOnBlock: true` in the hook configuration feeds the block reason back while allowing Claude to continue the same turn.
 - `undefined` does nothing. `reason` is ignored.
 
 ```json
@@ -2565,15 +2717,23 @@ to Claude.
 `SessionStart` hooks allow you to load in context at the start of a session.
 
 - `"hookSpecificOutput.additionalContext"` adds the string to the context.
+- `"hookSpecificOutput.sessionTitle"` sets the session title on startup/resume.
+- `"reloadSkills": true` re-scans skill directories after the hook finishes.
 
 ```json
 {
+  "reloadSkills": true,
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "My additional context here"
+    "additionalContext": "My additional context here",
+    "sessionTitle": "Focused refactor"
   }
 }
 ```
+
+##### Terminal Sequence Output
+
+Hooks can return `terminalSequence` to emit desktop notifications, window titles, or bells without needing direct terminal access.
 
 ##### Exit Code Example: Bash Command Validation
 
@@ -2988,7 +3148,7 @@ jobs:
           # Optional:
           # exclude-directories: "docs,examples"
           # claudecode-timeout: "20"
-          # claude-model: "claude-sonnet-4-6-20260217"
+          # claude-model: "sonnet"
 ```
 
 <h2 id="issue-triage-suggest-labels--severity">Issue Triage (suggest labels & severity)</h2>
@@ -3011,7 +3171,7 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     env:
-      CLAUDE_MODEL: claude-sonnet-4-6-20260217
+      CLAUDE_MODEL: sonnet
     steps:
       - name: Collect context & similar issues
         id: gather
@@ -3104,7 +3264,7 @@ jobs:
 >
 > ### Configuration & Customization
 >
-> - **Model selection**: set `CLAUDE_MODEL` (e.g., `claude-sonnet-4-6-20260217`) where shown.
+> - **Model selection**: set `CLAUDE_MODEL` (e.g., `sonnet`, `opus`, or a full pinned model ID) where shown.
 > - **Secrets**: `ANTHROPIC_API_KEY` is required. The built‑in `GITHUB_TOKEN` is sufficient for posting comments and applying labels.
 > - **Permissions**: each workflow declares the least privileges it needs (`pull-requests: write` and/or `issues: write`). Adjust only if your org requires stricter policies.
 > - **Scope**: use `paths:` filters on triggers to limit when workflows run (e.g., only for `/src` or exclude `/docs`).
@@ -3153,7 +3313,6 @@ _Check the output of `claude doctor` for log locations and environment checks._
 > claude update           # Update the CLI (if supported)
 >
 > claude doctor           # Open diagnostic / debug window
-> npx claude /doctor      # Opens diagnostic/debug window
 >
 > claude --debug          # Launch claude with diagnostics
 > claude --verbose        # Verbose logging
@@ -3534,8 +3693,47 @@ Tip: `claude "query"` starts the interactive REPL pre-seeded with your prompt; `
 
 5. **Pick the right model**
    - CLI aliases: `--model sonnet` or `--model opus` (latest of that family).
-   - As of Feb 2026, **Sonnet 4.6** is the default Sonnet — frontier performance at Sonnet pricing with a 1M-token context window.
-   - For reproducibility in settings, pin a full model ID (e.g., `"claude-sonnet-4-6-20260217"`).
+  - Use Opus 4.8 plus `/effort xhigh` for the hardest planning, review, and long-context tasks.
+  - For reproducibility in settings, pin a full model ID only when automatic family upgrades are undesirable.
+
+6. **Use rendering and cache controls deliberately**
+
+  ```bash
+  export CLAUDE_CODE_NO_FLICKER=1
+  export ENABLE_PROMPT_CACHING_1H=true
+  ```
+
+7. **Inspect usage by source**
+
+  ```bash
+  /usage
+  ```
+
+  `/usage` now breaks down plan usage by categories such as skills, subagents, plugins, and MCP servers.
+
+---
+
+<h2 id="migration-notes">Migration Notes</h2>
+
+Use these when updating older Claude Code setup docs to the current `2.1.158` era:
+
+| Older wording | Current guidance |
+| :------------ | :--------------- |
+| `/extra-usage` | Prefer `/usage-credits`; old name remains as a compatibility alias |
+| `/cost` or `/stats` for limits | Prefer `/usage` for limits, rate status, cache, and category breakdowns |
+| `/fork` | Use `/branch`; `/fork` remains only as a compatibility alias |
+| `/review` | Use `/code-review [effort]` for current correctness review behavior |
+| `/simplify` as the main review command | Use `/code-review` for correctness review; `/simplify` is cleanup-focused |
+| `/vim` | Configure vim editing through `/config` -> Editor mode |
+| `--mcp-debug` | Use `--debug` for MCP/server diagnostics |
+| `TaskOutput` tool | Read the background task's output file path instead |
+| `claude /login` or `claude setup-token` | Use `claude auth login`, `claude auth login --console`, or `/login` inside a running session |
+| Opus 4.6-only fast mode docs | Use current Opus guidance; Opus 4.8 fast mode is available where supported |
+| Hardcoded model IDs in general examples | Prefer `sonnet`/`opus` aliases unless teaching reproducible pinning |
+| `modelPicker:setAsDefault` keybinding | Rename custom bindings to `modelPicker:thisSessionOnly` |
+| Manual plugin scaffolding only | Use `claude plugin init <name>` for new plugins |
+
+When in doubt, cross-check the latest [CHANGELOG.md](CHANGELOG.md) entry and the official Claude Code docs.
 
 ---
 
@@ -3588,8 +3786,8 @@ Claude Code emits OpenTelemetry metrics/events. Set exporters in settings/env (e
       "Read(./secrets/**)",
     ],
   },
-  // Pin a model here for reproducibility if desired, using a full model ID:
-  "model": "claude-sonnet-4-6-20260217",
+  // Use an alias for current-family behavior, or pin a full model ID for reproducibility:
+  "model": "sonnet",
 }
 ```
 

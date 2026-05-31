@@ -1,5 +1,5 @@
 ---
-name: Active Directory Attacks
+name: active-directory-attacks
 description: This skill should be used when the user asks to "attack Active Directory", "exploit AD", "Kerberoasting", "DCSync", "pass-the-hash", "BloodHound enumeration", "Golden Ticket", "Silver Ticket", "AS-REP roasting", "NTLM relay", or needs guidance on Windows domain penetration testing.
 metadata:
   author: zebbern

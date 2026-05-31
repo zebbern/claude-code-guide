@@ -1,0 +1,35 @@
+{
+  "name": "r2-upload",
+  "version": "1.0.0",
+  "description": "Upload files to Cloudflare R2, AWS S3, or any S3-compatible storage and generate secure presigned download links with configurable expiration",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "onboard": "tsx src/onboard.ts"
+  },
+  "keywords": ["r2", "s3", "cloudflare", "storage", "mcp", "clawdbot", "upload", "presigned-url"],
+  "author": "ClawdBot Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawdbot/clawdhub-skills"
+  },
+  "homepage": "https://clawdhub.com/skills/r2-upload",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.699.0",
+    "@aws-sdk/s3-request-presigner": "^3.699.0",
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "js-yaml": "^4.1.0",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
