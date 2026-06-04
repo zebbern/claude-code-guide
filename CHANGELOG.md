@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.1.162
+
+- `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)
+- `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously these names were silently ignored)
+- `/effort` now confirms when your chosen level will persist as the default for new sessions
+- Clicking a slash command in the autocomplete menu now fills it into your prompt instead of running it immediately; press Enter to run
+- Remote Control now shows as a persistent footer pill (with a link to the session) instead of a startup message
+- Renamed Windsurf to Devin Desktop in the `/ide` menu, `/terminal-setup`, and `/scroll-speed`, following the editor's rebrand
+- Fixed a silent startup hang when the config directory is read-only or unwritable — Claude Code now starts with in-memory config and surfaces startup errors instead of showing a blank screen
+- Fixed WebFetch permission rules not being applied to built-in preapproved domains; explicit `WebFetch(domain:...)` deny/ask/allow rules now take precedence over the preapproved-host auto-allow
+- Fixed Windows permission rules never matching when spelled with backslashes (`~\`, `\\server\share`) or case-variant paths, and Read deny rules not hiding files from Glob/Grep results
+- Fixed an interrupt (Esc) sent at the very start of a turn being silently dropped in stream-json/SDK sessions, leaving the turn running with no "Interrupted" feedback
+- Fixed API 400 `no low surrogate in string` errors for classifier side-queries and MCP server descriptions containing emoji near a truncation boundary
+- Fixed MCP per-server `timeout` config values below 1000 ms being floored to a 1-second watchdog that aborted every tool call; sub-1000 ms values are now ignored (falling back to `MCP_TOOL_TIMEOUT` or default), and `claude mcp get` annotates them accordingly
+- Fixed the LSP tool's `workspaceSymbol` operation returning no results; it now accepts a `query` parameter and passes it to the language server
+- Fixed `claude agents` cutting live status text (tool args, replies, prompts, exec output) at 60–120 columns on wide terminals; the status detail now uses the full terminal width
+- Fixed `claude agents` truncating long session names at 40 columns; the name column now grows with terminal width
+- Fixed `claude agents` attach occasionally bouncing straight back to the session list on the first try after a background-service restart
+- Fixed `claude agents` Ctrl+V image paste doing nothing in the dispatch input and the session reply box; pasting with no image now shows a hint
+- Fixed backgrounding a session with ← silently losing the conversation when the background service cannot start; the session stays in the list as a failed row you can wake with Enter
+- Fixed replies from the agents view that fail to send being lost; they are now queued for delivery on the next session start
+- Fixed cross-session messaging (`SendMessage`) silently breaking when `CLAUDE_CODE_TMPDIR` or `$TMPDIR` points at a deep directory
+- Fixed opening a running background session from `claude agents` stalling for 5 seconds before attaching
+- Quieter startup: notices group by severity, and session info and announcements share a single line per launch
+- Startup warnings rewritten to be shorter and clearer, each with a concrete fix
+- Launch-prompt warnings (deep link/pre-filled prompt) now stay pinned below the input until you act instead of scrolling away
+- Failed turns now show a compact warning line instead of a multi-line red error block
+- Improved background service startup and `claude update` verification to wait out endpoint-security scanning of new binaries instead of failing after 5 seconds
+- Background dispatch spawn failures now report the error class name when no errno is available
+- Removed the "Claude in Chrome enabled" and "marketplace installed" startup messages; model auto-updates and the team-onboarding tip now show as quiet notices under the logo
+
 ## 2.1.161
 
 - `OTEL_RESOURCE_ATTRIBUTES` values are now included as labels on metric datapoints, so you can slice usage metrics by custom dimensions like team or repo
