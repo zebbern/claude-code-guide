@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.168
+
+- Bug fixes and reliability improvements
+
+## 2.1.167
+
+- Bug fixes and reliability improvements
+
 ## 2.1.166
 
 - Added `fallbackModel` setting to configure up to three fallback models tried in order when the primary model is overloaded or unavailable; `--fallback-model` now also applies to interactive sessions
