@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.1.172
+
+- Sub-agents can now spawn their own sub-agents (up to 5 levels deep)
+- Amazon Bedrock now reads the AWS region from `~/.aws` config files when `AWS_REGION` isn't set, matching AWS SDK precedence; `/status` shows where the region came from
+- Added a search bar when browsing a marketplace's plugins in `/plugin`
+- Added `model` attribute to the `claude_code.lines_of_code.count` OTEL metric
+- Fixed sessions using 1M context without usage credits getting permanently stuck — the session now automatically compacts back under the standard context limit
+- Fixed a repeating "an image in the conversation could not be processed and was removed" error when the conversation contained multiple images
+- Fixed the agents view keeping a session under Working with a busy spinner for up to 30 seconds after the worker replied
+- Fixed background agents potentially reading another directory's project settings (`.mcp.json` approvals, trust) when dispatched onto a pre-warmed worker
+- Fixed background-session attach failing with EAUTH for sessions started on an older version after the daemon auto-updated
+- Fixed a background sub-agent staying stuck as "active" in the agent panel after a nested agent it spawned was stopped
+- Fixed `/model` suggestions in the `claude agents` dispatch input rendering with a misleading slash prefix and showing models disabled for your org
+- Fixed `availableModels` restrictions not being applied to subagent model overrides, the agent dispatch model picker, and the advisor model
+- Fixed `availableModels` allowlists hiding the `/model` picker's Opus and Sonnet 1M rows when entries use version-specific IDs like `claude-opus-4-8`
+- Fixed the `/model` picker on Bedrock offering models the provider doesn't serve — selecting one silently switched the session model and lit the selection marker on multiple rows
+- Fixed model IDs getting a doubled 1M-context suffix (e.g. `[1M][1m]`) when `ANTHROPIC_DEFAULT_OPUS_MODEL` already includes one
+- Fixed `opusplan` model setting not shipping with 1M context in plan mode for entitled users; the `opusplan[1m]` workaround now also correctly switches to Opus in plan mode
+- Fixed `WebFetch(domain:*.example.com)` wildcard domain rules never matching subdomains in allow, deny, and ask position, and file permission rules with mid-pattern wildcards (e.g. `Read(secrets-*/config.json)`) being rejected at startup
+- Fixed up-arrow prompt history showing the main agent's prompts while a subagent's chat tab is open
+- Fixed memory recall not finding mounted team memory stores (`CLAUDE_MEMORY_STORES`) in remote sessions
+- Fixed workflow validation rejecting scripts whose prompt strings or comments merely mention `Date.now()`/`Math.random()`
+- Disable mouse tracking on Windows consoles that don't fully support it
+- Fixed the `/plugin` marketplace list losing its cursor after backing out of a long plugin list, and Esc from the plugin browser returning to the wrong tab
+- Improved performance in long conversations by removing redundant message normalization and avoiding full message-history transforms when streaming tool-use state is unchanged
+- Reduced idle CPU usage: `/goal` status chip no longer re-renders the terminal at 5 Hz while idle, and fewer UI re-renders while subagents run in parallel
+- Improved Claude in Chrome tool loading: browser tools now load in a single batched call instead of one per tool
+- Improved the non-interactive Usage Policy refusal message to suggest starting a new session or changing your model
+- `/code-review` now keeps the `ultra` option visible when you're not signed in to claude.ai, with an explanation that the cloud review requires a claude.ai account
+- Shortened the Remote Control footer indicator to "/rc active" and hid it on narrow terminals
+- Stopped promoting `/loop` in remote sessions, where pending loops don't keep the container alive
+- [VSCode] Fixed PowerShell tool calls rendering as raw JSON instead of a proper command display and permission dialog, and stripped ANSI escape codes from displayed shell output
+
 ## 2.1.170
 
 - Introducing Claude Fable 5: a Mythos-class model that we’ve made safe for general use. Fable’s capabilities exceed those of any model we’ve ever made generally available. Update to version 2.1.170 for access. https://www.anthropic.com/news/claude-fable-5-mythos-5
