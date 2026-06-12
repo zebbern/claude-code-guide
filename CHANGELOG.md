@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.1.174
+
+- Added `wheelScrollAccelerationEnabled` setting to disable mouse-wheel scroll acceleration in fullscreen mode
+- Fixed the `/model` picker hiding the model family that Default resolves to — Opus now appears as its own row on Max/Team Premium/Enterprise plans, Sonnet on Pro/Team plans, and Opus on pay-as-you-go API accounts
+- Fixed `/model` picker showing a hardcoded Sonnet version label when `ANTHROPIC_DEFAULT_SONNET_MODEL` pins a different Sonnet
+- Fixed the "Fable 5 is now consuming usage credits" banner incorrectly showing for enterprise accounts with usage-based billing
+- Fixed Bedrock GovCloud regions (`us-gov-*`) deriving the wrong inference profile prefix (`global` instead of `us-gov`), causing 400 errors on derived model IDs
+- Fixed background sessions inheriting another session's `ANTHROPIC_*` provider env (gateway URL, custom headers, `/model` aliases) from the shell that started the background daemon
+- Fixed a 1-2 second pause when exiting Claude Code shortly after a shell command was interrupted or killed on macOS and Linux
+- Fixed git commit co-author attribution showing an incorrect model name for some models
+- Fixed the `/advisor` dialog pre-selecting a saved advisor model that is blocked by the `availableModels` allowlist
+- Fixed skill hot-reload re-sending the entire skill listing when a single skill changed; only changed skills are now re-announced
+- Fixed Workflow tool `agent()` subagents missing per-agent attribution headers
+- [VSCode] Added usage attribution to the Account & usage dialog (`/usage`) showing cache misses, long context, subagents, and per-skill/agent/plugin/MCP breakdowns over the last 24h or 7d
+- Fixed pre-warmed background workers failing with "Could not resolve authentication method" when claimed after sitting idle
+
+## 2.1.173
+
+- Fixed Fable 5 model names with a `[1m]` suffix not being normalized — Fable 5 includes 1M context by default, so the suffix is now stripped automatically
+- Fixed a spurious "sandbox dependencies missing" startup warning on Windows when sandbox was enabled in settings
+
 ## 2.1.172
 
 - Sub-agents can now spawn their own sub-agents (up to 5 levels deep)
