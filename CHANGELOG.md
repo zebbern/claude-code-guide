@@ -1,5 +1,47 @@
 # Changelog
 
+## 2.1.181
+
+- Added `/config key=value` syntax to set any setting from the prompt (e.g. `/config thinking=false`) — works in interactive, `-p`, and Remote Control
+- Added `sandbox.allowAppleEvents` opt-in setting that lets sandboxed commands send Apple Events on macOS
+- Added `CLAUDE_CLIENT_PRESENCE_FILE` environment variable: point it at a marker file to suppress mobile push notifications while you're at the machine
+- Upgraded the bundled Bun runtime to 1.4
+- Improved streaming of long paragraphs: text now appears line-by-line instead of waiting for the first line break
+- Improved auto-retry: API connection drops mid-thinking now automatically retry instead of showing "Connection closed while thinking"
+- Improved the subagent panel: idle subagents auto-hide after 30s, the list caps at 5 rows with scroll hints, and keyboard hints now show in the footer
+- Improved the MCP OAuth browser page to match Claude Code's visual style and auto-close on success
+- Changed fullscreen mode URL opening to require Cmd+click (macOS) / Ctrl+click, matching native terminal behavior
+- Changed the `Improved N memories` line to no longer list individual files outside verbose mode
+- Fixed prompt caching not reading on custom `ANTHROPIC_BASE_URL` and on Foundry due to a per-request attestation token changing every turn
+- Fixed Write/Edit producing 0-byte or truncated files on network drives and cloud-synced folders
+- Fixed `open`, `osascript`, and browser-based auth flows failing with error -600 on macOS by adding the Apple Events entitlement
+- Fixed a startup regression (~120ms per launch in fresh environments, introduced in 2.1.169): the first prompt no longer waits for the managed-settings fetch when no MCP servers are configured
+- Fixed startup blocking with a blank terminal for up to 15 seconds when the account settings fetch is slow on a degraded network
+- Fixed startup crash (`TypeError: Cannot read properties of null`) when `.claude.json` contains corrupted null project entries
+- Fixed macOS TUI freezing at session start (Ctrl+C unresponsive) when Spotlight is busy reindexing
+- Fixed long-running idle sessions losing their history when another Claude Code process ran the 30-day transcript cleanup
+- Fixed foreground subagents spawning unbounded nested chains; they now respect the same 5-level depth limit as background subagents
+- Fixed `/recap` and conversation forks using the previous model immediately after a model switch
+- Fixed subagent "Thinking" duration showing the parent agent's elapsed time instead of the subagent's own
+- Fixed subagents blocked on a nested agent showing a ticking elapsed time instead of "waiting" in the agent panel
+- Fixed the API retry indicator ("Retrying in 0s · attempt N/10") staying on screen after the retry succeeded
+- Fixed AWS `awsCredentialExport` credentials with a short remaining lifetime causing credential refreshes every minute, and now accepts the JSON shape from `aws configure export-credentials`
+- Fixed `claude mcp get`/`list` showing `✓ Connected` when tools/list fails; they now show `! Connected · tools fetch failed` with the error detail
+- Fixed `/remote-control` leaving a stale "connecting…" line; it now confirms in the transcript once connected
+- Fixed ExitWorktree refusing to remove a clean worktree with "Could not verify worktree state" when bare `git` cannot be resolved on Windows
+- Fixed settings changes (such as `/effort` or `/model`) failing with ENOENT when `~/.claude/settings.json` is a relative symlink under a symlinked `~/.claude`
+- Fixed IDE selection line numbers in context reminders being off by one (IntelliJ and VS Code)
+- Fixed Ctrl+C in fullscreen after a native terminal selection (modifier+drag) overwriting the clipboard with the app's prior selection
+- Fixed Ctrl+V showing "No image found in clipboard" instead of pasting when the clipboard contains text
+- Fixed agent creation failing with "EEXIST: file already exists" when the agents directory already exists (Windows/OneDrive)
+- Fixed AskUserQuestion preview content being cut off at the dialog edge instead of word-wrapping
+- Fixed AskUserQuestion multi-select questions silently dropping a typed "Other" free-text answer when submitting
+- Fixed `/stats` "Most active day" and daily token chart dates showing one day early in UTC-negative timezones
+- Fixed `/copy` and copy-on-select on Linux not detecting a clipboard utility installed after Claude Code started
+- Fixed tab-indented code rendering with incorrect indentation in the Write (create-file) preview
+- Fixed user prompts queued mid-turn not showing a full-width background highlight in the transcript
+- Fixed the activity spinner's pulse dwelling on the wrong glyph size in Ghostty
+
 ## 2.1.179
 
 - Fixed mid-stream connection drops: partial responses are now preserved instead of showing a raw error, and the spinner no longer gets stuck at "running tool"
