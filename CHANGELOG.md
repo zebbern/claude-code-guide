@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.1.193
+
+- Added `autoMode.classifyAllShell` setting to route all Bash/PowerShell commands through the auto-mode classifier instead of only arbitrary-code-execution patterns
+- Added auto-mode denial reasons to the transcript, the denial toast, and `/permissions` recent denials
+- Added `claude_code.assistant_response` OpenTelemetry log event containing the model's response text. Redacted unless `OTEL_LOG_ASSISTANT_RESPONSES=1`; when that var is unset it follows `OTEL_LOG_USER_PROMPTS`, so deployments that already log prompt content will start receiving response content on upgrade — set `OTEL_LOG_ASSISTANT_RESPONSES=0` to keep prompts-only.
+- Added live file path autocomplete to bash mode (`!`)
+- Added a startup notice when MCP servers need authentication, pointing at `/mcp`
+- Added automatic memory-pressure reaping for idle background shell commands (disable with `CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP=1`)
+- Fixed `/model` and other client-data-gated UI showing stale/empty state immediately after `/login`
+- Fixed backgrounding (←←) spuriously cancelling with "N background tasks would be abandoned" when all running tasks carry over to the new session
+- Fixed pinned background agents being re-prompted to "Continue from where you left off" after every auto-update
+- Fixed backgrounding the main turn spawning a phantom "general-purpose (resumed)" subagent that re-ran the main conversation
+- Fixed agent panel hiding sibling agents when viewing a subagent
+- Improved background agents: the launch result no longer instructs Claude to "end your response" — it keeps working on other tasks while the agent runs
+- Improved MCP `headersHelper` auth: the helper now re-runs and reconnects automatically when a tool call returns 401/403
+- Improved plugin auto-rename: marketplace `renames` maps are now followed automatically, updating your settings to the new name
+- Improved `/add-dir` message when the directory is already a working directory
+
 ## 2.1.191
 
 - Added `/rewind` support for resuming a conversation from before `/clear` was run
