@@ -971,7 +971,7 @@ Step forward and backward through each action, see the DOM state, network reques
 - [core/locators.md](../core/locators.md) -- locator strategy priority and patterns
 - [core/assertions-and-waiting.md](../core/assertions-and-waiting.md) -- auto-waiting and web-first assertions in depth
 - [core/configuration.md](../core/configuration.md) -- setting up `playwright.config`
-- [core/page-object-model.md](../core/page-object-model.md) -- page object patterns for Playwright
+- [pom/page-object-model.md](../pom/page-object-model.md) -- page object patterns for Playwright
 - [core/fixtures-and-hooks.md](../core/fixtures-and-hooks.md) -- fixtures system for test setup and isolation
 - [core/test-organization.md](../core/test-organization.md) -- organizing tests for parallel execution
 - [migration/from-cypress.md](from-cypress.md) -- migrating from Cypress instead
