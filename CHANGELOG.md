@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.1.201
+
+- Claude Sonnet 5 sessions no longer use the mid-conversation system role for harness reminders
+
+## 2.1.200
+
+- Changed `AskUserQuestion` dialogs to no longer auto-continue by default; opt into an idle timeout via `/config`
+- Changed the "default" permission mode to "Manual" across the CLI, `--help`, VS Code, and JetBrains; `--permission-mode manual` and `"defaultMode": "manual"` are accepted alongside `default`
+- Fixed a crash at startup when `disabledMcpServers` or `enabledMcpServers` in `.claude.json` is set to a non-array value
+- Fixed background sessions silently stopping mid-turn after sleep/wake or when reopening a stalled session
+- Fixed background sessions re-running a turn cancelled with Esc after a stall respawn
+- Fixed background agents never starting again after a crash left a stale `daemon.lock` whose PID the OS reused
+- Fixed background-agent daemon handover so a reinstalled older build can no longer take over the daemon; build recency is now judged by the version's embedded build timestamp
+- Fixed background-agent roster issues: transient corruption permanently disabling orphan cleanup, older binaries not preserving fields written by newer versions, and socket auth tokens being stripped during daemon restarts
+- Fixed subagents cut off by a rate limit before producing any text output returning an empty result instead of failing cleanly
+- Fixed control bytes from background-agent output reaching the terminal in the agent view
+- Fixed `claude agents --plugin-dir <dir>` not showing the plugin's agents and skills in the agent view when the flag is placed after `agents`
+- Fixed project-scoped plugins not loading correctly from git worktrees of the same repository
+- Fixed `/mcp` server list not tracking focus for screen readers and magnifiers
+- Fixed voice dictation showing a misleading "Voice connection failed" message when a recording captures no audio
+- Fixed rendering flicker under tmux 3.4+ by enabling synchronized terminal output
+- Improved screen-reader output: decorative glyphs are now hidden, transcript symbols read as short labels, and nested tables read as `Header: value.` lines
+- Improved the install script to explain when installation is killed by the system running out of memory
+
 ## 2.1.199
 
 - Stacked slash-skill invocations like `/skill-a /skill-b do XYZ` now load all leading skills (up to 5), not just the first
