@@ -1,5 +1,49 @@
 # Changelog
 
+## 2.1.204
+
+- Fixed hook events not streaming during SessionStart hooks in headless sessions, which could cause remote workers to be idle-reaped mid-hook
+
+## 2.1.203
+
+- Added a warning when your login is about to expire, so you can re-authenticate before background sessions are interrupted
+- Added a grey ⏸ badge to the footer when in manual permission mode, making the active mode always visible
+- Added the session's additional working directories to MCP `roots/list`, with `notifications/roots/list_changed` sent when the set changes
+- Fixed opening or switching background agent sessions on macOS stalling for 15–20 seconds due to a false low-memory detection (regression in 2.1.196)
+- Fixed background sessions becoming permanently unresponsive to attach, replies, and stop when the daemon's session token went stale — the session now recovers automatically
+- Fixed returning to `claude agents` silently stopping running subagents and re-running the prompt from scratch — their work now carries over
+- Fixed a memory and per-turn CPU regression in interactive sessions: the context-usage indicator no longer re-analyzes the entire transcript after every turn
+- Fixed background agents inheriting a stale `PATH` from the daemon instead of the dispatching shell, causing missing tools on Windows
+- Fixed background and agent-view sessions dropping a shell-exported `ANTHROPIC_BASE_URL`, which sent API keys to the default endpoint and failed with 401
+- Fixed Bash failing with "argument list too long" in repos with many git worktrees
+- Fixed worktree-isolated subagents sometimes running shell commands in the parent checkout instead of their own worktree
+- Fixed worktree creation rejecting nested repositories in multi-repo workspaces, leaving background sessions unable to isolate and edit
+- Fixed background agents crash-looping when their working directory was deleted, replaced by a file, or became an invalid path — they now fail once with a clear error
+- Fixed a background daemon auto-upgrade failure silently killing all running background sessions
+- Fixed `TaskStop` and `TaskOutput` failing to find background agents spawned by another agent — errors now list running agents by id and description
+- Fixed the `claude agents` composer discarding your typed message when a slash command isn't available there
+- Fixed the agent list crashing when opening a stopped session whose conversation was already open in another session
+- Fixed background sessions showing "Needs input" in the agent list after the question was already answered
+- Fixed background agent startup failures showing only "exit_with_message" instead of the actual error
+- Fixed background sessions ignoring `effortLevel` changes in settings.json when forked through the daemon
+- Fixed attached background sessions ignoring `CLAUDE_CODE_DISABLE_MOUSE` and `CLAUDE_CODE_DISABLE_MOUSE_CLICKS` opt-outs
+- Fixed `/exit` incorrectly warning about running background agents after all named agents had completed
+- Fixed background sessions started from a non-git directory unable to edit files when a `WorktreeCreate` hook was configured
+- Fixed the `@` directory picker in `claude agents` not showing registered git worktrees
+- Fixed background task output on Windows being permanently replaced by an empty file after `/clear`
+- Fixed content jumping when scrolling up through long transcript history
+- Fixed the terminal flickering and jumping while typing in bash mode when a shell-history suggestion was shown
+- Fixed literal `^[[I` / `^[[O` escape codes being printed when reattaching to a background session
+- Fixed LSP-only plugins being incorrectly flagged for disuse when their language servers deliver diagnostics or answer navigation requests
+- Improved responsiveness while long responses stream: live-preview updates no longer re-render the whole screen
+- Improved subagent behavior: agents are now less likely to re-delegate their entire task to another subagent
+- Reduced binary size by ~7 MB and startup memory by ~7 MB by loading a large bundled dependency lazily instead of inlining it
+- Changed left arrow to no longer close the background tasks, diff, and workflow detail views — press Esc instead
+- Changed the empty `claude agents` view to always show the organized sections (Needs input / Working / Completed) with descriptions
+- Removed the startup "claude command missing or broken" warnings — they now appear in `/doctor` and `/status` instead
+- Removed a redundant navigation hint from the `claude agents` footer
+- [VSCode] Added a Settings toggle for "Enable Remote Control for all sessions"
+
 ## 2.1.202
 
 - Added a "Dynamic workflow size" setting in `/config` for controlling how large Claude generally makes dynamic workflows (small/medium/large agent counts) — an advisory guideline, not an enforced cap
