@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.215
+
+- Claude no longer runs the `/verify` and `/code-review` skills on its own; invoke them with `/verify` or `/code-review` when you want them
+
 ## 2.1.214
 
 - Fixed single-segment `dir/**` allow rules like `Edit(src/**)` auto-approving writes to nested `dir/` directories anywhere in the tree instead of only `<cwd>/dir`
