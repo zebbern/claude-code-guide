@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.220
+
+- Bug fixes and reliability improvements
+
 ## 2.1.219
 
 - Added Claude Opus 5 (`claude-opus-5`), now the default Opus model — 1M context, fast mode at $10/$50 per Mtok
@@ -10,10 +14,7 @@
 - Added nested subagent forwarding in stream-json: subagents spawned at depth-2+ now appear when `--forward-subagent-text` is set, keyed by their spawning Agent `tool_use` id
 - Fixed `claude -p` text output dropping the answer already produced when a turn dies on a mid-stream API error
 - Added HTTP status and error text to `claude mcp list` and `/mcp` when a server fails to connect, and a warning for MCP config values with hidden leading or trailing whitespace
-- Fixed a permission you approved while a self-hosted runner was restarting being dropped when the session resumed, so the approved action now runs
 - Fixed the Fable model row showing "Requires usage credits" for plans that include it, when a stale cache had baked the label in
-- Fixed a SIGTERM arriving while a self-hosted runner was starting up leaving a stale active row until the lease expired; it now deregisters cleanly
-- Added structured failure categories to self-hosted runner spawn and session failures, so hook errors, runner crashes and config errors can be told apart
 - Fixed the `/model` picker showing the merged Opus row as plain "Opus" instead of "Opus (1M context)"
 - Fixed copy-on-select inside GNU screen printing base64 into the terminal instead of copying the selection
 - Fixed Remote Control clients keeping a stale fast-mode status after a model switch, reconnect, or failed org check
@@ -953,7 +954,6 @@
 
 ## 2.1.169
 
-- Self-hosted runner: added a `post-session` lifecycle hook that runs after the session ends and before the workspace is deleted, so you can snapshot uncommitted work or export logs; also made the child-process SIGTERM→SIGKILL window configurable (default unchanged at 5s)
 - Added `--safe-mode` flag (and `CLAUDE_CODE_SAFE_MODE`) to start Claude Code with all customizations (CLAUDE.md, plugins, skills, hooks, MCP servers) disabled for troubleshooting
 - Added `/cd` command to move a session to a new working directory without breaking the prompt cache mid-session
 - Added a `disableBundledSkills` setting and `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS` environment variable to hide bundled skills, workflows, and built-in slash commands from the model
