@@ -1,7 +1,7 @@
 # Test Organization
 
 > **When to use**: Structuring test files, naming tests, grouping with `describe`, tagging, filtering, and deciding parallel vs serial execution.
-> **Prerequisites**: [core/configuration.md](foundations/configuration.md)
+> **Prerequisites**: [core/configuration.md](configuration.md)
 
 ## Quick Reference
 
@@ -975,8 +975,8 @@ test("should edit a product", async ({ page, request }) => {
 
 ## Related
 
-- [core/configuration.md](foundations/configuration.md) — `testMatch`, `testDir`, `fullyParallel`, `workers`
-- [core/fixtures-and-hooks.md](foundations/fixtures-and-hooks.md) — shared setup via fixtures instead of `beforeAll`
-- [core/test-architecture.md](decisions/test-architecture.md) — when to write E2E vs API vs component tests
-- [ci/parallel-and-sharding.md](infrastructure/parallel-and-sharding.md) — CI sharding for large suites
-- [ci/projects-and-dependencies.md](infrastructure/projects-and-dependencies.md) — multi-project config
+- [core/configuration.md](configuration.md) — `testMatch`, `testDir`, `fullyParallel`, `workers`
+- [core/fixtures-and-hooks.md](fixtures-and-hooks.md) — shared setup via fixtures instead of `beforeAll`
+- [core/test-architecture.md](test-architecture.md) — when to write E2E vs API vs component tests
+- [ci/parallel-and-sharding.md](../ci/parallel-and-sharding.md) — CI sharding for large suites
+- [ci/projects-and-dependencies.md](../ci/projects-and-dependencies.md) — multi-project config
