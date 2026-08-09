@@ -1,7 +1,7 @@
 # Quality-First Claude and Codex Agent Pack
 
-**Date:** 2026-08-08  
-**Status:** Approved design  
+**Date:** 2026-08-08
+**Status:** Approved design
 **Implementation scope:** `C:\Users\zeb\Documents\workspace_for_ai\claude-code-guide\agents`
 
 ## Objective
