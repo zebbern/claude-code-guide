@@ -6,7 +6,7 @@ tools:
   - Grep
   - Glob
   - Bash
-model: fable
+model: opus
 permissionMode: plan
 effort: max
 ---

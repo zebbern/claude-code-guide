@@ -66,10 +66,10 @@ codex exec --strict-config --sandbox read-only "Spawn the codebase-mapper custom
 
 Keep dependent phases sequential. Parallelize only independent read-heavy work, and keep write-heavy work single-owner.
 
-## Model policy — 2026-08-08
+## Model policy — 2026-08-10
 
-- Claude Fable with maximum effort: `official-docs-researcher`, `solution-architect`, and `security-reviewer`.
-- Claude Opus with maximum effort: `codebase-mapper`, `root-cause-debugger`, `change-implementer`, `code-reviewer`, and `runtime-verifier`.
+- Claude Fable with maximum effort: `official-docs-researcher` and `solution-architect`.
+- Claude Opus with maximum effort: `codebase-mapper`, `root-cause-debugger`, `change-implementer`, `code-reviewer`, `security-reviewer`, and `runtime-verifier`.
 - Codex `gpt-5.6-sol` with maximum effort: every role.
 - Parent orchestration may use Ultra for genuinely divisible work; custom workers do not.
 
