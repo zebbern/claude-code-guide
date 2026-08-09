@@ -14,7 +14,8 @@
 - Preserve the pre-existing modified root `README.md` byte-for-byte. Capture its SHA-256 immediately before implementation and compare it at completion.
 - Delete all 109 legacy `agents/*.agent.md` files and replace `agents/README.md`; retain no compatibility aliases.
 - Create exactly eight Claude Markdown files and eight Codex TOML files with matching lowercase-hyphen identities.
-- Claude research/architecture/security roles use `fable` at `max`; other Claude roles use `opus` at `max`.
+- Claude research and architecture roles use `fable` at `max`; other Claude roles, including security review, use `opus` at `max`.
+- 2026-08-10 revision: `security-reviewer` moved from Fable/max to Opus/max after repeated Fable safeguard rejections prevented substantive security review.
 - Every Codex role uses `gpt-5.6-sol` with `model_reasoning_effort = "max"`. Do not pin `ultra` inside a worker.
 - Omit Claude's `Agent` tool from every allowlist. Do not add memory, hooks, skills, MCP servers, background mode, worktree isolation, or turn limits.
 - Codex `official-docs-researcher` uses `web_search = "live"` and `tools.web_search = { context_size = "high" }`.
@@ -592,7 +593,7 @@ tools:
   - Grep
   - Glob
   - Bash
-model: fable
+model: opus
 permissionMode: plan
 effort: max
 ---
@@ -719,7 +720,7 @@ The finished TOML must parse with `developer_instructions` equal to the Claude b
 
 - [ ] **Step 5: Run the Task 4 parity check**
 
-Run the same inline parser/parity check for `security-reviewer` and `runtime-verifier`. Additionally assert `security-reviewer` uses Fable/read-only and `runtime-verifier` uses Opus/workspace-write.
+Run the same inline parser/parity check for `security-reviewer` and `runtime-verifier`. Additionally assert `security-reviewer` uses Opus/read-only and `runtime-verifier` uses Opus/workspace-write.
 
 ---
 
@@ -756,9 +757,9 @@ codex exec --strict-config --sandbox read-only "Spawn the codebase-mapper custom
 ```
 
 8. Quality workflow: mapper and official research may run independently; architecture follows established evidence; debugger precedes implementation for unknown failures; one implementer owns writes; code/security review may run independently after a diff exists; runtime verification runs last.
-9. Model policy dated 2026-08-08:
-   - Claude Fable/max for official research, architecture, and security.
-   - Claude Opus/max for mapping, debugging, implementation, code review, and runtime verification.
+9. Model policy revised 2026-08-10:
+   - Claude Fable/max for official research and architecture.
+   - Claude Opus/max for mapping, debugging, implementation, code review, security review, and runtime verification.
    - Codex `gpt-5.6-sol`/max for every role.
    - Parent orchestration may use Ultra for genuinely divisible work, but custom workers do not.
 10. Permission limitation: parent Claude/Codex modes can override child intent; use a constrained parent for enforcement and inspect Git/content state after read-only work.
@@ -857,7 +858,7 @@ expected = {
     "security-reviewer",
     "runtime-verifier",
 }
-fable = {"official-docs-researcher", "solution-architect", "security-reviewer"}
+fable = {"official-docs-researcher", "solution-architect"}
 plan = {"codebase-mapper", "official-docs-researcher", "solution-architect", "code-reviewer", "security-reviewer"}
 codex_read_only = {"codebase-mapper", "official-docs-researcher", "solution-architect", "code-reviewer", "security-reviewer"}
 claude_dir = root / ".claude" / "agents"

@@ -77,8 +77,9 @@ Maximum quality is the governing policy.
 
 ### Claude Code
 
-- `official-docs-researcher`, `solution-architect`, and `security-reviewer` use `model: fable` and `effort: max` because they emphasize broad synthesis, deep reasoning, research, and risk judgment.
-- `codebase-mapper`, `root-cause-debugger`, `change-implementer`, `code-reviewer`, and `runtime-verifier` use `model: opus` and `effort: max` because they emphasize complex agentic coding, debugging, review, and execution.
+- `official-docs-researcher` and `solution-architect` use `model: fable` and `effort: max` because they emphasize broad synthesis, deep reasoning, and research.
+- `codebase-mapper`, `root-cause-debugger`, `change-implementer`, `code-reviewer`, `security-reviewer`, and `runtime-verifier` use `model: opus` and `effort: max` because they emphasize complex agentic coding, debugging, review, risk judgment, and execution.
+- **2026-08-10 revision:** `security-reviewer` moved from Fable/max to Opus/max after repeated Fable safeguard rejections prevented the required substantive security review.
 - Model aliases are preferred over dated full model IDs so the definitions follow the current provider-supported model within the selected family.
 - No `maxTurns` cap is set because an arbitrary turn limit conflicts with the quality-first goal.
 
