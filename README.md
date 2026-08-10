@@ -4,7 +4,7 @@
 
 _For reference and contributions, visit the [official Claude Code documentation](https://code.claude.com/docs/en/overview)_
 
-_Verified against **Claude Code v2.1.224** and this repository's changelog through **v2.1.223** (checked 2026-08-08). Commands and provider model mappings change quickly; the linked official references remain authoritative._
+_Commands and provider model mappings change quickly; the linked official references remain authoritative._
 
 ![Claude Code](https://img.shields.io/npm/v/@anthropic-ai/claude-code?label=Claude%20Code&logo=anthropic)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/anthropics/claude-code)
