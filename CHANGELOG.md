@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.227
+
+- Fixed feature flags being evaluated without the user's subscription tier when a session started with an expired login token, which could wrongly prompt Max plan users to enable usage credits for Fable
+- Fixed every Bash command failing under `claude-code-action` with `allowed_non_write_users` on GitHub-hosted runners
+- Fixed `/tui` bringing back a conversation that had been rewound to before its first message
+- Improved slash-command menu: blue now marks only the selected row, matched characters are bolded instead of recolored, and emoji or accented names keep their glyphs
+- Improved performance: fewer event-loop stalls on file-not-found suggestions and at-mention size checks
+
 ## 2.1.226
 
 - Bug fixes and reliability improvements
