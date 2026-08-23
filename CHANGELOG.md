@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.240
+
+- Bug fixes and reliability improvements
+
 ## 2.1.239
 
 - Cost estimates (`/cost`, status line, `--max-budget-usd`) now include the 1.1× US-only-inference premium for data-residency workspaces
