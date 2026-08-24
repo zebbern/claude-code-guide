@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.241
+
+- Bug fixes and reliability improvements
+
 ## 2.1.240
 
 - Bug fixes and reliability improvements
