@@ -1842,6 +1842,28 @@ For a local stdio server, put its executable and arguments after `--` so Claude 
 claude mcp add -s local local-tools -- /absolute/path/to/mcp-server --workspace "$PWD"
 ```
 
+<h3 id="parallel-search-mcp">Free Web Search with Parallel Search MCP</h3>
+
+[Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp) adds `web_search` and `web_fetch` for web research and page excerpts. The anonymous endpoint needs no account, API key, or OAuth login; search uses Fast mode. Free access has lower rate limits and is intended for exploration and light use.
+
+With Claude Code installed, run this from the project where you want to use it:
+
+```bash
+claude mcp add --transport http --scope local parallel-search https://search.parallel.ai/mcp \
+  --header "User-Agent: claude-code-guide/Parallel-MCP-example"
+claude mcp get parallel-search
+claude mcp list
+```
+
+Local scope makes the server available only to you in this project. Open `claude`, check the connection with `/mcp`, then try:
+
+```text
+Use parallel-search to find the Python asyncio documentation, then fetch
+https://docs.python.org/3/library/asyncio.html and summarize it with a source URL.
+```
+
+Approve the MCP tool calls when prompted. Queries and fetched URLs are sent to Parallel. To remove this project's configuration, run `claude mcp remove parallel-search --scope local`.
+
 ## Additional Methods:
 
 <table><td>
