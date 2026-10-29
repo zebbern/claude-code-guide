@@ -487,6 +487,8 @@ Type `/` to see what your installed build, plan, platform, plugins, MCP servers,
 
 > This table highlights common and recently changed options; `claude --help` and the [live CLI reference](https://code.claude.com/docs/en/cli-reference) are authoritative. `--output-format json` is useful for one-shot automation; use `stream-json` for event-level integrations.
 
+> **Before you use `--system-prompt` or `--append-system-prompt`:** both flags act on a default you cannot see from the CLI — replacing it discards the whole thing — 19–26k characters of instructions, depending on model and entry point — and appending puts your text after all of it. Wire captures of that default, per model and per entry point (the interactive CLI and the SDK/print path do not send the same prompt or the same tool set), are archived at [OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault/tree/main/Claude-Code) with the date and the command that reproduces each one.
+
 For programmatic integrations, the former **Claude Code SDK** is now the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview): TypeScript uses `@anthropic-ai/claude-agent-sdk`, and Python uses `claude-agent-sdk` / `claude_agent_sdk`. Use `claude -p` for headless CLI calls; `--bare` removes discovered customization and keychain/OAuth access for low-overhead API/provider automation.
 
 <h2 id="cheat-sheet">CLI Quick Reference & Configuration Examples</h2>
