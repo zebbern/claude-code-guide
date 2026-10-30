@@ -26,10 +26,9 @@ jobs:
     
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: true
-          fetch-depth: 0
 
       - name: Download and process release notes
         id: sync_files
@@ -107,9 +106,9 @@ jobs:
           # Arrays to track changes
           declare -a CHANGED_FILES=()
           COMMIT_BODY=""
-          README_LIST=""
           TOTAL_ADDED=0
           TOTAL_DELETED=0
+          FAILED=0
           
           # Process each file
           for url in "${!FILES[@]}"; do
@@ -123,6 +122,7 @@ jobs:
             if ! download_with_retry "$url" "$tmp"; then
               echo -e "${RED}Skipping $name due to download failure${NC}"
               rm -f "$tmp"
+              FAILED=1
               continue
             fi
             
@@ -130,6 +130,7 @@ jobs:
             if ! validate_content "$tmp"; then
               echo -e "${RED}Skipping $name due to validation failure${NC}"
               rm -f "$tmp"
+              FAILED=1
               continue
             fi
             
@@ -157,13 +158,13 @@ jobs:
             base_file="$out"
             [[ -f "$out" ]] || base_file="/dev/null"
             
-            numstat=$(git --no-pager diff --no-index --numstat -- "$base_file" "$tmp" 2>/dev/null || echo "0 0 -")
+            numstat=$(git --no-pager diff --no-index --numstat -- "$base_file" "$tmp" 2>/dev/null || true)
             read -r added deleted _ <<< "$numstat"
             
             # Extract highlights from changes
             highlights=$(
               git --no-pager diff --no-index -U0 -- "$base_file" "$tmp" 2>/dev/null \
-                | sed -n 's/^+[^+]//p' \
+                | sed -n -e '/^+++ /d' -e 's/^+//p' \
                 | grep -E '^(#{1,3} |- |\* |[0-9]+\. )' \
                 | head -n 5 || true
             )
@@ -172,7 +173,7 @@ jobs:
             if [[ -z "$highlights" ]]; then
               highlights=$(
                 git --no-pager diff --no-index -U0 -- "$base_file" "$tmp" 2>/dev/null \
-                  | sed -n 's/^+[^+]//p' \
+                  | sed -n -e '/^+++ /d' -e 's/^+//p' \
                   | grep -v '^$' \
                   | head -n 3 || true
               )
@@ -191,9 +192,6 @@ jobs:
                 COMMIT_BODY+="  • ${line}"$'\n'
               done <<< "$highlights"
             fi
-            
-            # Build README summary
-            README_LIST+="- **${name}**: +${added:-0} / -${deleted:-0}"$'\n'
             
             # Track totals
             ((TOTAL_ADDED += added)) || true
@@ -215,16 +213,18 @@ jobs:
             printf '%b' "$COMMIT_BODY"
           } > /tmp/commit_body.txt
           
-          {
-            printf '%b' "$README_LIST"
-          } > /tmp/readme_list.txt
-          
           echo "total_added=$TOTAL_ADDED" >> "$GITHUB_OUTPUT"
           echo "total_deleted=$TOTAL_DELETED" >> "$GITHUB_OUTPUT"
           echo "changed_count=${#CHANGED_FILES[@]}" >> "$GITHUB_OUTPUT"
+          
+          # Fail the run instead of reporting "No Changes" when a download or validation failed
+          if [[ $FAILED -ne 0 ]]; then
+            echo "::error::One or more release-note files failed to download or validate"
+            exit 1
+          fi
 
       - name: Commit and push changes
-        if: always()
+        if: steps.sync_files.outputs.files_changed == 'true'
         run: |
           set -euo pipefail
           
@@ -236,21 +236,11 @@ jobs:
           if ! git diff --cached --quiet; then
             date_str=$(date -u +%Y-%m-%d)
             
-            if [[ "${{ steps.sync_files.outputs.files_changed }}" == "true" ]]; then
-              # Content changes detected
-              title="Sync release notes ($date_str)"
-              body=$(cat /tmp/commit_body.txt 2>/dev/null || echo "Updated release notes")
-              
-              git commit -m "$title" -m "$body"
-              echo "✅ Committed content changes"
-            else
-              # Only README status update
-              title="Update sync status ($date_str)"
-              body="No release note content changes. Updated status in README."
-              
-              git commit -m "$title" -m "$body"
-              echo "✅ Committed status update"
-            fi
+            title="Sync release notes ($date_str)"
+            body=$(cat /tmp/commit_body.txt 2>/dev/null || echo "Updated release notes")
+            
+            git commit -m "$title" -m "$body"
+            echo "✅ Committed content changes"
             
             # Push changes
             git push
@@ -278,9 +268,13 @@ jobs:
               echo '```'
               cat /tmp/commit_body.txt 2>/dev/null || echo "No details available"
               echo '```'
+            elif [[ "${{ steps.sync_files.outcome }}" != "success" ]]; then
+              echo "### ❌ Sync failed"
+              echo
+              echo "See the 'Download and process release notes' step log."
             else
               echo "### ℹ️ No Changes"
               echo
-              echo "All tracked files are up to date. Status README was updated."
+              echo "CHANGELOG.md is already up to date; nothing was committed."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
