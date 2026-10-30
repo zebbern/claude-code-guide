@@ -155,17 +155,17 @@ Reference these guidelines when:
 
 ## How to Use
 
-Read individual rule files for detailed explanations and code examples:
+Read individual rule files for detailed explanations and code examples. Only these rule files ship with this copy; for every other rule, use its one-line summary above:
 
 ```
 rules/perf-never-set-state-in-useframe.md
+rules/perf-zustand-selectors.md
+rules/perf-visibility-toggle.md
+rules/perf-r3f-perf.md
+rules/frame-delta-time.md
 rules/drei-use-gltf.md
-rules/state-zustand-selectors.md
+rules/loading-suspense.md
 ```
-
-## Full Compiled Document
-
-For the complete guide with all rules expanded: `../R3F_BEST_PRACTICES.md`
 
 ## Critical Patterns
 

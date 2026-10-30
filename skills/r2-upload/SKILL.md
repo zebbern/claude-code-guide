@@ -66,56 +66,32 @@ aws-bucket:
   region: us-east-1
 ```
 
-## Usage
+## Setup
 
-### Upload a file
-
-```bash
-r2-upload /path/to/file.pdf
-# Returns: https://files.example.com/abc123/file.pdf?signature=...
-```
-
-### Upload with custom path
+This skill is a stdio MCP server, not a shell command (there is no `r2-upload` binary). Build it once and register it with Claude Code:
 
 ```bash
-r2-upload /path/to/file.pdf --key uploads/2026/file.pdf
+cd "${CLAUDE_SKILL_DIR}" && npm install && npm run build
+claude mcp add r2-upload -- node "${CLAUDE_SKILL_DIR}/dist/index.js"
 ```
 
-### Upload to specific bucket
-
-```bash
-r2-upload /path/to/file.pdf --bucket personal
-```
-
-### Custom expiration (default: 5 minutes)
-
-```bash
-r2-upload /path/to/file.pdf --expires 24h
-r2-upload /path/to/file.pdf --expires 1d
-r2-upload /path/to/file.pdf --expires 300  # seconds
-```
-
-### Public URL (no signature)
-
-```bash
-r2-upload /path/to/file.pdf --public
-```
+Run `npm run onboard` in the same folder to create `~/.r2-upload.yml` interactively.
 
 ## Tools
 
-- `r2_upload` - Upload file and get presigned URL
-- `r2_list` - List recent uploads
-- `r2_delete` - Delete a file
+- `r2_upload` - Upload `file_path` and return a presigned URL. Optional: `key` (custom object path), `bucket`, `expires` (`300`, `24h`, `1d`; default `5m`), `public` (unsigned URL, needs a public bucket), `content_type`
+- `r2_list` - List files in a bucket (`bucket`, `prefix`, `max_keys`)
+- `r2_delete` - Delete a file by `key`
+- `r2_generate_url` - Generate a new presigned URL for an existing `key`
 
 ## Environment Variables
 
 - `R2_UPLOAD_CONFIG` - Path to config file (default: `~/.r2-upload.yml`)
 - `R2_DEFAULT_BUCKET` - Override default bucket
-- `R2_DEFAULT_EXPIRES` - Default expiration in seconds (default: 300 = 5 minutes)
 
 ## Notes
 
-- Uploaded files are stored with their original filename unless `--key` is specified
+- Uploaded files are stored with their original filename unless `key` is specified
 - Automatic UUID prefix added to prevent collisions (e.g., `abc123/file.pdf`)
 - Content-Type automatically detected from file extension
 - Presigned URLs expire after the configured duration

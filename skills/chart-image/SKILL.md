@@ -2,9 +2,6 @@
 name: chart-image
 version: 2.5.1
 description: "Generate publication-quality PNG chart images from data, supporting line, bar, area, candlestick, pie, and heatmap charts. Triggers when the user asks to visualize data, create a graph, plot a time series, or generate a chart for a report, alert, or dashboard. Runs as a lightweight, headless Node.js process without a browser."
-provides:
-  - capability: chart-generation
-    methods: [lineChart, barChart, areaChart, pieChart, candlestickChart, heatmap]
 ---
 
 # Chart Image Generator
@@ -23,18 +20,20 @@ Generate PNG chart images from data using Vega-Lite. Perfect for headless server
 ## Setup (one-time)
 
 ```bash
-cd /data/clawd/skills/chart-image/scripts && npm install
+cd "${CLAUDE_SKILL_DIR}/scripts" && npm install
 ```
 
 ## Quick Usage
 
 ```bash
-node /data/clawd/skills/chart-image/scripts/chart.mjs \
+node "${CLAUDE_SKILL_DIR}/scripts/chart.mjs" \
   --type line \
   --data '[{"x":"10:00","y":25},{"x":"10:30","y":27},{"x":"11:00","y":31}]' \
   --title "Price Over Time" \
   --output chart.png
 ```
+
+The examples below shorten the script path to `chart.mjs`.
 
 ## Chart Types
 
@@ -299,24 +298,18 @@ For advanced charts:
 node chart.mjs --spec my-spec.json --output custom.png
 ```
 
-## ⚠️ IMPORTANT: Always Send the Image!
+## Deliver the Image
 
-After generating a chart, **always send it back to the user's channel**.
-Don't just save to a file and describe it — the whole point is the visual.
+After generating a chart, save the PNG in the user's project (not `/tmp/`, which may get cleaned) and tell the user the file path.
+Don't just describe the chart — the whole point is the visual.
 
 ```bash
-# 1. Generate the chart
-node chart.mjs --type line --data '...' --output /data/clawd/tmp/my-chart.png
-
-# 2. Send it! Use message tool with filePath:
-#    action=send, target=<channel_id>, filePath=/data/clawd/tmp/my-chart.png
+node "${CLAUDE_SKILL_DIR}/scripts/chart.mjs" --type line --data '...' --output ./my-chart.png
 ```
 
 **Tips:**
-- Save to `/data/clawd/tmp/` (persistent) not `/tmp/` (may get cleaned)
-- Use `action=send` with `filePath` — `thread-reply` does NOT support file attachments
-- Include a brief caption in the message text
-- Auto-use `--dark` between 20:00-07:00 Israel time
+- Include a brief caption saying what the chart shows
+- Use `--dark` at night or for dark-themed destinations (see Theme Selection)
 
 ---
 *Updated: 2026-02-04 - Added --y-format (percent/dollar/compact/decimal4) and --subtitle*

@@ -977,6 +977,5 @@ test("downloads a file that requires authentication", async ({ page, request }) 
 
 - [Playwright Upload Docs](https://playwright.dev/docs/input#upload-files)
 - [Playwright Download Docs](https://playwright.dev/docs/downloads)
-- `recipes/drag-and-drop.md` -- General drag and drop patterns
-- `recipes/crud-testing.md` -- File uploads as part of resource creation
-- `foundations/actions.md` -- Input interaction fundamentals
+- [core/drag-and-drop.md](drag-and-drop.md) -- General drag and drop patterns
+- [core/crud-testing.md](crud-testing.md) -- File uploads as part of resource creation

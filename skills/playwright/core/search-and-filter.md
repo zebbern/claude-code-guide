@@ -1373,7 +1373,6 @@ test("filter options show result counts", async ({ page }) => {
 
 ## Related
 
-- `recipes/crud-testing.md` -- Filter and search within CRUD resource lists
-- `foundations/assertions.md` -- Assertion patterns for dynamic content
-- `patterns/page-objects.md` -- Encapsulate search and filter controls
-- `foundations/waiting.md` -- Waiting strategies for async search results
+- [core/crud-testing.md](crud-testing.md) -- Filter and search within CRUD resource lists
+- [core/assertions-and-waiting.md](assertions-and-waiting.md) -- Assertion patterns and waiting strategies for async search results
+- [pom/page-object-model.md](../pom/page-object-model.md) -- Encapsulate search and filter controls

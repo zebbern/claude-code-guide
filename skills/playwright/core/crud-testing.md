@@ -950,7 +950,7 @@ test("shows optimistic update then confirms", async ({ page }) => {
 
 ## Related
 
-- `recipes/search-and-filter.md` -- Filter and search within resource lists
-- `recipes/file-upload-download.md` -- Upload files as part of resource creation
-- `patterns/page-objects.md` -- Encapsulate CRUD forms in page objects
-- `foundations/selectors.md` -- Best practices for selecting table cells and form fields
+- [core/search-and-filter.md](search-and-filter.md) -- Filter and search within resource lists
+- [core/file-upload-download.md](file-upload-download.md) -- Upload files as part of resource creation
+- [pom/page-object-model.md](../pom/page-object-model.md) -- Encapsulate CRUD forms in page objects
+- [core/locators.md](locators.md) -- Best practices for selecting table cells and form fields

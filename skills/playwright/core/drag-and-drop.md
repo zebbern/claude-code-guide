@@ -913,6 +913,5 @@ test("drags items on mobile via touch events", async ({ page }) => {
 ## Related
 
 - [Playwright Drag and Drop Docs](https://playwright.dev/docs/input#drag-and-drop)
-- `recipes/file-upload-download.md` -- File drop zones specifically
-- `foundations/actions.md` -- Mouse and keyboard interaction basics
-- `patterns/page-objects.md` -- Encapsulate complex drag flows
+- [core/file-upload-download.md](file-upload-download.md) -- File drop zones specifically
+- [pom/page-object-model.md](../pom/page-object-model.md) -- Encapsulate complex drag flows

@@ -1037,6 +1037,6 @@ test("two users interact simultaneously", async ({ browser }) => {
 ## Related
 
 - [Playwright Authentication Docs](https://playwright.dev/docs/auth)
-- `patterns/page-objects.md` -- Encapsulate login flows in page objects
-- `foundations/assertions.md` -- Assertion patterns for auth states
-- `recipes/crud-testing.md` -- Test CRUD operations once authenticated
+- [pom/page-object-model.md](../pom/page-object-model.md) -- Encapsulate login flows in page objects
+- [core/assertions-and-waiting.md](assertions-and-waiting.md) -- Assertion patterns for auth states
+- [core/crud-testing.md](crud-testing.md) -- Test CRUD operations once authenticated

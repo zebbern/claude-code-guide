@@ -219,7 +219,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           text: `Error: No R2/S3 configuration found.
 
 Please run the onboarding script to set up your credentials:
-  cd ~/clawd/skills/r2-upload
+  cd <path-to-skill>/r2-upload
   npm run onboard
 
 Or manually create ~/.r2-upload.yml with your bucket configuration.

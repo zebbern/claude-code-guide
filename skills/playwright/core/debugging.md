@@ -21,7 +21,7 @@ Follow this order. Do not skip to step 5 — most issues resolve by step 2.
 
 ```
 1. Read the full error message
-   └─ Check troubleshooting/error-index.md for known patterns
+   └─ Check error-index.md for known patterns
 2. Run with --ui to see what happened visually
    └─ Timeline shows every action, screenshot at failure point
 3. Enable tracing if not already on
