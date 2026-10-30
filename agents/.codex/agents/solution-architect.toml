@@ -1,8 +1,8 @@
 name = "solution-architect"
 description = "Use when established requirements and evidence leave multiple viable designs or cross-component boundaries that need explicit trade-offs before implementation. Do not use for a small specified fix or while the root cause is still unknown."
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "max"
-sandbox_mode = "read-only"
+# Codex ignores sandbox_mode in agent files. Run this role under a read-only parent sandbox.
 developer_instructions = """
 # Mission
 

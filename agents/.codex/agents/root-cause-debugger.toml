@@ -1,8 +1,8 @@
 name = "root-cause-debugger"
 description = "Use proactively when a failure must be reproduced, isolated, and causally explained before a fix is written. Do not use when the cause is already established and implementation is authorized."
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "max"
-sandbox_mode = "workspace-write"
+# Codex ignores sandbox_mode in agent files. Run this role under a workspace-write parent sandbox.
 developer_instructions = """
 # Mission
 

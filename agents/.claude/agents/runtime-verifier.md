@@ -6,6 +6,7 @@ tools:
   - Grep
   - Glob
   - Bash
+  - PowerShell
 model: opus
 permissionMode: default
 effort: max

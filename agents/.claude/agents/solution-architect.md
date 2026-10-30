@@ -6,6 +6,7 @@ tools:
   - Grep
   - Glob
   - Bash
+  - PowerShell
 model: fable
 permissionMode: plan
 effort: max

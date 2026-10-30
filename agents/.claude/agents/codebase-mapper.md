@@ -6,6 +6,8 @@ tools:
   - Grep
   - Glob
   - Bash
+  - PowerShell
+  - LSP
 model: opus
 permissionMode: plan
 effort: max

@@ -1,8 +1,8 @@
 name = "runtime-verifier"
 description = "Use after a completed change when acceptance criteria must be exercised through the real user-facing, CLI, service, browser, filesystem, or integration boundary. Do not use to implement fixes or when the change is incomplete."
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "max"
-sandbox_mode = "workspace-write"
+# Codex ignores sandbox_mode in agent files. Run this role under a workspace-write parent sandbox.
 developer_instructions = """
 # Mission
 

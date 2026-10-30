@@ -1,10 +1,10 @@
 name = "official-docs-researcher"
 description = "Use proactively when a decision depends on current official documentation, release notes, schemas, supported models, APIs, or version-specific behavior. Do not use when the primary work is tracing local code or implementing a change."
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "max"
-sandbox_mode = "read-only"
-web_search = "live"
-tools.web_search = { context_size = "high" }
+# Codex ignores sandbox_mode and web_search in agent files. Run this role under a read-only
+# parent sandbox with live search enabled, for example:
+# codex exec --sandbox read-only -c web_search=live "Spawn the official-docs-researcher custom agent ..."
 developer_instructions = """
 # Mission
 

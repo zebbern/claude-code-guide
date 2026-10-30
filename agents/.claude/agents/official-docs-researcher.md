@@ -6,6 +6,7 @@ tools:
   - Grep
   - Glob
   - Bash
+  - PowerShell
   - WebFetch
   - WebSearch
 model: fable

@@ -1,8 +1,8 @@
 name = "codebase-mapper"
 description = "Use proactively when a task needs local repository structure, entry points, ownership, data flow, or change-surface mapping before a decision. Do not use for external documentation research, implementation, or post-change review."
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "max"
-sandbox_mode = "read-only"
+# Codex ignores sandbox_mode in agent files. Run this role under a read-only parent sandbox.
 developer_instructions = """
 # Mission
 
